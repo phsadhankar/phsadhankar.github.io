@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turbulent Vortices</title>
+    <link rel="stylesheet" href="../css/turbulence.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>Kolmogorov Turbulence Cascade</h2>
+      <p style="font-size: 12px; margin: 10px 0">
+        Multi-scale vortex interactions and energy dissipation
+      </p>
+      <div class="equation">
+        ω = ∇ × u (vorticity)<br />
+        ∂ω/∂t + (u·∇)ω = (ω·∇)u + ν∇²ω<br />
+        E(k) ∝ k^(-5/3) (Kolmogorov spectrum)
+      </div>
+      <p style="font-size: 11px">
+        <strong>Click:</strong> Add vortex<br />
+        <strong>Drag:</strong> Create vortex chain
+      </p>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>Reynolds Number: <span id="reynolds-val">1000</span></label>
+        <input
+          type="range"
+          id="reynolds"
+          min="100"
+          max="5000"
+          step="100"
+          value="1000"
+        />
+      </div>
+      <div class="control-group">
+        <label>Vortex Strength: <span id="strength-val">5.0</span></label>
+        <input
+          type="range"
+          id="strength"
+          min="1"
+          max="10"
+          step="0.5"
+          value="5"
+        />
+      </div>
+      <div class="control-group">
+        <label>Energy Cascade: <span id="cascade-val">0.5</span></label>
+        <input
+          type="range"
+          id="cascade"
+          min="0"
+          max="1"
+          step="0.1"
+          value="0.5"
+        />
+      </div>
+      <button id="reset">Clear Vortices</button>
+      <button id="random">Random Turbulence</button>
+    </div>
+
+    <div class="stats">
+      <div><strong>Vortices:</strong> <span id="vortex-count">0</span></div>
+      <div><strong>Total Energy:</strong> <span id="energy">0</span></div>
+      <div><strong>Enstrophy:</strong> <span id="enstrophy">0</span></div>
+      <div><strong>Reynolds:</strong> <span id="re-display">1000</span></div>
+    </div>
+
+    <script src="../js/turbulence.js"></script>
+  </body>
+</html>
