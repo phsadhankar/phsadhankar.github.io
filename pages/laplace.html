@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laplace Transform</title>
+    <link rel="stylesheet" href="../css/laplace.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>ℒ{f(t)} = F(s) - Laplace Transform</h2>
+      <div class="equation">
+        F(s) = ∫₀^∞ f(t)e^(-st) dt<br /><br />
+        s = σ + iω (complex frequency)
+      </div>
+      <p style="font-size: 12px; margin: 10px 0">
+        <strong>Top Left:</strong> Time domain f(t)<br />
+        <strong>Top Right:</strong> Magnitude |F(s)|<br />
+        <strong>Bottom:</strong> Complex s-plane visualization
+      </p>
+      <p style="font-size: 11px; margin: 10px 0; color: rgba(0, 255, 65, 0.7)">
+        The Laplace transform extends Fourier analysis to handle exponentially
+        growing/decaying signals and enables powerful analysis of differential
+        equations.
+      </p>
+    </div>
+
+    <div class="controls">
+      <h3 style="margin: 0 0 15px 0; font-size: 14px">Function Selection</h3>
+
+      <div class="control-group">
+        <label>Select f(t):</label>
+        <select id="function-select">
+          <option value="exp">e^(-at) - Exponential Decay</option>
+          <option value="sin">sin(ωt) - Sine Wave</option>
+          <option value="cos">cos(ωt) - Cosine Wave</option>
+          <option value="step">u(t) - Unit Step</option>
+          <option value="ramp">t·u(t) - Ramp</option>
+          <option value="pulse">Pulse Train</option>
+          <option value="damped-sin">e^(-at)sin(ωt) - Damped Sine</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label>Parameter α: <span id="alpha-val">1.0</span></label>
+        <input type="range" id="alpha" min="0.1" max="5" step="0.1" value="1" />
+      </div>
+
+      <div class="control-group">
+        <label>Parameter ω: <span id="omega-val">2.0</span></label>
+        <input
+          type="range"
+          id="omega"
+          min="0.5"
+          max="10"
+          step="0.5"
+          value="2"
+        />
+      </div>
+
+      <button id="animate-toggle">Show Transform Process</button>
+
+      <div class="transform-info" id="transform-result">F(s) = ...</div>
+    </div>
+
+    <script src="../js/laplace.js"></script>
+  </body>
+</html>
