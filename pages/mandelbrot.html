@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mandelbrot Explorer</title>
+    <link rel="stylesheet" href="../css/mandelbrot.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <div class="loading" id="loading">Computing fractal...</div>
+
+    <div class="info">
+      <h2>Mandelbrot Set: z → z² + c</h2>
+      <p style="font-size: 12px; margin: 10px 0">
+        The set of complex numbers c for which the iteration remains bounded
+      </p>
+      <div class="equation">
+        z₀ = 0<br />
+        z_{n+1} = z_n² + c<br /><br />
+        M = {c ∈ ℂ : lim |z_n| ≠ ∞}
+      </div>
+      <p style="font-size: 11px; margin: 10px 0">
+        <strong>Click</strong> to zoom in<br />
+        <strong>Right-click</strong> to zoom out<br />
+        <strong>Drag</strong> to select zoom area
+      </p>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>Max Iterations: <span id="iter-val">100</span></label>
+        <input
+          type="range"
+          id="iterations"
+          min="50"
+          max="1000"
+          step="50"
+          value="100"
+        />
+      </div>
+
+      <div class="control-group">
+        <label>Color Scheme:</label>
+        <select id="color-scheme">
+          <option value="classic">Classic</option>
+          <option value="electric">Electric Green</option>
+          <option value="fire">Fire</option>
+          <option value="ocean">Ocean</option>
+          <option value="psychedelic">Psychedelic</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label>Render Quality:</label>
+        <select id="quality">
+          <option value="1">High (1x)</option>
+          <option value="2" selected>Medium (2x)</option>
+          <option value="4">Low (4x)</option>
+        </select>
+      </div>
+
+      <button id="reset">Reset View</button>
+      <button id="julia">Julia Set Mode</button>
+    </div>
+
+    <div class="coords">
+      <div class="coord-line"><strong>Center:</strong></div>
+      <div class="coord-line">Re: <span id="center-real">-0.5</span></div>
+      <div class="coord-line">Im: <span id="center-imag">0.0</span></div>
+      <div class="coord-line">
+        <strong>Zoom:</strong> <span id="zoom-level">1.0</span>x
+      </div>
+      <div class="coord-line">
+        <strong>Range:</strong> <span id="range">3.0</span>
+      </div>
+      <div
+        class="coord-line"
+        style="
+          margin-top: 10px;
+          padding-top: 10px;
+          border-top: 1px solid #00ff41;
+        "
+      >
+        <strong>Mouse:</strong>
+      </div>
+      <div class="coord-line">Re: <span id="mouse-real">0</span></div>
+      <div class="coord-line">Im: <span id="mouse-imag">0</span></div>
+    </div>
+
+    <script src="../js/mandelbrot.js"></script>
+  </body>
+</html>
