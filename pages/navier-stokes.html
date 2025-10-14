@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navier-Stokes Simulation</title>
+    <link rel="stylesheet" href="../css/navier-stokes.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>∂u/∂t + (u·∇)u = Navier-Stokes</h2>
+      <p>Incompressible fluid simulation using velocity-pressure formulation</p>
+      <div class="equation">
+        ∂u/∂t + (u·∇)u = -∇p/ρ + ν∇²u + f<br />
+        ∇·u = 0 (incompressibility)
+      </div>
+      <p><strong>Interaction:</strong> Click and drag to create vortices</p>
+      <p>
+        <strong>Method:</strong> Semi-Lagrangian advection with pressure
+        projection
+      </p>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>Viscosity (ν): <span id="visc-val">0.00001</span></label>
+        <input
+          type="range"
+          id="viscosity"
+          min="0"
+          max="0.0001"
+          step="0.000001"
+          value="0.00001"
+        />
+      </div>
+      <div class="control-group">
+        <label>Vorticity: <span id="vort-val">50</span></label>
+        <input
+          type="range"
+          id="vorticity"
+          min="0"
+          max="100"
+          step="5"
+          value="50"
+        />
+      </div>
+      <button id="reset">Reset Field</button>
+      <button id="toggle">Pause/Resume</button>
+    </div>
+
+    <script src="../js/navier-stokes.js"></script>
+  </body>
+</html>
