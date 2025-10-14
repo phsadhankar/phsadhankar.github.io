@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lorenz Attractor</title>
+    <link rel="stylesheet" href="../css/lorenz.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>Lorenz Strange Attractor</h2>
+      <p style="font-size: 12px; margin: 10px 0">
+        Deterministic chaos in atmospheric convection
+      </p>
+      <div class="equation">
+        dx/dt = σ(y - x)<br />
+        dy/dt = x(ρ - z) - y<br />
+        dz/dt = xy - βz
+      </div>
+      <p style="font-size: 11px; margin: 10px 0">
+        <strong>σ</strong> (sigma): Prandtl number<br />
+        <strong>ρ</strong> (rho): Rayleigh number<br />
+        <strong>β</strong> (beta): Geometric factor
+      </p>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>σ (Prandtl): <span id="sigma-val">10.0</span></label>
+        <input type="range" id="sigma" min="5" max="20" step="0.5" value="10" />
+      </div>
+
+      <div class="control-group">
+        <label>ρ (Rayleigh): <span id="rho-val">28.0</span></label>
+        <input type="range" id="rho" min="10" max="40" step="0.5" value="28" />
+      </div>
+
+      <div class="control-group">
+        <label>β (beta): <span id="beta-val">2.67</span></label>
+        <input
+          type="range"
+          id="beta"
+          min="1"
+          max="5"
+          step="0.01"
+          value="2.67"
+        />
+      </div>
+
+      <div class="control-group">
+        <label>Speed: <span id="speed-val">1.0</span>x</label>
+        <input type="range" id="speed" min="0.1" max="3" step="0.1" value="1" />
+      </div>
+
+      <button id="reset">Reset</button>
+      <button id="add-particle">Add Particle</button>
+      <button id="toggle">Pause</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat-line">
+        <strong>Particles:</strong> <span id="particle-count">1</span>
+      </div>
+      <div class="stat-line">
+        <strong>Points:</strong> <span id="point-count">0</span>
+      </div>
+      <div class="stat-line">
+        <strong>FPS:</strong> <span id="fps">60</span>
+      </div>
+      <div
+        class="stat-line"
+        style="
+          margin-top: 10px;
+          padding-top: 10px;
+          border-top: 1px solid #00ff41;
+        "
+      >
+        <strong>Drag to rotate view</strong>
+      </div>
+    </div>
+
+    <script src="../js/lorenz.js"></script>
+  </body>
+</html>
