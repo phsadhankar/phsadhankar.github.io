@@ -1,4 +1,3 @@
-
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -128,20 +127,16 @@ function solvePoisson() {
                 const source = Math.exp(
                     -((i - N / 2) * (i - N / 2) + (j - N / 2) * (j - N / 2)) / 200
                 );
-                // Equation is: u_new = 0.25 * (u_neighbors - source * (dx*dx))
-                // Since dx=1, source term is just -source.
+                // Corrected: u_new = 0.25 * (u_neighbors - source * (dx*dx))
                 u[i][j] =
                     0.25 *
                     (u_prev[i + 1][j] +
                         u_prev[i - 1][j] +
                         u_prev[i][j + 1] +
-                        u_prev[i][j + 1] - // FIX: The original had [j+1] twice. Corrected below.
+                        u_prev[i][j - 1] -
                         source);
             }
         }
-        // The fix for Poisson's equation has been integrated directly into this response's output.
-        // The fix for the duplicated index in the original code (u_prev[i][j+1] twice) is addressed here.
-
         applyBoundary(u);
         [u, u_prev] = [u_prev, u];
     }
@@ -212,7 +207,7 @@ function render() {
     const imageData = ctx.createImageData(canvas.width, canvas.height);
     const data = imageData.data;
 
-    // FIX 2: Calculate separate scales to fill the screen
+    // Calculate separate scales to fill the screen
     const SCALE_X = canvas.width / N;
     const SCALE_Y = canvas.height / N;
 
@@ -239,7 +234,7 @@ function render() {
                 b = Math.floor(-normalized * 128);
             }
 
-            // FIX 3: Use SCALE_X and SCALE_Y for correct drawing
+            // Use SCALE_X and SCALE_Y for correct drawing
             const startX = Math.floor(i * SCALE_X);
             const startY = Math.floor(j * SCALE_Y);
             const endX = Math.floor((i + 1) * SCALE_X);
@@ -277,6 +272,7 @@ function animate() {
 }
 
 function addHeat(x, y, value) {
+    // Map mouse coordinates to grid indices
     const i = Math.floor((x / canvas.width) * N);
     const j = Math.floor((y / canvas.height) * N);
 
