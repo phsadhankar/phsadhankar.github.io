@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monte Carlo π</title>
+    <link rel="stylesheet" href="../css/monte-carlo.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>Monte Carlo π Estimation</h2>
+      <p style="font-size: 12px; margin: 10px 0">
+        Estimating π through random sampling
+      </p>
+      <div class="equation">
+        π ≈ 4 × (points inside circle) / (total points)<br /><br />
+        Circle: x² + y² ≤ 1<br />
+        Square: -1 ≤ x,y ≤ 1<br />
+        Ratio: π/4
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-line">Estimated π:</div>
+      <div class="stat-line big" id="pi-estimate">3.14159...</div>
+      <div class="stat-line">True π: 3.14159265358979...</div>
+      <div class="stat-line">Error: <span id="error">0.00000%</span></div>
+      <div class="stat-line">Total Points: <span id="total">0</span></div>
+      <div class="stat-line">Inside Circle: <span id="inside">0</span></div>
+      <div class="stat-line">Outside Circle: <span id="outside">0</span></div>
+      <div class="stat-line">Hit Rate: <span id="rate">0.00%</span></div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress"></div>
+      </div>
+      <div
+        class="stat-line"
+        style="font-size: 10px; color: rgba(0, 255, 65, 0.7)"
+      >
+        Convergence: O(1/√n)
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>Points/Frame: <span id="speed-val">100</span></label>
+        <input
+          type="range"
+          id="speed"
+          min="10"
+          max="1000"
+          step="10"
+          value="100"
+        />
+      </div>
+      <button id="reset">Reset Simulation</button>
+      <button id="toggle">Pause</button>
+      <button id="fast">Fast Mode (1M points)</button>
+    </div>
+
+    <script src="../js/monte-carlo.js"></script>
+  </body>
+</html>
