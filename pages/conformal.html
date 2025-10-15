@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conformal Mapping</title>
+    <link rel="stylesheet" href="../css/conformal.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>Conformal Mappings: w = f(z)</h2>
+      <p style="font-size: 12px; margin: 10px 0">
+        Angle-preserving transformations of the complex plane
+      </p>
+      <div class="equation">
+        z = x + iy → w = f(z) = u + iv<br /><br />
+        Preserves angles but not necessarily lengths<br />
+        ∂u/∂x = ∂v/∂y, ∂u/∂y = -∂v/∂x (Cauchy-Riemann)
+      </div>
+      <p style="font-size: 11px; color: rgba(0, 255, 65, 0.7)">
+        <strong>Left:</strong> z-plane (domain)<br />
+        <strong>Right:</strong> w-plane (range after transformation)
+      </p>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>Mapping Function:</label>
+        <select id="mapping-type">
+          <option value="identity">Identity: w = z</option>
+          <option value="square">Square: w = z²</option>
+          <option value="cube">Cube: w = z³</option>
+          <option value="inverse">Inversion: w = 1/z</option>
+          <option value="exp">Exponential: w = e^z</option>
+          <option value="log">Logarithm: w = log(z)</option>
+          <option value="mobius">Möbius: w = (az+b)/(cz+d)</option>
+          <option value="joukowsky">Joukowsky: w = z + 1/z</option>
+          <option value="sin">Sine: w = sin(z)</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label>Grid Resolution: <span id="grid-val">20</span></label>
+        <input
+          type="range"
+          id="grid-res"
+          min="10"
+          max="40"
+          step="5"
+          value="20"
+        />
+      </div>
+
+      <div class="control-group">
+        <label>Animation Speed: <span id="speed-val">1.0</span>x</label>
+        <input type="range" id="speed" min="0" max="2" step="0.1" value="1" />
+      </div>
+
+      <button id="toggle-anim">Pause Animation</button>
+      <button id="reset">Reset View</button>
+    </div>
+
+    <script src="../js/conformal.js"></script>
+  </body>
+</html>
