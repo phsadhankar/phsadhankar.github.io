@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDE Solver</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #0a0e27;
+        color: #00ff41;
+        font-family: "Courier New", monospace;
+        overflow: hidden;
+      }
+
+      canvas {
+        display: block;
+        cursor: crosshair;
+      }
+
+      .info {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: rgba(10, 14, 39, 0.95);
+        padding: 20px;
+        border: 2px solid #00ff41;
+        border-radius: 5px;
+        max-width: 400px;
+      }
+
+      .info h2 {
+        margin: 0 0 10px 0;
+        font-size: 20px;
+        text-shadow: 0 0 10px #00ff41;
+      }
+
+      .equation {
+        background: rgba(0, 255, 65, 0.1);
+        padding: 12px;
+        margin: 10px 0;
+        border-left: 3px solid #00ff41;
+        font-size: 11px;
+      }
+
+      .controls {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(10, 14, 39, 0.95);
+        padding: 15px;
+        border: 2px solid #00ff41;
+        border-radius: 5px;
+        min-width: 280px;
+      }
+
+      /* NEW STYLE FOR THE SEPARATE STATS BOX */
+      .stats-box {
+        position: absolute;
+        /* Position it below the controls box (approx 350px tall) */
+        bottom: 20px;
+        right: 20px;
+        background: rgba(10, 14, 39, 0.95);
+        padding: 15px;
+        border: 2px solid #00ff41;
+        border-radius: 5px;
+        min-width: 280px;
+        font-size: 12px;
+        line-height: 1.8;
+      }
+
+      .control-group {
+        margin: 12px 0;
+      }
+
+      .control-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 12px;
+      }
+
+      select {
+        width: 100%;
+        background: #0a0e27;
+        color: #00ff41;
+        border: 2px solid #00ff41;
+        padding: 8px;
+        font-family: "Courier New", monospace;
+        font-size: 12px;
+      }
+
+      input[type="range"] {
+        width: 100%;
+      }
+
+      button {
+        background: #00ff41;
+        color: #0a0e27;
+        border: none;
+        padding: 8px 16px;
+        margin: 5px 5px 5px 0;
+        cursor: pointer;
+        font-family: "Courier New", monospace;
+        font-weight: bold;
+        font-size: 11px;
+        transition: all 0.3s;
+        width: 100%;
+      }
+
+      button:hover {
+        box-shadow: 0 0 15px #00ff41;
+      }
+
+      /* Removed .stats styling here as it's now part of .stats-box */
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>Interactive PDE Solver</h2>
+      <p style="font-size: 12px; margin: 10px 0">
+        Finite Difference Method for various PDEs
+      </p>
+      <div class="equation" id="equation-display">
+        ∂u/∂t = α∇²u (Heat Equation)
+      </div>
+      <p style="font-size: 11px; margin: 10px 0">
+        <strong>Click:</strong> Add heat source<br />
+        <strong>Drag:</strong> Draw initial conditions
+      </p>
+    </div>
+
+    <div class="controls">
+      <h3 style="margin: 0 0 15px 0; font-size: 14px">PDE Configuration</h3>
+
+      <div class="control-group">
+        <label>Equation Type:</label>
+        <select id="pde-type">
+          <option value="heat">Heat Equation</option>
+          <option value="wave">Wave Equation</option>
+          <option value="laplace">Laplace Equation</option>
+          <option value="poisson">Poisson Equation</option>
+          <option value="diffusion">Reaction-Diffusion</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label>Diffusion Coeff (α): <span id="alpha-val">0.1</span></label>
+        <input
+          type="range"
+          id="alpha"
+          min="0.01"
+          max="0.5"
+          step="0.01"
+          value="0.1"
+        />
+      </div>
+
+      <div class="control-group">
+        <label>Time Step (dt): <span id="dt-val">0.1</span></label>
+        <input
+          type="range"
+          id="dt"
+          min="0.01"
+          max="0.5"
+          step="0.01"
+          value="0.1"
+        />
+      </div>
+
+      <div class="control-group">
+        <label>Boundary Condition:</label>
+        <select id="boundary">
+          <option value="dirichlet">Dirichlet (u=0)</option>
+          <option value="neumann">Neumann (∂u/∂n=0)</option>
+          <option value="periodic">Periodic</option>
+        </select>
+      </div>
+
+      <button id="reset">Clear Field</button>
+      <button id="toggle">Pause/Resume</button>
+      <button id="preset">Load Preset</button>
+    </div>
+
+    <div class="stats-box">
+      <div><strong>Time:</strong> <span id="time">0.00</span>s</div>
+      <div><strong>Max Value:</strong> <span id="max-val">0.00</span></div>
+      <div><strong>Total Energy:</strong> <span id="energy">0.00</span></div>
+    </div>
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+
+      // FIX 1: Add responsive resizing
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+
+      const N = 128;
+      let u = Array(N)
+        .fill()
+        .map(() => Array(N).fill(0));
+      let u_prev = Array(N)
+        .fill()
+        .map(() => Array(N).fill(0));
+      let v = Array(N)
+        .fill()
+        .map(() => Array(N).fill(0)); // For reaction-diffusion
+
+      let pdeType = "heat";
+      let alpha = 0.1;
+      let dt = 0.1;
+      let boundary = "dirichlet";
+      let running = true;
+      let simTime = 0;
+
+      let mouseDown = false;
+      let mouseX = 0,
+        mouseY = 0;
+
+      const equations = {
+        heat: "∂u/∂t = α∇²u",
+        wave: "∂²u/∂t² = c²∇²u",
+        laplace: "∇²u = 0",
+        poisson: "∇²u = f(x,y)",
+        diffusion: "∂u/∂t = D∇²u + f(u,v)",
+      };
+
+      function laplacian(arr, i, j) {
+        const dx = 1.0;
+        return (
+          (arr[i + 1][j] +
+            arr[i - 1][j] +
+            arr[i][j + 1] +
+            arr[i][j - 1] -
+            4 * arr[i][j]) /
+          (dx * dx)
+        );
+      }
+
+      function applyBoundary(arr) {
+        for (let i = 0; i < N; i++) {
+          if (boundary === "dirichlet") {
+            arr[0][i] = 0;
+            arr[N - 1][i] = 0;
+            arr[i][0] = 0;
+            arr[i][N - 1] = 0;
+          } else if (boundary === "neumann") {
+            arr[0][i] = arr[1][i];
+            arr[N - 1][i] = arr[N - 2][i];
+            arr[i][0] = arr[i][1];
+            arr[i][N - 1] = arr[i][N - 2];
+          } else if (boundary === "periodic") {
+            arr[0][i] = arr[N - 2][i];
+            arr[N - 1][i] = arr[1][i];
+            arr[i][0] = arr[i][N - 2];
+            arr[i][N - 1] = arr[i][1];
+          }
+        }
+      }
+
+      function solveHeat() {
+        for (let i = 1; i < N - 1; i++) {
+          for (let j = 1; j < N - 1; j++) {
+            const lap = laplacian(u_prev, i, j);
+            u[i][j] = u_prev[i][j] + alpha * dt * lap;
+          }
+        }
+        applyBoundary(u);
+        [u, u_prev] = [u_prev, u];
+      }
+
+      function solveWave() {
+        const c = 1.0; // Wave speed
+        for (let i = 1; i < N - 1; i++) {
+          for (let j = 1; j < N - 1; j++) {
+            const lap = laplacian(u_prev, i, j);
+            const new_u = 2 * u_prev[i][j] - u[i][j] + c * c * dt * dt * lap;
+            u[i][j] = new_u;
+          }
+        }
+        applyBoundary(u);
+        // Swap arrays
+        const temp = u_prev;
+        u_prev = u;
+        u = temp;
+      }
+
+      function solveLaplace() {
+        // Jacobi iteration for Laplace equation
+        for (let iter = 0; iter < 5; iter++) {
+          for (let i = 1; i < N - 1; i++) {
+            for (let j = 1; j < N - 1; j++) {
+              u[i][j] =
+                0.25 *
+                (u_prev[i + 1][j] +
+                  u_prev[i - 1][j] +
+                  u_prev[i][j + 1] +
+                  u_prev[i][j - 1]);
+            }
+          }
+          applyBoundary(u);
+          [u, u_prev] = [u_prev, u];
+        }
+      }
+
+      function solvePoisson() {
+        // Poisson with source term
+        for (let iter = 0; iter < 5; iter++) {
+          for (let i = 1; i < N - 1; i++) {
+            for (let j = 1; j < N - 1; j++) {
+              // The source term is approximated for a Gaussian source at center
+              const source = Math.exp(
+                -((i - N / 2) * (i - N / 2) + (j - N / 2) * (j - N / 2)) / 200
+              );
+              // Corrected: u_new = 0.25 * (u_neighbors - source * (dx*dx))
+              u[i][j] =
+                0.25 *
+                (u_prev[i + 1][j] +
+                  u_prev[i - 1][j] +
+                  u_prev[i][j + 1] +
+                  u_prev[i][j - 1] -
+                  source);
+            }
+          }
+          applyBoundary(u);
+          [u, u_prev] = [u_prev, u];
+        }
+      }
+
+      function solveReactionDiffusion() {
+        // Gray-Scott model
+        const Du = 0.16;
+        const Dv = 0.08;
+        const F = 0.06;
+        const k = 0.062;
+
+        for (let i = 1; i < N - 1; i++) {
+          for (let j = 1; j < N - 1; j++) {
+            const lapU = laplacian(u_prev, i, j);
+            const lapV = laplacian(v, i, j);
+
+            const uvv = u_prev[i][j] * v[i][j] * v[i][j];
+
+            u[i][j] =
+              u_prev[i][j] + dt * (Du * lapU - uvv + F * (1 - u_prev[i][j]));
+            v[i][j] = v[i][j] + dt * (Dv * lapV + uvv - (F + k) * v[i][j]);
+
+            u[i][j] = Math.max(0, Math.min(1, u[i][j]));
+            v[i][j] = Math.max(0, Math.min(1, v[i][j]));
+          }
+        }
+        applyBoundary(u);
+        [u, u_prev] = [u_prev, u];
+      }
+
+      function step() {
+        switch (pdeType) {
+          case "heat":
+            solveHeat();
+            break;
+          case "wave":
+            solveWave();
+            break;
+          case "laplace":
+            solveLaplace();
+            break;
+          case "poisson":
+            solvePoisson();
+            break;
+          case "diffusion":
+            solveReactionDiffusion();
+            break;
+        }
+        simTime += dt;
+      }
+
+      function calculateStats() {
+        let maxVal = 0;
+        let energy = 0;
+
+        for (let i = 0; i < N; i++) {
+          for (let j = 0; j < N; j++) {
+            maxVal = Math.max(maxVal, Math.abs(u_prev[i][j]));
+            energy += u_prev[i][j] * u_prev[i][j];
+          }
+        }
+
+        return { maxVal, energy };
+      }
+
+      function render() {
+        const imageData = ctx.createImageData(canvas.width, canvas.height);
+        const data = imageData.data;
+
+        // Calculate separate scales to fill the screen
+        const SCALE_X = canvas.width / N;
+        const SCALE_Y = canvas.height / N;
+
+        let maxVal = 0;
+        for (let i = 0; i < N; i++) {
+          for (let j = 0; j < N; j++) {
+            maxVal = Math.max(maxVal, Math.abs(u_prev[i][j]));
+          }
+        }
+
+        for (let i = 0; i < N; i++) {
+          for (let j = 0; j < N; j++) {
+            const val = u_prev[i][j];
+            const normalized = maxVal > 0 ? val / maxVal : 0;
+
+            let r, g, b;
+            if (normalized > 0) {
+              r = 0;
+              g = Math.floor(normalized * 255);
+              b = Math.floor(normalized * 128);
+            } else {
+              r = Math.floor(-normalized * 255);
+              g = 0;
+              b = Math.floor(-normalized * 128);
+            }
+
+            // Use SCALE_X and SCALE_Y for correct drawing
+            const startX = Math.floor(i * SCALE_X);
+            const startY = Math.floor(j * SCALE_Y);
+            const endX = Math.floor((i + 1) * SCALE_X);
+            const endY = Math.floor((j + 1) * SCALE_Y);
+
+            for (let px = startX; px < endX && px < canvas.width; px++) {
+              for (let py = startY; py < endY && py < canvas.height; py++) {
+                const idx = (py * canvas.width + px) * 4;
+                data[idx] = r;
+                data[idx + 1] = g;
+                data[idx + 2] = b;
+                data[idx + 3] = 255;
+              }
+            }
+          }
+        }
+
+        ctx.putImageData(imageData, 0, 0);
+      }
+
+      function animate() {
+        if (running) {
+          step();
+
+          const stats = calculateStats();
+          document.getElementById("time").textContent = simTime.toFixed(2);
+          document.getElementById("max-val").textContent =
+            stats.maxVal.toFixed(4);
+          document.getElementById("energy").textContent =
+            stats.energy.toFixed(2);
+        }
+
+        render();
+        requestAnimationFrame(animate);
+      }
+
+      function addHeat(x, y, value) {
+        // Map mouse coordinates to grid indices
+        const i = Math.floor((x / canvas.width) * N);
+        const j = Math.floor((y / canvas.height) * N);
+
+        if (i >= 0 && i < N && j >= 0 && j < N) {
+          for (let di = -2; di <= 2; di++) {
+            for (let dj = -2; dj <= 2; dj++) {
+              const ni = i + di;
+              const nj = j + dj;
+              if (ni >= 0 && ni < N && nj >= 0 && nj < N) {
+                u_prev[ni][nj] += value * Math.exp(-(di * di + dj * dj) / 2);
+                if (pdeType === "diffusion") {
+                  v[ni][nj] = 0.25;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      canvas.addEventListener("mousedown", (e) => {
+        mouseDown = true;
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        addHeat(mouseX, mouseY, 1.0);
+      });
+
+      canvas.addEventListener("mouseup", () => {
+        mouseDown = false;
+      });
+
+      canvas.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (mouseDown) {
+          addHeat(mouseX, mouseY, 0.5);
+        }
+      });
+
+      document.getElementById("pde-type").addEventListener("change", (e) => {
+        pdeType = e.target.value;
+        document.getElementById("equation-display").textContent =
+          equations[pdeType];
+        // Reset the field when switching PDE types for stability
+        document.getElementById("reset").click();
+        if (pdeType === "diffusion") {
+          for (let i = 0; i < N; i++) {
+            for (let j = 0; j < N; j++) {
+              u_prev[i][j] = 1.0;
+              v[i][j] = 0;
+            }
+          }
+        }
+      });
+
+      document.getElementById("alpha").addEventListener("input", (e) => {
+        alpha = parseFloat(e.target.value);
+        document.getElementById("alpha-val").textContent = alpha.toFixed(2);
+      });
+
+      document.getElementById("dt").addEventListener("input", (e) => {
+        dt = parseFloat(e.target.value);
+        document.getElementById("dt-val").textContent = dt.toFixed(2);
+      });
+
+      document.getElementById("boundary").addEventListener("change", (e) => {
+        boundary = e.target.value;
+      });
+
+      document.getElementById("reset").addEventListener("click", () => {
+        u = Array(N)
+          .fill()
+          .map(() => Array(N).fill(0));
+        u_prev = Array(N)
+          .fill()
+          .map(() => Array(N).fill(0));
+        v = Array(N)
+          .fill()
+          .map(() => Array(N).fill(0));
+        simTime = 0;
+      });
+
+      document.getElementById("toggle").addEventListener("click", () => {
+        running = !running;
+      });
+
+      document.getElementById("preset").addEventListener("click", () => {
+        for (let i = 0; i < N; i++) {
+          for (let j = 0; j < N; j++) {
+            u_prev[i][j] =
+              Math.sin((i * Math.PI) / N) * Math.sin((j * Math.PI) / N);
+            if (pdeType === "diffusion") {
+              u_prev[i][j] = 1.0;
+              if (Math.abs(i - N / 2) < 10 && Math.abs(j - N / 2) < 10) {
+                v[i][j] = 0.25;
+              }
+            }
+          }
+        }
+      });
+
+      animate();
+    </script>
+  </body>
+</html>
