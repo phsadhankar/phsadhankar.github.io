@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inscribed Square Problem</title>
+    <link rel="stylesheet" href="../css/inscribed-square.css" />
+  </head>
+  <body>
+    <canvas id="curveCanvas"></canvas>
+
+    <div class="ui-panel" id="info-panel">
+      <h2>Inscribed Square Problem</h2>
+      <div class="eq-box">
+        <strong>Conjecture:</strong> Every Jordan curve contains<br />
+        four points forming a square.<br /><br />
+        <strong>Status:</strong> Unproven (open problem)
+      </div>
+      <div class="instruction">
+        <strong>Instructions:</strong><br />
+        • Click and drag to draw a closed curve<br />
+        • Algorithm searches for inscribed squares<br />
+        • Try different shapes to test the conjecture!
+      </div>
+    </div>
+
+    <div class="ui-panel" id="control-panel">
+      <button class="btn" id="clearBtn">Clear & Redraw</button>
+      <button class="btn" id="findBtn">Find Squares</button>
+      <button class="btn" id="exampleBtn">Load Example</button>
+
+      <div class="slider-group">
+        <label>Search Precision: <span id="precisionVal">100</span></label>
+        <input
+          type="range"
+          id="precisionSlider"
+          min="50"
+          max="500"
+          step="50"
+          value="100"
+        />
+      </div>
+
+      <div class="status" id="statusDisplay">
+        Draw a closed curve to begin...
+      </div>
+    </div>
+
+    <script src="../js/inscribed-square.js"></script>
+  </body>
+</html>
