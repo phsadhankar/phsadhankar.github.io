@@ -1,32 +1,9 @@
-body {
-  margin: 0;
-  padding: 0;
-  background: #0a0e27;
-  color: #00ff41;
-  font-family: "Courier New", monospace;
-  overflow: hidden;
-}
-
 canvas {
-  display: block;
   cursor: crosshair;
 }
 
 .info {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background: rgba(10, 14, 39, 0.9);
-  padding: 20px;
-  border: 2px solid #00ff41;
-  border-radius: 5px;
   max-width: 400px;
-}
-
-.info h2 {
-  margin: 0 0 10px 0;
-  font-size: 20px;
-  text-shadow: 0 0 10px #00ff41;
 }
 
 .info p {
@@ -35,33 +12,9 @@ canvas {
   line-height: 1.6;
 }
 
-.equation {
-  background: rgba(0, 255, 65, 0.1);
-  padding: 10px;
-  margin: 10px 0;
-  border-left: 3px solid #00ff41;
-  font-size: 11px;
-  font-style: italic;
-}
-
 .controls {
-  position: absolute;
   bottom: 20px;
   left: 20px;
-  background: rgba(10, 14, 39, 0.9);
-  padding: 15px;
-  border: 2px solid #00ff41;
-  border-radius: 5px;
-}
-
-.control-group {
-  margin: 10px 0;
-}
-
-.control-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 12px;
 }
 
 input[type="range"] {
@@ -69,18 +22,9 @@ input[type="range"] {
 }
 
 button {
-  background: #00ff41;
-  color: #0a0e27;
-  border: none;
-  padding: 8px 16px;
   margin: 5px;
-  cursor: pointer;
-  font-family: "Courier New", monospace;
-  font-weight: bold;
-  transition: all 0.3s;
 }
 
 button:hover {
-  box-shadow: 0 0 15px #00ff41;
   transform: scale(1.05);
 }
