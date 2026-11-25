@@ -1,5 +1,5 @@
 // Shared behaviour for the simulation pages:
-//   ?embed        -> hide every panel (used for the live previews on the home page)
+//   ?embed        -> hide every panel and seed a demo state (used for the previews on the home page)
 //   drag a panel  -> move it around
 //   [-] button    -> fold a panel down to its title
 //   H             -> hide / show all panels
@@ -71,12 +71,49 @@
         panel.addEventListener("pointercancel", stop);
     }
 
+    // Some simulations start empty. When they're shown as a preview, give them
+    // something to look at.
+    function seedDemo() {
+        const page = location.pathname.split("/").pop();
+        const click = (sel) => document.querySelector(sel)?.click();
+
+        // a ghost hand that keeps stirring the canvas
+        const ghost = (canvas, speed) => {
+            const fire = (type, x, y) =>
+                canvas.dispatchEvent(new MouseEvent(type, { clientX: x, clientY: y, bubbles: true }));
+            let t = 0;
+            fire("mousedown", innerWidth / 2, innerHeight / 2);
+            setInterval(() => {
+                t += speed;
+                fire(
+                    "mousemove",
+                    innerWidth * (0.5 + 0.28 * Math.sin(t * 1.3) * Math.cos(t * 0.4)),
+                    innerHeight * (0.5 + 0.3 * Math.sin(t * 0.9 + 1))
+                );
+            }, 16);
+        };
+
+        const seeds = {
+            "turbulence.html": () => click("#random"),
+            "pde-solver.html": () => click("#preset"),
+            "inscribed-square.html": () => {
+                click("#exampleBtn");
+                setTimeout(() => click("#findBtn"), 250);
+            },
+            "navier-stokes.html": () => ghost(document.querySelector("canvas"), 0.05),
+        };
+
+        setTimeout(() => seeds[page]?.(), 300);
+    }
+
     function init() {
         forwardKeys();
-        if (embedded) return;
+        if (embedded) {
+            seedDemo();
+            return;
+        }
 
-        const panels = [...document.querySelectorAll(SELECTOR)];
-        panels.forEach(makePanel);
+        document.querySelectorAll(SELECTOR).forEach(makePanel);
 
         document.addEventListener("keydown", (e) => {
             if (e.target.closest && e.target.closest("input, select, textarea")) return;
