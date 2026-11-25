@@ -95,12 +95,43 @@
 
         const seeds = {
             "turbulence.html": () => click("#random"),
-            "pde-solver.html": () => click("#preset"),
+            "conformal.html": () => {
+                const sel = document.querySelector("#mapping-type");
+                if (sel) {
+                    sel.value = "square";
+                    sel.dispatchEvent(new Event("change"));
+                }
+            },
+            "pde-solver.html": () => {
+                const sel = document.querySelector("#pde-type");
+                if (sel) {
+                    sel.value = "wave";
+                    sel.dispatchEvent(new Event("change"));
+                }
+                const c = document.querySelector("canvas");
+                for (const [fx, fy] of [[0.38, 0.42], [0.62, 0.56]]) {
+                    c.dispatchEvent(new MouseEvent("mousedown", { clientX: innerWidth * fx, clientY: innerHeight * fy, bubbles: true }));
+                    c.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
+                }
+            },
             "inscribed-square.html": () => {
                 click("#exampleBtn");
                 setTimeout(() => click("#findBtn"), 250);
             },
-            "navier-stokes.html": () => ghost(document.querySelector("canvas"), 0.05),
+            "navier-stokes.html": () => {
+                const slider = document.querySelector("#vorticity");
+                slider.value = slider.max;
+                slider.dispatchEvent(new Event("input"));
+                ghost(document.querySelector("canvas"), 0.14);
+            },
+            // let the attractor run ahead so the butterfly is already drawn
+            "lorenz.html": () => {
+                click("#add-particle");
+                click("#add-particle");
+                particles.forEach((p) => {
+                    for (let i = 0; i < 2600; i++) p.update(0.008);
+                });
+            },
         };
 
         setTimeout(() => seeds[page]?.(), 300);
