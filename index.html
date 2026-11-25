@@ -3,91 +3,183 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pruthviraj Portfolio</title>
-    <link rel="stylesheet" href="./index.css" />
+    <title>Pruthviraj Sadhankar</title>
+    <meta
+      name="description"
+      content="Pruthviraj Sadhankar: software engineer and undergraduate researcher. Twelve live mathematical simulations, plus the rest of the software."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Martian+Mono:wdth,wght@75..112,300..700&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&display=swap"
+    />
+    <link rel="stylesheet" href="./css/site.css" />
   </head>
   <body>
-    <div class="sidebar">
-      <div class="logo">
-        <h1>∇ × Portfolio</h1>
-        <p>Mathematical Simulations</p>
+    <canvas id="net" aria-hidden="true"></canvas>
+
+    <header class="pad">
+      <div class="pad-fields">
+        <span class="field"><i>Name</i><b>Pruthviraj Sadhankar</b></span>
+        <span class="field"><i>Project</i><b>Portfolio</b></span>
+        <span class="field"><i>Date</i><b id="today"></b></span>
+        <span class="field"><i>Sheet</i><b>1 of 1</b></span>
       </div>
+      <nav class="pad-nav" aria-label="Sections">
+        <a href="#sims">Simulations</a>
+        <a href="#software">Software</a>
+        <a href="#record">Record</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
 
-      <div class="menu">
-        <div class="menu-section">
-          <h3>// About</h3>
-          <div class="menu-item" data-page="./pages/home.html">Home</div>
+    <main>
+      <section class="hero" id="top">
+        <h1 class="name">
+          <span>Pruthviraj</span>
+          <span>Sadhankar</span>
+        </h1>
+
+        <p class="roles">
+          Software engineer<br />
+          Undergraduate researcher<br />
+          University of Kansas
+        </p>
+
+        <div class="given-find">
+          <dl>
+            <dt>Given</dt>
+            <dd>
+              <ol>
+                <li>
+                  An undergraduate in computer science at the University of
+                  Kansas, honors track, class of 2027.
+                </li>
+                <li>
+                  A research assistant who writes machine-checked proofs about
+                  programs.
+                </li>
+                <li>
+                  The software lead for KUbeSat: more than ten engineers
+                  writing flight software for a satellite.
+                </li>
+                <li>A habit of turning equations into things that move.</li>
+              </ol>
+            </dd>
+          </dl>
+          <dl>
+            <dt>Find</dt>
+            <dd>Something hard to build next.</dd>
+            <dt class="ans">Answer</dt>
+            <dd>
+              <a class="answer" href="mailto:pruthviraj.sadhankar@gmail.com"
+                >pruthviraj.sadhankar@gmail.com</a
+              >
+            </dd>
+          </dl>
         </div>
 
-        <div class="menu-section">
-          <h3>// Fluid Dynamics</h3>
-          <div class="menu-item" data-page="./pages/navier-stokes.html">
-            Navier-Stokes Solver
-          </div>
-          <div class="menu-item" data-page="./pages/turbulence.html">
-            Turbulent Vortices
-          </div>
-        </div>
+        <p class="margin-note">
+          <span>↖</span> The grid is the flow net of an ideal fluid passing a
+          cylinder. The cylinder is your cursor.
+        </p>
+      </section>
 
-        <div class="menu-section">
-          <h3>// Signal Processing</h3>
-          <div class="menu-item" data-page="./pages/fourier.html">
-            Fourier Transform
-          </div>
-          <div class="menu-item" data-page="./pages/laplace.html">
-            Laplace Transform
-          </div>
-          <div class="menu-item" data-page="./pages/wavelet.html">
-            Wavelet Analysis
-          </div>
-        </div>
+      <section class="sheet" id="sims">
+        <aside class="rail">
+          <span class="sec-no">§1</span>
+          <h2>Simulations</h2>
+          <p>
+            Twelve numerical experiments, each written from scratch in plain
+            JavaScript on a canvas.
+          </p>
+          <p class="how">
+            Hover a plate to run it. Click to open it full screen, where the
+            panels can be dragged, folded, or hidden with <kbd>H</kbd>.
+          </p>
+        </aside>
+        <div class="body" id="sim-body"></div>
+      </section>
 
-        <div class="menu-section">
-          <h3>// Complex Analysis</h3>
-          <div class="menu-item" data-page="./pages/complex-flow.html">
-            Complex Flow Field
-          </div>
-          <div class="menu-item" data-page="./pages/conformal.html">
-            Conformal Mapping
-          </div>
+      <section class="sheet" id="software">
+        <aside class="rail">
+          <span class="sec-no">§2</span>
+          <h2>Software</h2>
+          <p>The rest of the shelf: research code, tools, and games.</p>
+          <div class="filters" id="filters" role="group" aria-label="Filter"></div>
+        </aside>
+        <div class="body">
+          <div class="ledger" id="ledger"></div>
+          <p class="more">
+            <a href="https://github.com/phsadhankar?tab=repositories"
+              >All repositories on GitHub ↗</a
+            >
+          </p>
         </div>
+      </section>
 
-        <div class="menu-section">
-          <h3>// Numerical Methods</h3>
-          <div class="menu-item" data-page="./pages/pde-solver.html">
-            PDE Solver
-          </div>
-          <div class="menu-item" data-page="./pages/monte-carlo.html">
-            Monte Carlo π
-          </div>
-          <div class="menu-item" data-page="./pages/inscribed-square.html">
-            Inscribed Square
-          </div>
+      <section class="sheet" id="record">
+        <aside class="rail">
+          <span class="sec-no">§3</span>
+          <h2>Record</h2>
+          <p>Where the hours went.</p>
+        </aside>
+        <div class="body">
+          <div class="entries" id="experience"></div>
+          <h3 class="sub">Education</h3>
+          <div class="entries" id="education"></div>
         </div>
+      </section>
 
-        <div class="menu-section">
-          <h3>// Chaos & Fractals</h3>
-          <div class="menu-item" data-page="./pages/lorenz.html">
-            Lorenz Attractor
-          </div>
-          <div class="menu-item" data-page="./pages/mandelbrot.html">
-            Mandelbrot Explorer
-          </div>
-          <div class="menu-item" data-page="./pages/universe.html">
-            Universe Sandbox
-          </div>
-          <div class="menu-item" data-page="./pages/blackhole.html">
-            Black Hole Sandbox
-          </div>
+      <section class="sheet" id="toolbox">
+        <aside class="rail">
+          <span class="sec-no">§4</span>
+          <h2>Toolbox</h2>
+          <p>Stated as sets, because that is how I would rather say it.</p>
+        </aside>
+        <div class="body">
+          <div class="sets" id="sets"></div>
         </div>
+      </section>
+    </main>
+
+    <footer class="end" id="contact">
+      <div class="qed" aria-hidden="true">Q.E.D.<i></i></div>
+      <div class="end-links">
+        <a href="mailto:pruthviraj.sadhankar@gmail.com">pruthviraj.sadhankar@gmail.com</a>
+        <a href="https://github.com/phsadhankar" target="_blank" rel="noopener">github.com/phsadhankar</a>
+        <a
+          href="https://linkedin.com/in/pruthviraj-sadhankar-a39063253/"
+          target="_blank"
+          rel="noopener"
+          >LinkedIn</a
+        >
+        <p class="colophon">
+          Set in Big Shoulders Display, Newsreader and Martian Mono. The
+          background solves w = z + R²/z for you.
+        </p>
       </div>
+    </footer>
+
+    <div class="viewer" id="viewer" aria-hidden="true">
+      <div class="viewer-bar">
+        <span class="v-fig" id="v-fig"></span>
+        <strong id="v-title"></strong>
+        <code id="v-eq"></code>
+        <span class="v-keys">
+          <button type="button" id="v-prev" aria-label="Previous simulation">←</button>
+          <button type="button" id="v-next" aria-label="Next simulation">→</button>
+          <a id="v-open" target="_blank" rel="noopener">Open alone ↗</a>
+          <button type="button" id="v-close">Close ✕</button>
+        </span>
+      </div>
+      <iframe id="v-frame" title="Simulation"></iframe>
+      <p class="v-hint">Drag panels · – folds · H hides · ← → switch · Esc closes</p>
     </div>
 
-    <div class="content-frame">
-      <div class="loading">Loading simulation...</div>
-      <iframe id="content-iframe"></iframe>
-    </div>
-
-    <script src="./index.js"></script>
+    <script src="./js/data.js"></script>
+    <script src="./js/grid.js"></script>
+    <script src="./js/site.js"></script>
   </body>
 </html>
