@@ -1,0 +1,358 @@
+// Everything that shows up on the page lives here.
+
+window.BRANCHES = [
+    {
+        id: "fluids",
+        name: "Fluid dynamics",
+        sims: [
+            {
+                slug: "navier-stokes",
+                title: "Navier–Stokes solver",
+                eq: "∂u/∂t + (u·∇)u = −∇p/ρ + ν∇²u + f",
+                note: "Incompressible flow on a grid. Semi-Lagrangian advection, then a pressure projection keeps it divergence-free. Drag to stir.",
+                span: 7,
+                ar: "16 / 10",
+            },
+            {
+                slug: "turbulence",
+                title: "Turbulent vortices",
+                eq: "E(k) ∝ k^(−5/3)",
+                note: "Vortices stretching and dissipating across scales, with live readouts for energy and enstrophy. Click to add one.",
+                span: 5,
+                ar: "4 / 5",
+                dy: 56,
+            },
+        ],
+    },
+    {
+        id: "signals",
+        name: "Signal processing",
+        sims: [
+            {
+                slug: "fourier",
+                title: "Fourier transform",
+                eq: "F(ω) = ∫ f(t) e^(−iωt) dt",
+                note: "Three sines you can tune, the signal they add up to, and the spectrum that gives them away.",
+                span: 4,
+                ar: "1 / 1",
+            },
+            {
+                slug: "laplace",
+                title: "Laplace transform",
+                eq: "F(s) = ∫₀^∞ f(t) e^(−st) dt",
+                note: "Fourier with a damping knob. Move into complex frequency s = σ + iω and read the signal off the s-plane.",
+                span: 4,
+                ar: "1 / 1",
+                dy: 64,
+            },
+            {
+                slug: "wavelet",
+                title: "Wavelet transform",
+                eq: "W(a,b) = a^(−½) ∫ f(t) ψ*((t−b)/a) dt",
+                note: "Time and frequency at once. Morlet, Mexican hat, Haar, Daubechies, and a chirp to test them on.",
+                span: 4,
+                ar: "1 / 1",
+                dy: 128,
+            },
+        ],
+    },
+    {
+        id: "complex",
+        name: "Complex analysis",
+        sims: [
+            {
+                slug: "complex-flow",
+                title: "Complex flow field",
+                eq: "F(z) = U (z + R²/z)",
+                note: "Potential flows built from complex functions: uniform, source, vortex, dipole, corner, and flow around a cylinder.",
+                span: 5,
+                ar: "4 / 5",
+            },
+            {
+                slug: "conformal",
+                title: "Conformal mapping",
+                eq: "w = f(z),  ∂u/∂x = ∂v/∂y",
+                note: "Two planes side by side. Pick w = f(z) and watch a grid of right angles survive the trip.",
+                span: 7,
+                ar: "16 / 10",
+                dy: 72,
+            },
+        ],
+    },
+    {
+        id: "numerical",
+        name: "Numerical methods",
+        sims: [
+            {
+                slug: "pde-solver",
+                title: "PDE solver",
+                eq: "∂u/∂t = α∇²u",
+                note: "Heat, wave, Laplace, Poisson and reaction–diffusion by finite differences, with three kinds of boundary. Click to add heat, drag to draw.",
+                span: 7,
+                ar: "16 / 10",
+            },
+            {
+                slug: "monte-carlo",
+                title: "Monte Carlo π",
+                eq: "π ≈ 4 · inside / total",
+                note: "Throw darts at a square and count the ones that land in the circle. Up to a million points, converging at O(1/√n).",
+                span: 5,
+                ar: "4 / 5",
+                dy: 56,
+            },
+            {
+                slug: "inscribed-square",
+                title: "Inscribed square",
+                eq: "∀ closed curve ∃ four points forming a square",
+                note: "Still open for general curves. Draw one and let the search try to find a square on it.",
+                span: 6,
+                start: 4,
+                ar: "16 / 10",
+            },
+        ],
+    },
+    {
+        id: "chaos",
+        name: "Chaos & fractals",
+        sims: [
+            {
+                slug: "lorenz",
+                title: "Lorenz attractor",
+                eq: "dx/dt = σ(y − x)",
+                note: "Deterministic chaos in three equations. Add particles that start almost together and watch them part ways.",
+                span: 5,
+                ar: "4 / 5",
+            },
+            {
+                slug: "mandelbrot",
+                title: "Mandelbrot explorer",
+                eq: "z → z² + c,  z₀ = 0",
+                note: "Zoom into the boundary of the set of c for which the orbit stays bounded. Five palettes.",
+                span: 7,
+                ar: "16 / 10",
+                dy: 72,
+            },
+        ],
+    },
+];
+
+const GH = "https://github.com/phsadhankar/";
+
+window.SOFTWARE = [
+    {
+        name: "Q-Synth",
+        text: "Searches for the shortest gate sequence that reproduces a target unitary, Boolean function or truth table, and shrinks existing quantum circuits.",
+        stack: "Python",
+        tags: ["quantum", "formal"],
+        url: GH + "Q-Synth",
+    },
+    {
+        name: "Qubit Command Center",
+        text: "Runs quantum circuits seeded by real muon arrival times from a desktop detector, hashed with SHA-256 into Qiskit's sampler.",
+        stack: "Python · Qiskit",
+        tags: ["quantum"],
+        url: GH + "Qubit-Command-Center",
+    },
+    {
+        name: "Neural Molecular Dynamics",
+        text: "Bridges static protein structure prediction and real-time physical simulation, aiming at the folding pathway and not only the final state.",
+        stack: "Python",
+        tags: ["ml"],
+        url: GH + "Neural-Molecular-Dynamics",
+    },
+    {
+        name: "SyGuS-Syn",
+        text: "Syntax-guided program synthesis, written in Python.",
+        stack: "Python",
+        tags: ["formal"],
+        url: GH + "SyGuS-Syn",
+    },
+    {
+        name: "Say It to My Face",
+        text: "A paper for EECS 690 on whether a NAO robot staying in the room changes how people answer a survey.",
+        stack: "TeX · NAO",
+        tags: ["research", "robotics"],
+        url: GH + "say-it-to-my-face",
+    },
+    {
+        name: "Sequence Visualizer",
+        text: "Web tool for viewing DNA, RNA and protein alignments, with FASTA, Clustal, Phylip and SAM/BAM import.",
+        stack: "JavaScript",
+        tags: ["web"],
+        url: GH + "Sequence-Visualizer",
+    },
+    {
+        name: "Audio Clone",
+        text: "Hindi voice cloning with Coqui XTTS v2. The setup script finds an NVIDIA, AMD or CPU backend and installs the matching PyTorch.",
+        stack: "Python · PyTorch",
+        tags: ["ml"],
+        url: GH + "Audio-Clone",
+    },
+    {
+        name: "ML Super App",
+        text: "Streamlit app for data analysis and causal analysis: upload a dataset, preprocess it, explore it, run regression and classification.",
+        stack: "Python · Streamlit",
+        tags: ["ml", "web"],
+        url: GH + "ML-Super-app",
+    },
+    {
+        name: "Stock Trader",
+        text: "LSTM stock prediction and a trading bot behind a web interface.",
+        stack: "Python · LSTM",
+        tags: ["ml"],
+        url: GH + "Stock-Trader",
+    },
+    {
+        name: "ProCraftersBot",
+        text: "A handful of Minecraft bots: PvP, bodyguards and printers that build for you.",
+        stack: "Node.js · Mineflayer",
+        tags: ["games"],
+        url: "https://github.com/ProCrafters-MC-Automation/ProCraftersBot",
+    },
+    {
+        name: "Mr. J",
+        text: "An LLM that automates repetitive Minecraft chores so the player can get on with the creative part.",
+        stack: "Node.js · Gemini API",
+        tags: ["ml", "games"],
+        url: "https://devpost.com/software/mr-j-ikgsqr",
+    },
+    {
+        name: "Crescendo",
+        text: "Robot code for the 2024 FRC season, in Java.",
+        stack: "Java · WPILib",
+        tags: ["robotics"],
+        url: GH + "Crescendo",
+    },
+    {
+        name: "Writing APP",
+        text: "Like an IDE, but for writing.",
+        stack: "CSS",
+        tags: ["web"],
+        url: GH + "Writing-APP",
+    },
+    {
+        name: "Git Games",
+        text: "Live on GitHub Pages.",
+        stack: "JavaScript",
+        tags: ["web", "games"],
+        url: "https://phsadhankar.github.io/Git-Games/",
+        live: true,
+    },
+    {
+        name: "Clash Royale Deck Builder",
+        text: "Build and compare decks. Live on GitHub Pages.",
+        stack: "JavaScript",
+        tags: ["web", "games"],
+        url: "https://1procrafters.github.io/Clash-Royale-Deck-Builder/",
+        live: true,
+    },
+];
+
+window.FILTERS = [
+    ["all", "All"],
+    ["quantum", "Quantum"],
+    ["ml", "ML"],
+    ["formal", "Formal methods"],
+    ["robotics", "Robotics"],
+    ["web", "Web"],
+    ["games", "Games"],
+];
+
+window.RECORD = [
+    {
+        when: "Sep 2024 – now",
+        role: "Undergraduate research assistant",
+        org: "Institute for Information Science (I2S)",
+        points: [
+            "Learning how to define, mathematically, what programs mean.",
+            "Machine-checking those definitions so that correctness is verified, not hoped for.",
+            "Writing formal proofs and verifying them in proof assistants under Dr. Guria.",
+        ],
+    },
+    {
+        when: "Aug 2025 – now",
+        role: "Software team lead",
+        org: "KUbeSat",
+        points: [
+            "Leading more than ten software engineers building the flight software for a satellite.",
+            "Wrote the project proposals and talked to the manufacturers of the parts the software depends on.",
+        ],
+    },
+    {
+        when: "Dec 2024 – Aug 2025",
+        role: "Chief codebase engineer",
+        org: "KUbeSat",
+        points: [
+            "Delegated work across the team and chose the main on-board computer.",
+            "Studied the previous year's codebase and started the new one for Sat2.",
+        ],
+    },
+    {
+        when: "Sep 2024 – May 2025",
+        role: "Android intern",
+        org: "Campus Roots",
+        points: [
+            "Built the client-facing Android app.",
+            "Shipped about 2.5 features a week, from interface work to backend API calls.",
+            "Used MVVM to keep to Android best practice.",
+        ],
+    },
+    {
+        when: "Sep 2023 – Apr 2024",
+        role: "Lead technician",
+        org: "FRC Team 2410",
+        points: [
+            "Led the programmers building a robot for public events and competition.",
+            "Collaborated through git: 40+ commits across 16 branches.",
+            "Wrote the control software with WPILib in LabVIEW and Java; on the robot six days a week, about three hours a day.",
+        ],
+    },
+    {
+        when: "Dec 2022 – May 2024",
+        role: "Founder, Computer Science Honor Society",
+        org: "Blue Valley North High School",
+        points: [
+            "Founded it in the 2022–23 school year under the programming teacher.",
+            "Led the effort to get a state charter through the National Honor Society.",
+        ],
+    },
+];
+
+window.SCHOOLS = [
+    {
+        when: "2024 – 2027",
+        role: "B.S. with Honors, Computer Science",
+        org: "University of Kansas",
+        points: [
+            "University Scholar and University Honors. Dean's List.",
+            "1st place, ICPC Kansas Region, at Iowa State University.",
+            "FFIT Certificate of Excellence.",
+        ],
+    },
+    {
+        when: "2020 – 2024",
+        role: "High school diploma",
+        org: "Blue Valley North High School",
+        points: [
+            "AP Scholar, National Honor Society, Honor Rolls, InnerView Honor Award.",
+            "Founder of the Computer Science Honor Society.",
+            "DECA: ICDC finalist in Business Growth Plan.",
+            "Golden Seal of Biliteracy in French.",
+        ],
+    },
+];
+
+window.TOOLBOX = [
+    {
+        name: "Languages",
+        items: ["Python", "R", "HTML", "CSS", "JavaScript", "TypeScript", "Java", "Ruby", "C", "C++", "C#", "Haskell", "LaTeX", "Rocq"],
+    },
+    {
+        name: "Scientific",
+        items: ["NumPy/SciPy", "TensorFlow", "PyTorch", "SymPy", "OpenGL/WebGL", "CUDA", "ROCm"],
+    },
+    {
+        name: "Theory",
+        items: ["Program synthesis", "Formal methods", "Compiler design", "Graph theory", "Combinatorics", "Linear algebra"],
+    },
+];
