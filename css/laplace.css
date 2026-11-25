@@ -8,20 +8,7 @@
   min-width: 280px;
 }
 
-.control-group {
-  margin: 12px 0;
-}
-
-button {
-  margin: 5px 5px 5px 0;
-  font-size: 11px;
+.controls button {
   width: 100%;
-}
-
-.transform-info {
-  margin-top: 15px;
-  padding: 10px;
-  background: rgba(0, 255, 65, 0.05);
-  border-radius: 3px;
-  font-size: 10px;
+  margin: 4px 0 0;
 }

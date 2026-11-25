@@ -8,12 +8,7 @@
   min-width: 280px;
 }
 
-.control-group {
-  margin: 12px 0;
-}
-
-button {
-  margin: 5px 5px 5px 0;
-  font-size: 11px;
+.controls button {
   width: 100%;
+  margin: 4px 0 0;
 }

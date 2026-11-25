@@ -13,24 +13,13 @@ canvas {
 }
 
 .stats-box {
-  position: absolute;
   bottom: 20px;
   right: 20px;
-  background: rgba(10, 14, 39, 0.95);
-  padding: 15px;
-  border: 2px solid #00ff41;
-  border-radius: 5px;
   min-width: 280px;
-  font-size: 12px;
   line-height: 1.8;
 }
 
-.control-group {
-  margin: 12px 0;
-}
-
-button {
-  margin: 5px 5px 5px 0;
-  font-size: 11px;
+.controls button {
   width: 100%;
+  margin: 4px 0 0;
 }

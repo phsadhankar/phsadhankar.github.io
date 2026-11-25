@@ -16,18 +16,8 @@ canvas:active {
   min-width: 300px;
 }
 
-button {
-  margin: 5px 5px 5px 0;
-  font-size: 11px;
-}
-
 .stats {
   top: 20px;
   right: 20px;
-  font-size: 11px;
   min-width: 200px;
-}
-
-.stat-line {
-  margin: 5px 0;
 }

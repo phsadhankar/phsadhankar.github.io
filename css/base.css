@@ -1,9 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Martian+Mono:wdth,wght@75..112,300..700&display=swap");
+
+/*
+  Shared look for the simulation pages.
+  The canvas is the dark stage; every control sits on a slip of
+  engineering paper pinned over it.
+*/
+
+:root {
+  --stage: #0e1620;
+  --ink: #14202b;
+  --paper: #dfe8d5;
+  --rule: rgba(72, 118, 90, 0.28);
+  --red: #d63a22;
+  --glow: #ff7a45;
+  --mono: "Martian Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --display: "Big Shoulders Display", "Martian Mono", Impact, "Arial Narrow", sans-serif;
+}
+
+html,
 body {
   margin: 0;
   padding: 0;
-  background: #0a0e27;
-  color: #00ff41;
-  font-family: "Courier New", monospace;
+  background: var(--stage);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-stretch: 80%;
   overflow: hidden;
 }
 
@@ -11,81 +32,254 @@ canvas {
   display: block;
 }
 
-.info {
+/* ---------- paper slips ---------- */
+
+.info,
+.controls,
+.stats,
+.stats-box,
+.coords,
+.ui-panel,
+.overlay {
   position: absolute;
+  box-sizing: border-box;
+  padding: 18px 20px 16px;
+  color: var(--ink);
+  font-size: 11px;
+  line-height: 1.55;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--rule) 1px, transparent 1px),
+    linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+  background-size: 12px 12px;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  user-select: none;
+}
+
+.ui-panel {
+  position: fixed;
+}
+
+.info {
   top: 20px;
   left: 20px;
-  background: rgba(10, 14, 39, 0.95);
-  padding: 20px;
-  border: 2px solid #00ff41;
-  border-radius: 5px;
 }
 
-.info h2 {
-  margin: 0 0 10px 0;
-  font-size: 20px;
-  text-shadow: 0 0 10px #00ff41;
-}
-
-.equation {
-  background: rgba(0, 255, 65, 0.1);
-  padding: 12px;
-  margin: 10px 0;
-  border-left: 3px solid #00ff41;
-  font-size: 11px;
-}
-
-.controls {
+/* a little red tab, the way you'd flag a page */
+.panel::before {
+  content: "";
   position: absolute;
-  background: rgba(10, 14, 39, 0.95);
-  padding: 15px;
-  border: 2px solid #00ff41;
-  border-radius: 5px;
+  top: -1px;
+  left: 16px;
+  width: 26px;
+  height: 5px;
+  background: var(--red);
 }
 
-.control-group {
+.panel.dragging {
+  cursor: grabbing;
+  box-shadow: 0 26px 50px rgba(0, 0, 0, 0.55);
+}
+
+.panel-fold {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  line-height: 1;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+}
+
+.panel-fold:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.panel.folded > *:not(.panel-fold):not(h2) {
+  display: none;
+}
+
+.panel.folded {
+  min-width: 0;
+  padding-bottom: 10px;
+}
+
+.panel.folded h2 {
+  margin: 0;
+  padding-right: 24px;
+}
+
+html.embed .panel,
+html.panels-hidden .panel {
+  display: none;
+}
+
+/* ---------- type ---------- */
+
+h2 {
+  margin: 0 0 8px;
+  padding-right: 24px;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-shadow: none;
+}
+
+.info p,
+.instruction {
+  margin: 8px 0;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.equation,
+.eq-box {
   margin: 10px 0;
+  padding: 8px 10px;
+  font-size: 11px;
+  line-height: 1.55;
+  background: rgba(20, 32, 43, 0.07);
+  border-left: 3px solid var(--red);
 }
 
-.control-group label {
+.frequency-display,
+.transform-info,
+.status {
+  margin-top: 10px;
+  padding: 8px 10px;
+  font-size: 10.5px;
+  background: rgba(20, 32, 43, 0.07);
+  border-radius: 0;
+}
+
+.stat-line {
+  margin: 4px 0;
+}
+
+.stat-line strong {
+  font-weight: 600;
+}
+
+/* ---------- controls ---------- */
+
+.control-group,
+.slider-group {
+  margin: 12px 0;
+}
+
+.control-group label,
+.slider-group label {
   display: block;
   margin-bottom: 5px;
-  font-size: 12px;
+  font-size: 10.5px;
+  letter-spacing: 0.02em;
 }
 
 input[type="range"] {
   width: 100%;
-}
-
-button {
-  background: #00ff41;
-  color: #0a0e27;
-  border: none;
-  padding: 8px 16px;
+  height: 16px;
+  margin: 0;
+  background: transparent;
   cursor: pointer;
-  font-family: "Courier New", monospace;
-  font-weight: bold;
-  transition: all 0.3s;
 }
 
-button:hover {
-  box-shadow: 0 0 15px #00ff41;
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 2px;
+  background: var(--ink);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 11px;
+  height: 15px;
+  margin-top: -6.5px;
+  background: var(--red);
+  border: 1px solid var(--ink);
+  border-radius: 0;
+}
+
+input[type="range"]::-moz-range-track {
+  height: 2px;
+  background: var(--ink);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 9px;
+  height: 13px;
+  background: var(--red);
+  border: 1px solid var(--ink);
+  border-radius: 0;
+}
+
+button,
+.btn {
+  margin: 4px 4px 0 0;
+  padding: 7px 12px;
+  font: 600 10.5px/1 var(--mono);
+  font-stretch: 80%;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+button:hover,
+.btn:hover {
+  background: var(--red);
+  border-color: var(--red);
+  box-shadow: none;
+  transform: none;
+}
+
+button.active {
+  background: transparent;
+  color: var(--ink);
 }
 
 select {
   width: 100%;
-  background: #0a0e27;
-  color: #00ff41;
-  border: 2px solid #00ff41;
-  padding: 8px;
-  font-family: "Courier New", monospace;
-  font-size: 12px;
+  padding: 6px 8px;
+  font: 500 11px var(--mono);
+  font-stretch: 80%;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  cursor: pointer;
 }
 
-.stats {
-  position: absolute;
-  background: rgba(10, 14, 39, 0.95);
-  padding: 15px;
-  border: 2px solid #00ff41;
-  border-radius: 5px;
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  margin: 10px 0;
+  background: rgba(20, 32, 43, 0.15);
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--red);
+  transition: width 0.3s;
+}
+
+.loading {
+  color: var(--paper);
+  text-shadow: none;
 }

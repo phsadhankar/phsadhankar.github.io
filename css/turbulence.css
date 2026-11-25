@@ -11,16 +11,7 @@ canvas {
   left: 20px;
 }
 
-input[type="range"] {
-  width: 200px;
-}
-
-button {
-  margin: 5px;
-}
-
 .stats {
   top: 20px;
   right: 20px;
-  font-size: 11px;
 }
