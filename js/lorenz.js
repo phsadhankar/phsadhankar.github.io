@@ -102,7 +102,7 @@ let fpsTime = Date.now();
 
 function animate() {
     const now = Date.now();
-    const dt = ((now - lastTime) / 1000) * speed * 0.5;
+    const dt = Math.min((now - lastTime) / 1000, 0.04) * speed * 0.5;
     lastTime = now;
 
     ctx.fillStyle = "rgba(14, 22, 32, 0.1)";
