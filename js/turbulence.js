@@ -183,7 +183,7 @@ function calculateEnergy() {
 }
 
 function animate() {
-    ctx.fillStyle = "rgba(10, 14, 39, 0.1)";
+    ctx.fillStyle = "rgba(14, 22, 32, 0.1)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Update vortices
@@ -218,7 +218,7 @@ function animate() {
         const intensity = Math.min(1, Math.abs(v.strength) / 10);
         const color =
             v.strength > 0
-                ? `rgba(0, 255, 65, ${intensity * 0.3})`
+                ? `rgba(255, 122, 69, ${intensity * 0.3})`
                 : `rgba(255, 0, 65, ${intensity * 0.3})`;
 
         gradient.addColorStop(0, color);
@@ -233,7 +233,7 @@ function animate() {
         );
 
         // Draw vortex core
-        ctx.strokeStyle = v.strength > 0 ? "#00ff41" : "#ff0041";
+        ctx.strokeStyle = v.strength > 0 ? "#ff7a45" : "#7fd0ff";
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.arc(v.x, v.y, v.radius, 0, Math.PI * 2);
@@ -252,7 +252,7 @@ function animate() {
 
     // Draw particles
     particles.forEach((p) => {
-        ctx.strokeStyle = `rgba(0, 255, 65, ${p.life})`;
+        ctx.strokeStyle = `rgba(255, 122, 69, ${p.life})`;
         ctx.lineWidth = 1;
         ctx.beginPath();
 

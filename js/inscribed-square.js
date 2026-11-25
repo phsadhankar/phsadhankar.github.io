@@ -142,12 +142,12 @@ function updateStatus(message) {
 }
 
 function render() {
-    ctx.fillStyle = "#0a0e27";
+    ctx.fillStyle = "#0e1620";
     ctx.fillRect(0, 0, cvs.width, cvs.height);
 
     // Draw the curve
     if (curvePoints.length > 1) {
-        ctx.strokeStyle = "#00ff41";
+        ctx.strokeStyle = "#ff7a45";
         ctx.lineWidth = 3;
         ctx.beginPath();
         ctx.moveTo(curvePoints[0].x, curvePoints[0].y);
@@ -157,7 +157,7 @@ function render() {
         ctx.stroke();
 
         // Draw points on curve
-        ctx.fillStyle = "rgba(0, 255, 65, 0.5)";
+        ctx.fillStyle = "rgba(255, 122, 69, 0.5)";
         curvePoints.forEach((p) => {
             ctx.beginPath();
             ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);

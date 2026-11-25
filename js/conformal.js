@@ -155,7 +155,7 @@ function drawGrid(side) {
         ctx.beginPath();
         ctx.strokeStyle =
             side === "left"
-                ? "rgba(0, 255, 65, 0.3)"
+                ? "rgba(255, 122, 69, 0.3)"
                 : "rgba(0, 170, 255, 0.5)";
         ctx.lineWidth = 1;
 
@@ -177,7 +177,7 @@ function drawGrid(side) {
         ctx.beginPath();
         ctx.strokeStyle =
             side === "left"
-                ? "rgba(0, 255, 65, 0.3)"
+                ? "rgba(255, 122, 69, 0.3)"
                 : "rgba(0, 170, 255, 0.5)";
         ctx.lineWidth = 1;
 
@@ -227,7 +227,7 @@ function drawAxes(side) {
         side === "left" ? canvas.width * 0.25 : canvas.width * 0.75;
     const offsetY = canvas.height / 2;
 
-    ctx.strokeStyle = "rgba(0, 255, 65, 0.5)";
+    ctx.strokeStyle = "rgba(255, 122, 69, 0.5)";
     ctx.lineWidth = 2;
 
     // Real axis
@@ -243,14 +243,14 @@ function drawAxes(side) {
     ctx.stroke();
 
     // Labels
-    ctx.fillStyle = "#00ff41";
-    ctx.font = "12px Courier New";
+    ctx.fillStyle = "#ff7a45";
+    ctx.font = "12px 'Martian Mono', monospace";
     ctx.fillText(
         side === "left" ? "z-plane" : "w-plane",
         offsetX - 40,
         offsetY - 220
     );
-    ctx.font = "10px Courier New";
+    ctx.font = "10px 'Martian Mono', monospace";
     ctx.fillText("Re", offsetX + 210, offsetY + 5);
     ctx.fillText("Im", offsetX + 5, offsetY - 210);
 }
@@ -259,8 +259,8 @@ function drawArrow() {
     const midX = canvas.width / 2;
     const midY = canvas.height / 2;
 
-    ctx.strokeStyle = "#00ff41";
-    ctx.fillStyle = "#00ff41";
+    ctx.strokeStyle = "#ff7a45";
+    ctx.fillStyle = "#ff7a45";
     ctx.lineWidth = 3;
 
     ctx.beginPath();
@@ -275,12 +275,12 @@ function drawArrow() {
     ctx.closePath();
     ctx.fill();
 
-    ctx.font = "14px Courier New";
+    ctx.font = "14px 'Martian Mono', monospace";
     ctx.fillText("f(z)", midX - 15, midY - 20);
 }
 
 function animate() {
-    ctx.fillStyle = "#0a0e27";
+    ctx.fillStyle = "#0e1620";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Draw domain (z-plane)

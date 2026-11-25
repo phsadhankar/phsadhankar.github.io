@@ -192,7 +192,7 @@ function drawStreamlines() {
         const startY = -rangeY + (i / numLines) * (rangeY * 2);
 
         ctx.beginPath();
-        ctx.strokeStyle = "rgba(0, 255, 65, 0.15)";
+        ctx.strokeStyle = "rgba(255, 122, 69, 0.15)";
         ctx.lineWidth = 1;
 
         let z = new Complex(-4 * aspect, startY);
@@ -270,8 +270,8 @@ function drawObstacles() {
         const center = complexToScreen(new Complex(0, 0));
         const scale = Math.min(cvs.width, cvs.height) / 6;
 
-        ctx.fillStyle = "#0a0e27";
-        ctx.strokeStyle = "#00ff41";
+        ctx.fillStyle = "#0e1620";
+        ctx.strokeStyle = "#ff7a45";
         ctx.lineWidth = 3;
         ctx.beginPath();
         ctx.arc(center.x, center.y, 0.5 * scale, 0, Math.PI * 2);
@@ -281,7 +281,7 @@ function drawObstacles() {
 }
 
 function animate() {
-    ctx.fillStyle = "rgba(10, 14, 39, 0.3)";
+    ctx.fillStyle = "rgba(14, 22, 32, 0.3)";
     ctx.fillRect(0, 0, cvs.width, cvs.height);
 
     drawStreamlines();
@@ -291,7 +291,7 @@ function animate() {
     particles.forEach((p) => {
         p.update(0.05);
 
-        ctx.strokeStyle = "rgba(0, 255, 65, 0.7)";
+        ctx.strokeStyle = "rgba(255, 122, 69, 0.7)";
         ctx.lineWidth = 2;
         ctx.beginPath();
 
@@ -303,7 +303,7 @@ function animate() {
         ctx.stroke();
 
         const pos = complexToScreen(new Complex(p.x, p.y));
-        ctx.fillStyle = "#00ff41";
+        ctx.fillStyle = "#ff7a45";
         ctx.beginPath();
         ctx.arc(pos.x, pos.y, 3, 0, Math.PI * 2);
         ctx.fill();

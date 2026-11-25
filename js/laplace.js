@@ -89,14 +89,14 @@ function drawTimeDomain() {
     const x = 30;
     const y = 30;
 
-    ctx.fillStyle = "rgba(10, 14, 39, 0.3)";
+    ctx.fillStyle = "rgba(14, 22, 32, 0.3)";
     ctx.fillRect(x, y, w, h);
-    ctx.strokeStyle = "#00ff41";
+    ctx.strokeStyle = "#ff7a45";
     ctx.lineWidth = 2;
     ctx.strokeRect(x, y, w, h);
 
     ctx.beginPath();
-    ctx.strokeStyle = "#00ff41";
+    ctx.strokeStyle = "#ff7a45";
     ctx.lineWidth = 2;
 
     const func = transforms[selectedFunc].func;
@@ -114,10 +114,10 @@ function drawTimeDomain() {
     }
     ctx.stroke();
 
-    ctx.fillStyle = "#00ff41";
-    ctx.font = "14px Courier New";
+    ctx.fillStyle = "#ff7a45";
+    ctx.font = "14px 'Martian Mono', monospace";
     ctx.fillText("f(t) - Time Domain", x + 10, y + 20);
-    ctx.font = "10px Courier New";
+    ctx.font = "10px 'Martian Mono', monospace";
     ctx.fillText("t →", x + w - 30, y + h + 20);
 }
 
@@ -127,9 +127,9 @@ function drawMagnitudeSpectrum() {
     const x = canvas.width - w - 30;
     const y = 30;
 
-    ctx.fillStyle = "rgba(10, 14, 39, 0.3)";
+    ctx.fillStyle = "rgba(14, 22, 32, 0.3)";
     ctx.fillRect(x, y, w, h);
-    ctx.strokeStyle = "#00ff41";
+    ctx.strokeStyle = "#ff7a45";
     ctx.lineWidth = 2;
     ctx.strokeRect(x, y, w, h);
 
@@ -147,7 +147,7 @@ function drawMagnitudeSpectrum() {
         maxMag = Math.max(maxMag, mag);
     }
 
-    ctx.fillStyle = "rgba(0, 255, 65, 0.6)";
+    ctx.fillStyle = "rgba(255, 122, 69, 0.6)";
     for (let i = 0; i < samples; i++) {
         const barHeight = (magnitudes[i] / maxMag) * h * 0.8;
         const px = x + (i / samples) * w;
@@ -156,10 +156,10 @@ function drawMagnitudeSpectrum() {
         ctx.fillRect(px, py, barWidth, barHeight);
     }
 
-    ctx.fillStyle = "#00ff41";
-    ctx.font = "14px Courier New";
+    ctx.fillStyle = "#ff7a45";
+    ctx.font = "14px 'Martian Mono', monospace";
     ctx.fillText("|F(s)| - Magnitude", x + 10, y + 20);
-    ctx.font = "10px Courier New";
+    ctx.font = "10px 'Martian Mono', monospace";
     ctx.fillText("ω →", x + w - 30, y + h + 20);
 }
 
@@ -169,16 +169,16 @@ function drawComplexPlane() {
     const x = 30;
     const y = canvas.height - h - 30;
 
-    ctx.fillStyle = "rgba(10, 14, 39, 0.3)";
+    ctx.fillStyle = "rgba(14, 22, 32, 0.3)";
     ctx.fillRect(x, y, w, h);
-    ctx.strokeStyle = "#00ff41";
+    ctx.strokeStyle = "#ff7a45";
     ctx.lineWidth = 2;
     ctx.strokeRect(x, y, w, h);
 
     const cx = x + w / 2;
     const cy = y + h / 2;
 
-    ctx.strokeStyle = "rgba(0, 255, 65, 0.3)";
+    ctx.strokeStyle = "rgba(255, 122, 69, 0.3)";
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(x, cy);
@@ -229,10 +229,10 @@ function drawComplexPlane() {
         });
     }
 
-    ctx.fillStyle = "#00ff41";
-    ctx.font = "14px Courier New";
+    ctx.fillStyle = "#ff7a45";
+    ctx.font = "14px 'Martian Mono', monospace";
     ctx.fillText("s-plane: σ + iω", x + 10, y + 20);
-    ctx.font = "10px Courier New";
+    ctx.font = "10px 'Martian Mono', monospace";
     ctx.fillText("σ (real) →", cx + 10, cy - 10);
     ctx.save();
     ctx.translate(cx - 50, cy);
@@ -249,7 +249,7 @@ function updateTransformInfo() {
 }
 
 function animate() {
-    ctx.fillStyle = "#0a0e27";
+    ctx.fillStyle = "#0e1620";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     drawTimeDomain();

@@ -125,7 +125,7 @@ function render() {
         ctx.putImageData(imageData, 0, 0);
 
         if (isDragging) {
-            ctx.strokeStyle = "#00ff41";
+            ctx.strokeStyle = "#ff7a45";
             ctx.lineWidth = 2;
             ctx.strokeRect(
                 dragStartX,

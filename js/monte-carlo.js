@@ -18,7 +18,7 @@ const TRUE_PI = Math.PI;
 
 function drawCircleAndSquare() {
     // Draw square
-    ctx.strokeStyle = "#00ff41";
+    ctx.strokeStyle = "#ff7a45";
     ctx.lineWidth = 3;
     ctx.strokeRect(
         centerX - radius,
@@ -33,7 +33,7 @@ function drawCircleAndSquare() {
     ctx.stroke();
 
     // Draw axes
-    ctx.strokeStyle = "rgba(0, 255, 65, 0.3)";
+    ctx.strokeStyle = "rgba(255, 122, 69, 0.3)";
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(centerX - radius, centerY);
@@ -92,7 +92,7 @@ function updateStats() {
 function drawPoints() {
     points.forEach((point) => {
         ctx.fillStyle = point.inside
-            ? "rgba(0, 255, 65, 0.6)"
+            ? "rgba(255, 122, 69, 0.6)"
             : "rgba(255, 0, 65, 0.6)";
         ctx.fillRect(point.x - 1, point.y - 1, 2, 2);
     });
@@ -105,17 +105,17 @@ function drawConvergence() {
     const graphH = 160;
 
     // Background + frame
-    ctx.fillStyle = "rgba(0, 255, 65, 0.05)";
+    ctx.fillStyle = "rgba(255, 122, 69, 0.05)";
     ctx.fillRect(graphX, graphY, graphW, graphH);
-    ctx.strokeStyle = "rgba(0, 255, 65, 0.3)";
+    ctx.strokeStyle = "rgba(255, 122, 69, 0.3)";
     ctx.lineWidth = 2;
     ctx.strokeRect(graphX, graphY, graphW, graphH);
 
     // Title
-    ctx.fillStyle = "#00ff41";
-    ctx.font = "12px 'Courier New'";
+    ctx.fillStyle = "#ff7a45";
+    ctx.font = "12px 'Martian Mono', monospace";
     ctx.fillText("Convergence Plot", graphX + 10, graphY + 18);
-    ctx.font = "10px 'Courier New'";
+    ctx.font = "10px 'Martian Mono', monospace";
     ctx.fillText("log₁₀(Relative Error) vs log₁₀(Samples)", graphX + 10, graphY + 34);
 
     // Axes
@@ -125,7 +125,7 @@ function drawConvergence() {
     const gx1 = graphX + graphW - 10;
     const gy1 = graphY + 10;
 
-    ctx.strokeStyle = "rgba(0, 255, 65, 0.4)";
+    ctx.strokeStyle = "rgba(255, 122, 69, 0.4)";
     ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.moveTo(gx0, gy0);
@@ -181,8 +181,8 @@ function drawConvergence() {
     ctx.stroke();
 
     // Axis ticks (log10 scale)
-    ctx.fillStyle = "rgba(0,255,65,0.7)";
-    ctx.font = "10px 'Courier New'";
+    ctx.fillStyle = "rgba(255, 122, 69,0.7)";
+    ctx.font = "10px 'Martian Mono', monospace";
 
     for (let exp = 1; exp <= Math.ceil(Math.log10(totalPoints)); exp++) {
         const lx = gx0 + ((Math.log10(10 ** exp) - Math.log10(10)) / (Math.log10(totalPoints) - Math.log10(10))) * (gx1 - gx0);
@@ -204,7 +204,7 @@ function drawConvergence() {
 }
 
 function animate() {
-    ctx.fillStyle = "rgba(10, 14, 39, 0.1)";
+    ctx.fillStyle = "rgba(14, 22, 32, 0.1)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     drawCircleAndSquare();
