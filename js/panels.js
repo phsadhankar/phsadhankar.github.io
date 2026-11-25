@@ -122,7 +122,24 @@
                 const slider = document.querySelector("#vorticity");
                 slider.value = slider.max;
                 slider.dispatchEvent(new Event("input"));
-                ghost(document.querySelector("canvas"), 0.14);
+                const c = document.querySelector("canvas");
+                if (typeof velocityStep === "function" && typeof densityStep === "function") {
+                    c.dispatchEvent(new MouseEvent("mousedown", { clientX: innerWidth * 0.35, clientY: innerHeight * 0.5, bubbles: true }));
+                    for (let k = 1; k <= 24; k++) {
+                        const t = k * 0.14;
+                        c.dispatchEvent(new MouseEvent("mousemove", {
+                            clientX: innerWidth * (0.5 + 0.28 * Math.sin(t * 1.3) * Math.cos(t * 0.4)),
+                            clientY: innerHeight * (0.5 + 0.3 * Math.sin(t * 0.9 + 1)),
+                            bubbles: true
+                        }));
+                        addForces();
+                        velocityStep(u, v, u_prev, v_prev, viscosity, 0.1);
+                        densityStep(dens, dens_prev, u, v, 0, 0.1);
+                        for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) { u_prev[i][j] = v_prev[i][j] = dens_prev[i][j] = 0; }
+                    }
+                    c.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
+                }
+                ghost(c, 0.14);
             },
             // let the attractor run ahead so the butterfly is already drawn
             "lorenz.html": () => {
@@ -134,7 +151,7 @@
             },
         };
 
-        setTimeout(() => seeds[page]?.(), 300);
+        requestAnimationFrame(() => seeds[page]?.());
     }
 
     function init() {
