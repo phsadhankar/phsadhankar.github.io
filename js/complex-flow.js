@@ -235,7 +235,7 @@ function drawVectorField() {
             const len = Math.min(step * 0.35, mag * 8);
             const color = Math.min(255, mag * 80);
 
-            ctx.strokeStyle = `rgb(0, ${color}, ${color * 0.5})`;
+            ctx.strokeStyle = `rgb(${color}, ${color * 0.48}, ${color * 0.27})`;
             ctx.lineWidth = 1.5;
 
             ctx.beginPath();

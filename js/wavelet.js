@@ -180,7 +180,7 @@ function drawScalogram(coeffs, scales) {
             const intensity = Math.abs(coeffs[s][i]) / maxCoeff;
             const color = Math.floor(intensity * 255);
 
-            ctx.fillStyle = `rgb(0, ${color}, ${color * 0.5})`;
+            ctx.fillStyle = `rgb(${color}, ${color * 0.48}, ${color * 0.27})`;
             ctx.fillRect(
                 x + i * pixelWidth,
                 y + s * pixelHeight,

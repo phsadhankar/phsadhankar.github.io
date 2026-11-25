@@ -203,7 +203,7 @@ function drawComplexPlane() {
             const px = cx + sigma * (w / (sigmaRange * 2));
             const py = cy - omega_s * (h / (omegaRange * 2));
 
-            ctx.fillStyle = `rgba(0, ${color}, ${color * 0.5}, 0.8)`;
+            ctx.fillStyle = `rgba(${color}, ${color * 0.48}, ${color * 0.27}, 0.8)`;
             ctx.fillRect(px, py, w / resolution, h / resolution);
         }
     }
