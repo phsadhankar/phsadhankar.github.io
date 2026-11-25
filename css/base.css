@@ -118,7 +118,13 @@ canvas {
   padding-right: 24px;
 }
 
-html.embed .panel,
+html.embed .info,
+html.embed .controls,
+html.embed .stats,
+html.embed .stats-box,
+html.embed .coords,
+html.embed .ui-panel,
+html.embed .overlay,
 html.panels-hidden .panel {
   display: none;
 }
