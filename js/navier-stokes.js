@@ -240,11 +240,17 @@ function addForces() {
             const x = Math.floor(mouseX);
             const y = Math.floor(mouseY);
 
-            if (x > 0 && x < N - 1 && y > 0 && y < N - 1) {
-                const force = vorticity * 0.1;
-                u_prev[x][y] += dx * force;
-                v_prev[x][y] += dy * force;
-                dens_prev[x][y] += 200;
+            const force = vorticity * 0.12;
+            for (let ox = -1; ox <= 1; ox++) {
+                for (let oy = -1; oy <= 1; oy++) {
+                    const nx = x + ox;
+                    const ny = y + oy;
+                    if (nx > 0 && nx < N - 1 && ny > 0 && ny < N - 1) {
+                        u_prev[nx][ny] += dx * force;
+                        v_prev[nx][ny] += dy * force;
+                        dens_prev[nx][ny] += 360;
+                    }
+                }
             }
         }
     }
@@ -263,7 +269,7 @@ function render() {
             const vel = Math.sqrt(u[i][j] * u[i][j] + v[i][j] * v[i][j]);
             const d = dens[i][j];
 
-            const color = Math.min(255, (vel * 100 + d) * 2);
+            const shade = Math.min(1, ((vel * 100 + d) * 2.5) / 255);
 
             // FIX: Use SCALE_X and SCALE_Y to determine the size of the pixel block
             const startX = Math.floor(i * SCALE_X);
@@ -274,9 +280,9 @@ function render() {
             for (let px = startX; px < endX; px++) {
                 for (let py = startY; py < endY; py++) {
                     const idx = (py * canvas.width + px) * 4;
-                    data[idx] = 0;
-                    data[idx + 1] = color;
-                    data[idx + 2] = color * 0.5;
+                    data[idx] = Math.round(14 + shade * 241);
+                    data[idx + 1] = Math.round(22 + shade * 100);
+                    data[idx + 2] = Math.round(32 + shade * 37);
                     data[idx + 3] = 255;
                 }
             }

@@ -189,7 +189,7 @@ function animate() {
     // Update vortices
     vortices = vortices.filter((v) => {
         v.update(1);
-        return v.strength > 0.1 && v.radius > 5 && v.age < v.maxAge;
+        return Math.abs(v.strength) > 0.1 && v.radius > 5 && v.age < v.maxAge;
     });
 
     // Handle vortex splitting (energy cascade)
@@ -219,7 +219,7 @@ function animate() {
         const color =
             v.strength > 0
                 ? `rgba(255, 122, 69, ${intensity * 0.3})`
-                : `rgba(255, 0, 65, ${intensity * 0.3})`;
+                : `rgba(127, 208, 255, ${intensity * 0.3})`;
 
         gradient.addColorStop(0, color);
         gradient.addColorStop(1, "rgba(0, 0, 0, 0)");

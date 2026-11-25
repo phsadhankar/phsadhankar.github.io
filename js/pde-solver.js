@@ -224,14 +224,15 @@ function render() {
             const normalized = maxVal > 0 ? val / maxVal : 0;
 
             let r, g, b;
-            if (normalized > 0) {
-                r = 0;
-                g = Math.floor(normalized * 255);
-                b = Math.floor(normalized * 128);
+            if (normalized >= 0) {
+                r = Math.floor(14 + normalized * 241);
+                g = Math.floor(22 + normalized * 100);
+                b = Math.floor(32 + normalized * 37);
             } else {
-                r = Math.floor(-normalized * 255);
-                g = 0;
-                b = Math.floor(-normalized * 128);
+                const neg = -normalized;
+                r = Math.floor(14 + neg * 113);
+                g = Math.floor(22 + neg * 186);
+                b = Math.floor(32 + neg * 223);
             }
 
             // Use SCALE_X and SCALE_Y for correct drawing
