@@ -3,7 +3,7 @@ const ctx = canvas.getContext("2d");
 
 let omega = 1.8;
 let delta = 0.6;
-let gamma = 0.08;
+let gamma = 0.015;
 
 let rx = 0, ry = 0, rz = 1;
 let simT = 0;

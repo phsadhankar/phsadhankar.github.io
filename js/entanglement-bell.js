@@ -45,14 +45,26 @@ function outcomeProbs(a, b, p) {
     };
 }
 
+function chshAtOffset(baseA, d, p) {
+    const a = baseA;
+    const ap = baseA + Math.PI / 2;
+    const b = baseA + d;
+    const bp = baseA - d;
+    const e00 = corrE(a, b, p);
+    const e01 = corrE(a, bp, p);
+    const e10 = corrE(ap, b, p);
+    const e11 = corrE(ap, bp, p);
+    // Max over all valid CHSH sign assignments (odd number of minus signs)
+    return Math.max(
+        Math.abs(e00 + e01 + e10 - e11),
+        Math.abs(e00 + e01 - e10 + e11),
+        Math.abs(e00 - e01 + e10 + e11),
+        Math.abs(-e00 + e01 + e10 + e11)
+    );
+}
+
 function chshValue(p) {
-    // Evaluate CHSH around current Alice basis thetaA and optimal companion angles shifted by (thetaB - thetaA)
-    const d = thetaB - thetaA;
-    const a = thetaA;
-    const ap = thetaA + Math.PI / 2;
-    const b = thetaA + d;
-    const bp = thetaA - d;
-    return Math.abs(corrE(a, b, p) - corrE(a, bp, p) + corrE(ap, b, p) + corrE(ap, bp, p));
+    return chshAtOffset(thetaA, thetaB - thetaA, p);
 }
 
 function samplePair() {
@@ -72,7 +84,6 @@ function clearStats() {
     counts = { pp: 0, pm: 0, mp: 0, mm: 0 };
 }
 
-// Seed initial photon pulses & statistics so first paint & ?embed looks alive
 for (let i = 0; i < 42; i++) samplePair();
 for (let k = 0.15; k <= 0.9; k += 0.25) {
     const res = samplePair();
@@ -85,9 +96,9 @@ function layout() {
     const embedded =
         document.documentElement.classList.contains("embed") ||
         document.documentElement.classList.contains("panels-hidden");
-    const topY = embedded || H < 680 ? 36 : 240;
+    const topY = embedded || H < 680 ? 36 : 392;
     const benchH = Math.max(190, (H - topY - 36) * 0.56);
-    const dialY = topY + benchH * 0.52;
+    const dialY = embedded || H < 680 ? topY + benchH * 0.52 : topY + 86;
     const dialR = Math.min(72, benchH * 0.34, W * 0.11);
     const ax = Math.max(dialR + 46, W * 0.2);
     const bx = Math.min(W - dialR - 46, W * 0.8);
@@ -104,7 +115,6 @@ function drawDial(cx, cy, R, ang, title, sub, pSignFlash) {
     ctx.lineWidth = 1.8;
     ctx.stroke();
 
-    // Degree ticks
     for (let deg = 0; deg < 360; deg += 30) {
         const rad = (deg * Math.PI) / 180;
         const rIn = deg % 90 === 0 ? R - 11 : R - 6;
@@ -116,7 +126,6 @@ function drawDial(cx, cy, R, ang, title, sub, pSignFlash) {
         ctx.stroke();
     }
 
-    // Orthogonal axis (+1 / -1 polarizer orientation at ang/2 in physical space or ang in Bloch)
     const ux = Math.sin(ang), uy = -Math.cos(ang);
     ctx.strokeStyle = "#d63a22";
     ctx.lineWidth = 2.6;
@@ -125,13 +134,11 @@ function drawDial(cx, cy, R, ang, title, sub, pSignFlash) {
     ctx.lineTo(cx + ux * (R - 8), cy + uy * (R - 8));
     ctx.stroke();
 
-    // Arrowhead on +1 end
     ctx.fillStyle = "#d63a22";
     ctx.beginPath();
     ctx.arc(cx + ux * (R - 10), cy + uy * (R - 10), 4.5, 0, Math.PI * 2);
     ctx.fill();
 
-    // Recent outcome flash badge (+1 / -1)
     if (pSignFlash && pSignFlash.life > 0) {
         ctx.globalAlpha = pSignFlash.life;
         ctx.fillStyle = pSignFlash.sign > 0 ? "#d63a22" : "#1d5fa7";
@@ -157,7 +164,6 @@ function draw() {
     const pr = outcomeProbs(thetaA, thetaB, p);
     const S = chshValue(p);
 
-    // Emit periodic correlated photon wavepackets
     emitTick++;
     if (emitTick >= 22) {
         emitTick = 0;
@@ -165,7 +171,6 @@ function draw() {
         pulses.push({ t: 0, res, aSign: res[0] === "p" ? 1 : -1, bSign: res[1] === "p" ? 1 : -1 });
     }
 
-    // Beamlines from center BBO crystal to Alice & Bob
     ctx.strokeStyle = "rgba(20, 32, 43, 0.28)";
     ctx.lineWidth = 1.5;
     ctx.setLineDash([6, 4]);
@@ -175,7 +180,6 @@ function draw() {
     ctx.stroke();
     ctx.setLineDash([]);
 
-    // Travelling correlated photons
     for (let i = pulses.length - 1; i >= 0; i--) {
         const q = pulses[i];
         q.t += 0.015;
@@ -189,7 +193,6 @@ function draw() {
         const xRight = L.sx + q.t * (L.bx - L.dialR - L.sx);
         const phase = Math.sin(q.t * Math.PI * 10) * 5;
 
-        // Dashed entanglement tether between pair
         ctx.strokeStyle = `rgba(214, 58, 34, ${0.15 * (1 - q.t * 0.5)})`;
         ctx.lineWidth = 1;
         ctx.beginPath();
@@ -212,7 +215,6 @@ function draw() {
         else lastB = flashes[i];
     }
 
-    // Center BBO source diamond
     const pulseR = 13 + 3 * Math.sin(performance.now() * 0.005);
     ctx.fillStyle = "rgba(214, 58, 34, 0.14)";
     ctx.beginPath();
@@ -239,13 +241,11 @@ function draw() {
     ctx.fillText(`C = ${p.conc.toFixed(2)}`, L.sx, L.dialY + 49);
     ctx.textAlign = "left";
 
-    // Draw Alice & Bob dials
     const degA = Math.round(((thetaA * 180) / Math.PI + 360) % 360);
     const degB = Math.round(((thetaB * 180) / Math.PI + 360) % 360);
     drawDial(L.ax, L.dialY, L.dialR, thetaA, `ALICE θ_a = ${degA}°`, "Drag dial", lastA);
     drawDial(L.bx, L.dialY, L.dialR, thetaB, `BOB θ_b = ${degB}°`, "Drag dial", lastB);
 
-    // Bottom pane: CHSH Witness & Correlation Curve vs angle offset Δθ
     const cx0 = 52;
     const cy0 = L.dialY + L.dialR + 54;
     const cw = L.W - 104;
@@ -261,12 +261,10 @@ function draw() {
 
         const gx = cx0 + 44, gy = cy0 + 28, gw = leftW - 64, gh = ch - 48;
 
-        // Baseline S = 0, Classical Bell Bound S = 2, Tsirelson Bound S = 2*sqrt(2)
         const sToY = (sVal) => gy + gh * (1 - sVal / 3.1);
         const yBound = sToY(2);
         const yTsir = sToY(2 * Math.SQRT2);
 
-        // Shaded quantum nonlocality region S > 2
         ctx.fillStyle = "rgba(214, 58, 34, 0.08)";
         ctx.fillRect(gx, gy, gw, Math.max(0, yBound - gy));
 
@@ -285,16 +283,10 @@ function draw() {
         ctx.stroke();
         ctx.setLineDash([]);
 
-        // CHSH S(delta) curve across [0, 180] deg
         ctx.beginPath();
         for (let k = 0; k <= 120; k++) {
             const dRad = (k / 120) * Math.PI;
-            const sVal = Math.abs(
-                corrE(thetaA, thetaA + dRad, p) -
-                corrE(thetaA, thetaA - dRad, p) +
-                corrE(thetaA + Math.PI / 2, thetaA + dRad, p) +
-                corrE(thetaA + Math.PI / 2, thetaA - dRad, p)
-            );
+            const sVal = chshAtOffset(thetaA, dRad, p);
             const px = gx + (k / 120) * gw;
             const py = sToY(sVal);
             if (k === 0) ctx.moveTo(px, py);
@@ -304,7 +296,6 @@ function draw() {
         ctx.lineWidth = 2.4;
         ctx.stroke();
 
-        // Active operating point
         const diff = (((thetaB - thetaA) % Math.PI) + Math.PI) % Math.PI;
         const curX = gx + (diff / Math.PI) * gw;
         const curY = sToY(S);
@@ -322,7 +313,6 @@ function draw() {
         ctx.fillStyle = "#3c4b57";
         ctx.fillText("2√2", gx - 32, yTsir + 3);
 
-        // Right card: Joint Coincidence Histogram (+1/+1, -1/-1, +1/-1, -1/+1)
         const hx0 = cx0 + leftW + 18;
         const hw = cw - leftW - 18;
         ctx.fillStyle = "rgba(239, 244, 230, 0.84)";
@@ -356,7 +346,6 @@ function draw() {
             ctx.fillStyle = b.col;
             ctx.fillRect(x, barBase - Math.min(barMaxH, hEmp), barW, Math.min(barMaxH, hEmp));
 
-            // Analytical QM target marker line
             ctx.strokeStyle = "#14202b";
             ctx.lineWidth = 2;
             ctx.beginPath();

@@ -190,7 +190,7 @@ window.DISCIPLINES = [
         sym: "⟨ψ|",
         name: "Quantum",
         tagline: "Optical Bloch control, Bell nonlocality, quantum walks & search",
-        eq: "iℏ ∂ψ/∂t = Ĥψ  ·  dr⃗/dt = Ω⃗_eff × r⃗ − γr⃗_⊥  ·  S ≤ 2√2",
+        eq: "iℏ ∂ψ/∂t = Ĥψ  ·  dr/dt = Ω_eff × r − γr_⊥  ·  S ≤ 2√2",
         desc: "Six interactive quantum mechanics and quantum computation labs covering optical Bloch dynamics, SU(2) gate synthesis, wavepacket tunneling, Bell CHSH violation, discrete quantum walks, and Grover search.",
         softTags: ["quantum"],
         branches: [
@@ -201,7 +201,7 @@ window.DISCIPLINES = [
                     {
                         slug: "rabi-ramsey",
                         title: "Rabi & optical Bloch dynamics",
-                        eq: "dr⃗/dt = Ω⃗_eff × r⃗ − γ(r_x, r_y, 0)",
+                        eq: "dr/dt = Ω_eff × r − γ(r_x, r_y, 0)",
                         note: "Driven two-level atom integrated via RK4 showing Bloch precession spirals, excited population P(|1⟩, t), and resonance profile.",
                         span: 6,
                         ar: "16 / 10",

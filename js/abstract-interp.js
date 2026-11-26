@@ -39,7 +39,7 @@ function getProgram() {
                 r * (Math.cos(ang) * x - Math.sin(ang) * y),
                 r * (Math.sin(ang) * x + Math.cos(ang) * y),
             ],
-            hazard: { x: 2.38 - hazardOffset * 0.28, y: 1.45 - hazardOffset * 0.25, w: 1.15, h: 1.15 },
+            hazard: { x: 2.02 - hazardOffset * 0.22, y: 1.98 - hazardOffset * 0.22, w: 1.1, h: 1.1 },
         };
     }
     if (progId === "skew") {
@@ -151,7 +151,7 @@ function buildFixpointSequence() {
         if (iter > widenDelay && iter <= widenDelay + 3) {
             // Cousot widening operator: unstable bounds jump modestly toward outer guard/horizon (or 3.85 if box unstable)
             kind = "widen";
-            nextBounds = bounds.map((b, i) => (joinBounds[i] > b + 0.015 ? Math.min(3.85, joinBounds[i] + 0.55) : b));
+            nextBounds = bounds.map((b, i) => (joinBounds[i] > b + 0.015 ? Math.min(3.45, joinBounds[i] + 0.35) : b));
         } else {
             nextBounds = joinBounds;
         }

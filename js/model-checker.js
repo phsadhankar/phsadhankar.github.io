@@ -345,7 +345,7 @@ function draw() {
     });
 
     // Draw nodes with expanding BFS wavefront ring
-    const R = 25;
+    const R = 29;
     states.forEach((s) => {
         const reach = s.depth < Infinity;
         const isBad = badSet.has(s.idx);
