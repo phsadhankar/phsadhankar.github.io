@@ -1,6 +1,6 @@
 // Everything that shows up on the page lives here.
 
-window.BRANCHES = [
+window.MATH_BRANCHES = [
     {
         id: "fluids",
         name: "Fluid dynamics",
@@ -81,7 +81,7 @@ window.BRANCHES = [
     },
     {
         id: "numerical",
-        name: "Numerical methods",
+        name: "Numerical & geometric",
         sims: [
             {
                 slug: "pde-solver",
@@ -105,9 +105,41 @@ window.BRANCHES = [
                 title: "Inscribed square",
                 eq: "∀ closed curve ∃ four points forming a square",
                 note: "Still open for general curves. Draw one and let the search try to find a square on it.",
-                span: 6,
-                start: 4,
+                span: 8,
+                start: 3,
                 ar: "16 / 10",
+            },
+        ],
+    },
+    {
+        id: "variational",
+        name: "Variational & number theory",
+        sims: [
+            {
+                slug: "riemann-zeta",
+                title: "Riemann zeta critical strip",
+                eq: "ζ(s) = (1 − 2^(1−s))⁻¹ ∑ (−1)^(n−1) n^(−s)",
+                note: "Borwein-accelerated η(s) → ζ(s) spiral on the critical strip paired with the Hardy Z(t) trace and non-trivial zeros γₙ.",
+                span: 4,
+                ar: "1 / 1",
+            },
+            {
+                slug: "double-pendulum",
+                title: "Double pendulum & phase space",
+                eq: "d/dt (∂L/∂θ̇ᵢ) − ∂L/∂θᵢ = 0",
+                note: "Twin Lagrangian pendulums separated by δθ₀ = 10⁻³ rad diverging via RK4, plotted beside their (θ₂, ω₂) phase portrait.",
+                span: 4,
+                ar: "1 / 1",
+                dy: 64,
+            },
+            {
+                slug: "brachistochrone",
+                title: "Brachistochrone & tautochrone",
+                eq: "T[y] = ∫ √((1 + y'²) / 2gy) dx",
+                note: "Euler–Lagrange's fastest descent curve. Race beads down the cycloid, parabola, line, or drag your own spline.",
+                span: 4,
+                ar: "1 / 1",
+                dy: 128,
             },
         ],
     },
@@ -127,10 +159,80 @@ window.BRANCHES = [
                 slug: "mandelbrot",
                 title: "Mandelbrot explorer",
                 eq: "z → z² + c,  z₀ = 0",
-                note: "Zoom into the boundary of the set of c for which the orbit stays bounded. Five palettes.",
+                note: "Zoom into the boundary of the set of c for which the orbit stays bounded. Five ink and contour views.",
                 span: 7,
                 ar: "16 / 10",
                 dy: 72,
+            },
+        ],
+    },
+];
+
+window.QUANTUM_BRANCHES = [
+    {
+        id: "quantum-labs",
+        name: "Qubits, waves & quantum search",
+        sims: [
+            {
+                slug: "bloch-gates",
+                title: "Bloch sphere & gate composer",
+                eq: "|ψ⟩ = cos(θ/2)|0⟩ + e^(iφ) sin(θ/2)|1⟩",
+                note: "Compose single-qubit SU(2) gates (H, X, Y, Z, S, T, Rx, Ry), trace Bloch geodesics, and simplify circuits via exact peephole identities.",
+                span: 5,
+                ar: "4 / 5",
+            },
+            {
+                slug: "wavepacket",
+                title: "Schrödinger wavepacket tunneling",
+                eq: "iℏ ∂ψ/∂t = [−(ℏ²/2m)∂²/∂x² + V(x)] ψ",
+                note: "Unitary Crank–Nicolson integrator conserving ∫|ψ|²dx = 1 across single barriers, resonant double barriers, and harmonic wells.",
+                span: 7,
+                ar: "16 / 10",
+                dy: 56,
+            },
+            {
+                slug: "grover",
+                title: "Grover amplitude amplification",
+                eq: "U_s · U_ω  ⇒  k_opt = ⌊(π/4) √N⌋",
+                note: "Step through oracle phase flips and inversion about the mean inside the (|s'⟩, |w⟩) subspace alongside live basis amplitudes.",
+                span: 8,
+                start: 3,
+                ar: "16 / 10",
+            },
+        ],
+    },
+];
+
+window.PL_BRANCHES = [
+    {
+        id: "pl-labs",
+        name: "Types, synthesis & machine-checked proofs",
+        sims: [
+            {
+                slug: "lambda-calc",
+                title: "λ-Calculus & Algorithm W",
+                eq: "(λx. M) N →β [x := N] M · Γ ⊢ e : τ",
+                note: "Capture-avoiding β-reducer over ASTs under Normal or Applicative order, paired with live Hindley–Milner type inference.",
+                span: 6,
+                ar: "16 / 10",
+            },
+            {
+                slug: "program-synth",
+                title: "SyGuS bottom-up & CEGIS",
+                eq: "sig(e) = [e(I₁), …, e(Iₖ)]",
+                note: "Enumerates ASTs by height with Observational Equivalence pruning and counterexample-guided verification until ∃e satisfying all specs.",
+                span: 6,
+                ar: "16 / 10",
+                dy: 56,
+            },
+            {
+                slug: "hoare-proof",
+                title: "Hoare logic & wp verifier",
+                eq: "P ⇒ I  ·  (I ∧ B) ⇒ wp(C, I)  ·  (I ∧ ¬B) ⇒ Q",
+                note: "Discharges verification conditions for loop invariants on a state manifold, or lets you inject bugs to inspect failing counterexamples.",
+                span: 8,
+                start: 3,
+                ar: "16 / 10",
             },
         ],
     },
@@ -349,10 +451,10 @@ window.TOOLBOX = [
     },
     {
         name: "Scientific",
-        items: ["NumPy/SciPy", "TensorFlow", "PyTorch", "SymPy", "OpenGL/WebGL", "CUDA", "ROCm"],
+        items: ["NumPy/SciPy", "TensorFlow", "PyTorch", "SymPy", "OpenGL/WebGL", "CUDA", "ROCm", "Qiskit"],
     },
     {
         name: "Theory",
-        items: ["Program synthesis", "Formal methods", "Compiler design", "Graph theory", "Combinatorics", "Linear algebra"],
+        items: ["Program synthesis", "Formal methods", "Type systems", "Quantum circuits", "Compiler design", "Graph theory", "Linear algebra"],
     },
 ];

@@ -6,7 +6,7 @@
     <title>Pruthviraj Sadhankar</title>
     <meta
       name="description"
-      content="Pruthviraj Sadhankar: software engineer and undergraduate researcher. Twelve live mathematical simulations, plus the rest of the software."
+      content="Pruthviraj Sadhankar: mathematics, quantum computing, and formal methods research alongside live interactive notebooks."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,7 +27,9 @@
         <span class="field"><i>Sheet</i><b>1 of 1</b></span>
       </div>
       <nav class="pad-nav" aria-label="Sections">
-        <a href="#sims">Simulations</a>
+        <a href="#math">Math</a>
+        <a href="#quantum">Quantum</a>
+        <a href="#pl">PL &amp; Formal</a>
         <a href="#software">Software</a>
         <a href="#record">Record</a>
         <a href="#contact">Contact</a>
@@ -42,8 +44,8 @@
         </h1>
 
         <p class="roles">
-          Software engineer<br />
-          Undergraduate researcher<br />
+          Mathematics · Quantum<br />
+          Formal methods · Systems<br />
           University of Kansas
         </p>
 
@@ -57,14 +59,14 @@
                   Kansas, honors track, class of 2027.
                 </li>
                 <li>
-                  A research assistant who writes machine-checked proofs about
-                  programs.
+                  A researcher working across formal verification in Rocq,
+                  syntax-guided program synthesis, and quantum circuit compilation.
                 </li>
                 <li>
                   The software lead for KUbeSat: more than ten engineers
                   writing flight software for a satellite.
                 </li>
-                <li>A habit of turning equations into things that move.</li>
+                <li>A habit of turning proofs, operators, and equations into interactive labs.</li>
               </ol>
             </dd>
           </dl>
@@ -86,25 +88,55 @@
         </p>
       </section>
 
-      <section class="sheet" id="sims">
+      <section class="sheet" id="math">
         <aside class="rail">
           <span class="sec-no">§1</span>
-          <h2>Simulations</h2>
+          <h2>Mathematics</h2>
           <p>
-            Twelve numerical experiments, each written from scratch in plain
-            JavaScript on a canvas.
+            Fifteen numerical, geometric, and variational labs built from scratch
+            on canvas in plain JavaScript.
           </p>
           <p class="how">
-            Hover a plate to run it. Click to open it full screen, where the
-            panels can be dragged, folded, or hidden with <kbd>H</kbd>.
+            Hover a plate to run it. Click to open full screen, where panels can
+            be dragged, folded, or hidden with <kbd>H</kbd>.
           </p>
         </aside>
-        <div class="body" id="sim-body"></div>
+        <div class="body" id="math-body"></div>
+      </section>
+
+      <section class="sheet" id="quantum">
+        <aside class="rail">
+          <span class="sec-no">§2</span>
+          <h2>Quantum &amp; Physics</h2>
+          <p>
+            Single-qubit SU(2) gate synthesis, unitary Crank–Nicolson tunneling,
+            and Grover subspace amplification.
+          </p>
+          <p class="how">
+            Pairs directly with the Python circuit optimizer and muon-seeded sampler in §4.
+          </p>
+        </aside>
+        <div class="body" id="quantum-body"></div>
+      </section>
+
+      <section class="sheet" id="pl">
+        <aside class="rail">
+          <span class="sec-no">§3</span>
+          <h2>PL &amp; Formal Methods</h2>
+          <p>
+            Capture-avoiding λ-reduction and Hindley–Milner typing, bottom-up
+            SyGuS synthesis, and Hoare logic verification conditions.
+          </p>
+          <p class="how">
+            Click any plate to step proofs, inspect ASTs, or inject counterexamples.
+          </p>
+        </aside>
+        <div class="body" id="pl-body"></div>
       </section>
 
       <section class="sheet" id="software">
         <aside class="rail">
-          <span class="sec-no">§2</span>
+          <span class="sec-no">§4</span>
           <h2>Software</h2>
           <p>The rest of the shelf: research code, tools, and games.</p>
           <div class="filters" id="filters" role="group" aria-label="Filter"></div>
@@ -121,7 +153,7 @@
 
       <section class="sheet" id="record">
         <aside class="rail">
-          <span class="sec-no">§3</span>
+          <span class="sec-no">§5</span>
           <h2>Record</h2>
           <p>Where the hours went.</p>
         </aside>
@@ -134,7 +166,7 @@
 
       <section class="sheet" id="toolbox">
         <aside class="rail">
-          <span class="sec-no">§4</span>
+          <span class="sec-no">§6</span>
           <h2>Toolbox</h2>
           <p>Stated as sets, because that is how I would rather say it.</p>
         </aside>

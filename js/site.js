@@ -11,22 +11,28 @@
         year: "numeric",
     });
 
-    /* ---------- simulation plates ---------- */
+    /* ---------- simulation plates across disciplines ---------- */
 
     const ALL = [];
     let fig = 0;
     const letters = "ABCDEFGH";
 
-    $("#sim-body").innerHTML = BRANCHES.map((b, bi) => {
-        const plates = b.sims
-            .map((s) => {
-                s.fig = ++fig;
-                ALL.push(s);
-                const n = String(s.fig).padStart(2, "0");
-                const style =
-                    `--span:${s.span};--ar:${s.ar};--dy:${s.dy || 0}px` + (s.start ? `;--start:${s.start}` : "");
-                return `
-          <a class="plate" href="#/${s.slug}" data-slug="${s.slug}" data-hot style="${style}">
+    function renderBranches(targetSelector, branches, sectionId) {
+        const container = $(targetSelector);
+        if (!container || !branches) return;
+        container.innerHTML = branches
+            .map((b, bi) => {
+                const plates = b.sims
+                    .map((s) => {
+                        s.fig = ++fig;
+                        s.section = sectionId;
+                        ALL.push(s);
+                        const n = String(s.fig).padStart(2, "0");
+                        const style =
+                            `--span:${s.span};--ar:${s.ar};--dy:${s.dy || 0}px` +
+                            (s.start ? `;--start:${s.start}` : "");
+                        return `
+          <a class="plate" href="#/${s.slug}" data-slug="${s.slug}" style="${style}">
             <div class="mat">
               <div class="frame">
                 <img src="assets/posters/${s.slug}.jpg" alt="" />
@@ -40,9 +46,9 @@
               <p>${esc(s.note)}</p>
             </div>
           </a>`;
-            })
-            .join("");
-        return `
+                    })
+                    .join("");
+                return `
       <div class="branch">
         <div class="branch-head">
           <span class="b-no">${letters[bi]}</span>
@@ -51,7 +57,13 @@
         </div>
         <div class="plates">${plates}</div>
       </div>`;
-    }).join("");
+            })
+            .join("");
+    }
+
+    renderBranches("#math-body", window.MATH_BRANCHES, "math");
+    renderBranches("#quantum-body", window.QUANTUM_BRANCHES, "quantum");
+    renderBranches("#pl-body", window.PL_BRANCHES, "pl");
 
     /* ---------- live previews ---------- */
 
@@ -169,8 +181,9 @@
     }
 
     $("#v-close").addEventListener("click", () => {
+        const sec = ALL[current]?.section || "math";
         // swap the route in place so Back never leaves the site
-        history.replaceState(null, "", location.pathname + "#sims");
+        history.replaceState(null, "", location.pathname + "#" + sec);
         route();
     });
     $("#v-prev").addEventListener("click", () => go(-1));
