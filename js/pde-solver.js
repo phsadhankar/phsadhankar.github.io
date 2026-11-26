@@ -225,14 +225,14 @@ function render() {
 
             let r, g, b;
             if (normalized >= 0) {
-                r = Math.floor(14 + normalized * 241);
-                g = Math.floor(22 + normalized * 100);
-                b = Math.floor(32 + normalized * 37);
+                r = Math.floor(228 - normalized * 14);
+                g = Math.floor(236 - normalized * 178);
+                b = Math.floor(217 - normalized * 183);
             } else {
                 const neg = -normalized;
-                r = Math.floor(14 + neg * 113);
-                g = Math.floor(22 + neg * 186);
-                b = Math.floor(32 + neg * 223);
+                r = Math.floor(228 - neg * 199);
+                g = Math.floor(236 - neg * 141);
+                b = Math.floor(217 - neg * 50);
             }
 
             // Use SCALE_X and SCALE_Y for correct drawing

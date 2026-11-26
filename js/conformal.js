@@ -155,8 +155,8 @@ function drawGrid(side) {
         ctx.beginPath();
         ctx.strokeStyle =
             side === "left"
-                ? "rgba(255, 122, 69, 0.3)"
-                : "rgba(0, 170, 255, 0.5)";
+                ? "rgba(214, 58, 34, 0.45)"
+                : "rgba(29, 95, 167, 0.6)";
         ctx.lineWidth = 1;
 
         for (let j = 0; j <= gridRes; j++) {
@@ -177,8 +177,8 @@ function drawGrid(side) {
         ctx.beginPath();
         ctx.strokeStyle =
             side === "left"
-                ? "rgba(255, 122, 69, 0.3)"
-                : "rgba(0, 170, 255, 0.5)";
+                ? "rgba(214, 58, 34, 0.45)"
+                : "rgba(29, 95, 167, 0.6)";
         ctx.lineWidth = 1;
 
         for (let i = 0; i <= gridRes; i++) {
@@ -201,8 +201,8 @@ function drawCircles(side) {
         ctx.beginPath();
         ctx.strokeStyle =
             side === "left"
-                ? "rgba(255, 170, 0, 0.4)"
-                : "rgba(255, 170, 0, 0.6)";
+                ? "rgba(154, 91, 19, 0.5)"
+                : "rgba(154, 91, 19, 0.78)";
         ctx.lineWidth = 2;
 
         const numPoints = 100;
@@ -227,7 +227,7 @@ function drawAxes(side) {
         side === "left" ? canvas.width * 0.25 : canvas.width * 0.75;
     const offsetY = canvas.height / 2;
 
-    ctx.strokeStyle = "rgba(255, 122, 69, 0.5)";
+    ctx.strokeStyle = "rgba(20, 32, 43, 0.45)";
     ctx.lineWidth = 2;
 
     // Real axis
@@ -243,7 +243,7 @@ function drawAxes(side) {
     ctx.stroke();
 
     // Labels
-    ctx.fillStyle = "#ff7a45";
+    ctx.fillStyle = "#14202b";
     ctx.font = "12px 'Martian Mono', monospace";
     ctx.fillText(
         side === "left" ? "z-plane" : "w-plane",
@@ -259,8 +259,8 @@ function drawArrow() {
     const midX = canvas.width / 2;
     const midY = canvas.height / 2;
 
-    ctx.strokeStyle = "#ff7a45";
-    ctx.fillStyle = "#ff7a45";
+    ctx.strokeStyle = "#d63a22";
+    ctx.fillStyle = "#14202b";
     ctx.lineWidth = 3;
 
     ctx.beginPath();
@@ -280,8 +280,8 @@ function drawArrow() {
 }
 
 function animate() {
-    ctx.fillStyle = "#0e1620";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height); //
+    
 
     // Draw domain (z-plane)
     drawAxes("left");

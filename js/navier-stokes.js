@@ -280,9 +280,9 @@ function render() {
             for (let px = startX; px < endX; px++) {
                 for (let py = startY; py < endY; py++) {
                     const idx = (py * canvas.width + px) * 4;
-                    data[idx] = Math.round(14 + shade * 241);
-                    data[idx + 1] = Math.round(22 + shade * 100);
-                    data[idx + 2] = Math.round(32 + shade * 37);
+                    data[idx] = Math.round(228 - shade * 20);
+                    data[idx + 1] = Math.round(236 - shade * 178);
+                    data[idx + 2] = Math.round(217 - shade * 183);
                     data[idx + 3] = 255;
                 }
             }

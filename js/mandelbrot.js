@@ -20,32 +20,48 @@ let dragEndX, dragEndY;
 
 const colorSchemes = {
     classic: (n, maxIter) => {
-        if (n === maxIter) return [0, 0, 0];
-        const hue = (n / maxIter) * 360;
-        return hslToRgb(hue, 100, 50);
+        if (n === maxIter) return [20, 32, 43];
+        const t = Math.pow(n / maxIter, 0.55);
+        return [
+            Math.round(228 - t * 14),
+            Math.round(236 - t * 178),
+            Math.round(217 - t * 183),
+        ];
     },
     electric: (n, maxIter) => {
-        if (n === maxIter) return [0, 0, 0];
-        const t = n / maxIter;
-        return [0, Math.floor(t * 255), Math.floor(t * 100)];
+        if (n === maxIter) return [20, 32, 43];
+        const t = Math.pow(n / maxIter, 0.6);
+        return [
+            Math.round(228 - t * 199),
+            Math.round(236 - t * 141),
+            Math.round(217 - t * 50),
+        ];
     },
     fire: (n, maxIter) => {
-        if (n === maxIter) return [0, 0, 0];
-        const t = n / maxIter;
-        return [Math.floor(t * 255), Math.floor(t * t * 255), 0];
-    },
-    ocean: (n, maxIter) => {
-        if (n === maxIter) return [0, 0, 50];
-        const t = n / maxIter;
-        return [0, Math.floor(t * 150), Math.floor(100 + t * 155)];
-    },
-    psychedelic: (n, maxIter) => {
-        if (n === maxIter) return [0, 0, 0];
+        if (n === maxIter) return [20, 32, 43];
         const t = n / maxIter;
         return [
-            Math.floor(127 + 127 * Math.sin(t * Math.PI * 4)),
-            Math.floor(127 + 127 * Math.sin(t * Math.PI * 4 + 2)),
-            Math.floor(127 + 127 * Math.sin(t * Math.PI * 4 + 4)),
+            Math.round(228 - t * 60),
+            Math.round(236 - t * 185),
+            Math.round(217 - t * 195),
+        ];
+    },
+    ocean: (n, maxIter) => {
+        if (n === maxIter) return [20, 32, 43];
+        const t = n / maxIter;
+        return [
+            Math.round(228 - t * 184),
+            Math.round(236 - t * 114),
+            Math.round(217 - t * 142),
+        ];
+    },
+    psychedelic: (n, maxIter) => {
+        if (n === maxIter) return [20, 32, 43];
+        const t = n / maxIter;
+        return [
+            Math.floor(165 + 75 * Math.sin(t * Math.PI * 5)),
+            Math.floor(145 + 75 * Math.sin(t * Math.PI * 5 + 2.1)),
+            Math.floor(135 + 75 * Math.sin(t * Math.PI * 5 + 4.2)),
         ];
     },
 };
@@ -125,7 +141,7 @@ function render() {
         ctx.putImageData(imageData, 0, 0);
 
         if (isDragging) {
-            ctx.strokeStyle = "#ff7a45";
+            ctx.strokeStyle = "#d63a22";
             ctx.lineWidth = 2;
             ctx.strokeRect(
                 dragStartX,

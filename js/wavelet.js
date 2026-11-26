@@ -124,14 +124,14 @@ function drawSignal(signal) {
     const x = canvas.width * 0.1;
     const y = 30;
 
-    ctx.fillStyle = "rgba(14, 22, 32, 0.3)";
+    ctx.fillStyle = "rgba(239, 244, 230, 0.78)";
     ctx.fillRect(x, y, w, h);
-    ctx.strokeStyle = "#ff7a45";
+    ctx.strokeStyle = "#14202b";
     ctx.lineWidth = 2;
     ctx.strokeRect(x, y, w, h);
 
     ctx.beginPath();
-    ctx.strokeStyle = "#ff7a45";
+    ctx.strokeStyle = "#14202b";
     ctx.lineWidth = 2;
 
     const step = w / N;
@@ -147,7 +147,7 @@ function drawSignal(signal) {
     }
     ctx.stroke();
 
-    ctx.fillStyle = "#ff7a45";
+    ctx.fillStyle = "#14202b";
     ctx.font = "14px 'Martian Mono', monospace";
     ctx.fillText("Signal: f(t)", x + 10, y + 20);
 }
@@ -158,9 +158,9 @@ function drawScalogram(coeffs, scales) {
     const x = canvas.width * 0.1;
     const y = canvas.height * 0.25 + 30;
 
-    ctx.fillStyle = "rgba(14, 22, 32, 0.3)";
+    ctx.fillStyle = "rgba(239, 244, 230, 0.78)";
     ctx.fillRect(x, y, w, h);
-    ctx.strokeStyle = "#ff7a45";
+    ctx.strokeStyle = "#14202b";
     ctx.lineWidth = 2;
     ctx.strokeRect(x, y, w, h);
 
@@ -180,7 +180,7 @@ function drawScalogram(coeffs, scales) {
             const intensity = Math.abs(coeffs[s][i]) / maxCoeff;
             const color = Math.floor(intensity * 255);
 
-            ctx.fillStyle = `rgb(${color}, ${color * 0.48}, ${color * 0.27})`;
+            ctx.fillStyle = `rgba(214, 58, 34, ${Math.min(0.9, (color / 255) * 0.92)})`;
             ctx.fillRect(
                 x + i * pixelWidth,
                 y + s * pixelHeight,
@@ -190,11 +190,11 @@ function drawScalogram(coeffs, scales) {
         }
     }
 
-    ctx.strokeStyle = "#ff7a45";
+    ctx.strokeStyle = "#14202b";
     ctx.lineWidth = 2;
     ctx.strokeRect(x, y, w, h);
 
-    ctx.fillStyle = "#ff7a45";
+    ctx.fillStyle = "#14202b";
     ctx.font = "14px 'Martian Mono', monospace";
     ctx.fillText("Scalogram: |W(a,b)|", x + 10, y + 20);
     ctx.font = "10px 'Martian Mono', monospace";
@@ -208,9 +208,9 @@ function drawDecomposition(coeffs, scales) {
     const x = canvas.width * 0.1;
     const y = canvas.height * 0.68 + 30;
 
-    ctx.fillStyle = "rgba(14, 22, 32, 0.3)";
+    ctx.fillStyle = "rgba(239, 244, 230, 0.78)";
     ctx.fillRect(x, y, w, h);
-    ctx.strokeStyle = "#ff7a45";
+    ctx.strokeStyle = "#14202b";
     ctx.lineWidth = 2;
     ctx.strokeRect(x, y, w, h);
 
@@ -221,7 +221,7 @@ function drawDecomposition(coeffs, scales) {
         Math.floor(scales.length * 0.8),
     ];
 
-    const colors = ["#ff7a45", "#00aaff", "#ffaa00"];
+    const colors = ["#d63a22", "#1d5fa7", "#9a5b13"];
     const subH = h / indicesToDraw.length;
 
     indicesToDraw.forEach((scaleIdx, idx) => {
@@ -252,18 +252,17 @@ function drawDecomposition(coeffs, scales) {
         );
     });
 
-    ctx.strokeStyle = "#ff7a45";
+    ctx.strokeStyle = "#14202b";
     ctx.lineWidth = 2;
     ctx.strokeRect(x, y, w, h);
 
-    ctx.fillStyle = "#ff7a45";
+    ctx.fillStyle = "#14202b";
     ctx.font = "14px 'Martian Mono', monospace";
     ctx.fillText("Decomposition Levels", x + 10, y - 10);
 }
 
 function analyze() {
-    ctx.fillStyle = "#0e1620";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const signal = generateSignal();
     const scales = Array.from(

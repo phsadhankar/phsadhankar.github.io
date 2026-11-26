@@ -192,7 +192,7 @@ function drawStreamlines() {
         const startY = -rangeY + (i / numLines) * (rangeY * 2);
 
         ctx.beginPath();
-        ctx.strokeStyle = "rgba(255, 122, 69, 0.15)";
+        ctx.strokeStyle = "rgba(20, 32, 43, 0.2)";
         ctx.lineWidth = 1;
 
         let z = new Complex(-4 * aspect, startY);
@@ -235,7 +235,7 @@ function drawVectorField() {
             const len = Math.min(step * 0.35, mag * 8);
             const color = Math.min(255, mag * 80);
 
-            ctx.strokeStyle = `rgb(${color}, ${color * 0.48}, ${color * 0.27})`;
+            ctx.strokeStyle = `rgba(29, 95, 167, ${0.28 + Math.min(0.65, color / 320)})`;
             ctx.lineWidth = 1.5;
 
             ctx.beginPath();
@@ -270,8 +270,8 @@ function drawObstacles() {
         const center = complexToScreen(new Complex(0, 0));
         const scale = Math.min(cvs.width, cvs.height) / 6;
 
-        ctx.fillStyle = "#0e1620";
-        ctx.strokeStyle = "#ff7a45";
+        ctx.fillStyle = "#eff4e6";
+        ctx.strokeStyle = "#14202b";
         ctx.lineWidth = 3;
         ctx.beginPath();
         ctx.arc(center.x, center.y, 0.5 * scale, 0, Math.PI * 2);
@@ -281,7 +281,7 @@ function drawObstacles() {
 }
 
 function animate() {
-    ctx.fillStyle = "rgba(14, 22, 32, 0.3)";
+    ctx.fillStyle = "rgba(228, 236, 217, 0.32)";
     ctx.fillRect(0, 0, cvs.width, cvs.height);
 
     drawStreamlines();
@@ -291,7 +291,7 @@ function animate() {
     particles.forEach((p) => {
         p.update(0.05);
 
-        ctx.strokeStyle = "rgba(255, 122, 69, 0.7)";
+        ctx.strokeStyle = "rgba(214, 58, 34, 0.85)";
         ctx.lineWidth = 2;
         ctx.beginPath();
 
@@ -303,7 +303,7 @@ function animate() {
         ctx.stroke();
 
         const pos = complexToScreen(new Complex(p.x, p.y));
-        ctx.fillStyle = "#ff7a45";
+        ctx.fillStyle = "#d63a22";
         ctx.beginPath();
         ctx.arc(pos.x, pos.y, 3, 0, Math.PI * 2);
         ctx.fill();

@@ -95,6 +95,13 @@
 
         const seeds = {
             "turbulence.html": () => click("#random"),
+            "complex-flow.html": () => {
+                const sel = document.querySelector("#flowType");
+                if (sel) {
+                    sel.value = "cylinder";
+                    sel.dispatchEvent(new Event("change"));
+                }
+            },
             "conformal.html": () => {
                 const sel = document.querySelector("#mapping-type");
                 if (sel) {

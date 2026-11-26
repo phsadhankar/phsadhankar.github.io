@@ -18,7 +18,7 @@ const TRUE_PI = Math.PI;
 
 function drawCircleAndSquare() {
     // Draw square
-    ctx.strokeStyle = "#ff7a45";
+    ctx.strokeStyle = "#14202b";
     ctx.lineWidth = 3;
     ctx.strokeRect(
         centerX - radius,
@@ -33,7 +33,7 @@ function drawCircleAndSquare() {
     ctx.stroke();
 
     // Draw axes
-    ctx.strokeStyle = "rgba(255, 122, 69, 0.3)";
+    ctx.strokeStyle = "rgba(20, 32, 43, 0.3)";
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(centerX - radius, centerY);
@@ -92,8 +92,8 @@ function updateStats() {
 function drawPoints() {
     points.forEach((point) => {
         ctx.fillStyle = point.inside
-            ? "rgba(255, 122, 69, 0.6)"
-            : "rgba(255, 0, 65, 0.6)";
+            ? "rgba(214, 58, 34, 0.72)"
+            : "rgba(29, 95, 167, 0.65)";
         ctx.fillRect(point.x - 1, point.y - 1, 2, 2);
     });
 }
@@ -105,14 +105,14 @@ function drawConvergence() {
     const graphH = 160;
 
     // Background + frame
-    ctx.fillStyle = "rgba(255, 122, 69, 0.05)";
+    ctx.fillStyle = "rgba(239, 244, 230, 0.85)";
     ctx.fillRect(graphX, graphY, graphW, graphH);
-    ctx.strokeStyle = "rgba(255, 122, 69, 0.3)";
+    ctx.strokeStyle = "rgba(20, 32, 43, 0.3)";
     ctx.lineWidth = 2;
     ctx.strokeRect(graphX, graphY, graphW, graphH);
 
     // Title
-    ctx.fillStyle = "#ff7a45";
+    ctx.fillStyle = "#14202b";
     ctx.font = "12px 'Martian Mono', monospace";
     ctx.fillText("Convergence Plot", graphX + 10, graphY + 18);
     ctx.font = "10px 'Martian Mono', monospace";
@@ -125,7 +125,7 @@ function drawConvergence() {
     const gx1 = graphX + graphW - 10;
     const gy1 = graphY + 10;
 
-    ctx.strokeStyle = "rgba(255, 122, 69, 0.4)";
+    ctx.strokeStyle = "rgba(20, 32, 43, 0.35)";
     ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.moveTo(gx0, gy0);
@@ -167,7 +167,7 @@ function drawConvergence() {
     const minLog = Math.log10(minErr || 1e-6);
     const maxLog = Math.log10(maxErr);
 
-    ctx.strokeStyle = "#00aaff";
+    ctx.strokeStyle = "#d63a22";
     ctx.lineWidth = 2;
     ctx.beginPath();
     smooth.forEach((p, i) => {
@@ -181,7 +181,7 @@ function drawConvergence() {
     ctx.stroke();
 
     // Axis ticks (log10 scale)
-    ctx.fillStyle = "rgba(255, 122, 69,0.7)";
+    ctx.fillStyle = "#14202b";
     ctx.font = "10px 'Martian Mono', monospace";
 
     for (let exp = 1; exp <= Math.ceil(Math.log10(totalPoints)); exp++) {
@@ -204,8 +204,7 @@ function drawConvergence() {
 }
 
 function animate() {
-    ctx.fillStyle = "rgba(14, 22, 32, 0.1)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     drawCircleAndSquare();
     drawPoints();

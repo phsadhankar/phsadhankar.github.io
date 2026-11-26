@@ -44,7 +44,7 @@ class Particle {
     }
 }
 
-const particles = [new Particle(0.1, 0, 0, "#ff7a45")];
+const particles = [new Particle(0.1, 0, 0, "#d63a22")];
 
 function rotateX(y, z, angle) {
     const cos = Math.cos(angle);
@@ -105,7 +105,7 @@ function animate() {
     const dt = Math.min((now - lastTime) / 1000, 0.04) * speed * 0.5;
     lastTime = now;
 
-    ctx.fillStyle = "rgba(14, 22, 32, 0.1)";
+    ctx.fillStyle = "rgba(228, 236, 217, 0.16)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     if (running) {
@@ -210,13 +210,13 @@ document.getElementById("speed").addEventListener("input", (e) => {
 
 document.getElementById("reset").addEventListener("click", () => {
     particles.length = 0;
-    particles.push(new Particle(0.1, 0, 0, "#ff7a45"));
+    particles.push(new Particle(0.1, 0, 0, "#d63a22"));
     document.getElementById("particle-count").textContent =
         particles.length;
 });
 
 document.getElementById("add-particle").addEventListener("click", () => {
-    const colors = ["#ff7a45", "#00aaff", "#ff00aa", "#ffaa00", "#aa00ff"];
+    const colors = ["#d63a22", "#1d5fa7", "#2c7a4b", "#9a5b13", "#6b2d8b"];
     const color = colors[particles.length % colors.length];
     const offset = (Math.random() - 0.5) * 0.2;
     particles.push(new Particle(0.1 + offset, offset, offset, color));

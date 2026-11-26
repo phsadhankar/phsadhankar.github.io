@@ -122,14 +122,14 @@ function drawTimeDomain(signal) {
     const x = canvas.width * 0.15;
     const y = canvas.height * 0.1;
 
-    ctx.fillStyle = "rgba(14, 22, 32, 0.3)";
+    ctx.fillStyle = "rgba(239, 244, 230, 0.78)";
     ctx.fillRect(x, y, w, h);
-    ctx.strokeStyle = "#ff7a45";
+    ctx.strokeStyle = "#14202b";
     ctx.lineWidth = 2;
     ctx.strokeRect(x, y, w, h);
 
     ctx.beginPath();
-    ctx.strokeStyle = "#ff7a45";
+    ctx.strokeStyle = "#14202b";
     ctx.lineWidth = 2;
 
     const step = w / N;
@@ -145,7 +145,7 @@ function drawTimeDomain(signal) {
     }
     ctx.stroke();
 
-    ctx.fillStyle = "#ff7a45";
+    ctx.fillStyle = "#14202b";
     ctx.font = "14px 'Martian Mono', monospace";
     ctx.fillText("Time Domain: f(t)", x + 10, y + 20);
     ctx.font = "10px 'Martian Mono', monospace";
@@ -159,16 +159,16 @@ function drawFrequencyDomain(magnitude) {
     const x = canvas.width * 0.15;
     const y = canvas.height * 0.55;
 
-    ctx.fillStyle = "rgba(14, 22, 32, 0.3)";
+    ctx.fillStyle = "rgba(239, 244, 230, 0.78)";
     ctx.fillRect(x, y, w, h);
-    ctx.strokeStyle = "#ff7a45";
+    ctx.strokeStyle = "#14202b";
     ctx.lineWidth = 2;
     ctx.strokeRect(x, y, w, h);
 
     const maxMag = Math.max(...magnitude.slice(0, N / 2));
     const step = w / (N / 2);
 
-    ctx.fillStyle = "rgba(255, 122, 69, 0.6)";
+    ctx.fillStyle = "rgba(214, 58, 34, 0.78)";
     for (let i = 0; i < N / 2; i++) {
         const barHeight = (magnitude[i] / maxMag) * h * 0.9;
         const px = x + i * step;
@@ -176,7 +176,7 @@ function drawFrequencyDomain(magnitude) {
         ctx.fillRect(px, py, step * 0.8, barHeight);
     }
 
-    ctx.fillStyle = "#ff7a45";
+    ctx.fillStyle = "#14202b";
     ctx.font = "14px 'Martian Mono', monospace";
     ctx.fillText("Frequency Domain: |F(ω)|", x + 10, y + 20);
     ctx.font = "10px 'Martian Mono', monospace";
@@ -189,13 +189,13 @@ function drawComplexCircle(t) {
     const cy = canvas.height * 0.5;
     const r = 80;
 
-    ctx.strokeStyle = "rgba(255, 122, 69, 0.3)";
+    ctx.strokeStyle = "rgba(20, 32, 43, 0.35)";
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.arc(cx, cy, r, 0, 2 * Math.PI);
     ctx.stroke();
 
-    ctx.strokeStyle = "rgba(255, 122, 69, 0.2)";
+    ctx.strokeStyle = "rgba(20, 32, 43, 0.25)";
     ctx.beginPath();
     ctx.moveTo(cx - r - 10, cy);
     ctx.lineTo(cx + r + 10, cy);
@@ -205,7 +205,7 @@ function drawComplexCircle(t) {
 
     const angles = [freq1 * t, freq2 * t, freq3 * t];
     const amps = [amp1, amp2, amp3];
-    const colors = ["#ff7a45", "#00aaff", "#ffaa00"];
+    const colors = ["#d63a22", "#1d5fa7", "#9a5b13"];
 
     for (let i = 0; i < 3; i++) {
         if (amps[i] > 0) {
@@ -227,7 +227,7 @@ function drawComplexCircle(t) {
         }
     }
 
-    ctx.fillStyle = "#ff7a45";
+    ctx.fillStyle = "#14202b";
     ctx.font = "12px 'Martian Mono', monospace";
     ctx.fillText("e^(iωt)", cx - 20, cy - r - 20);
 }
@@ -256,8 +256,7 @@ function updateFrequencyInfo(magnitude) {
 }
 
 function animate() {
-    ctx.fillStyle = "#0e1620";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const signal = generateSignal();
     fft.forward(signal);

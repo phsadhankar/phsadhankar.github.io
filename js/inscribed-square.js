@@ -2,8 +2,17 @@ const cvs = document.getElementById("curveCanvas");
 const ctx = cvs.getContext("2d");
 
 function setupCanvas() {
+    const oldW = cvs.width || window.innerWidth;
+    const oldH = cvs.height || window.innerHeight;
     cvs.width = window.innerWidth;
     cvs.height = window.innerHeight;
+    if (typeof curvePoints !== "undefined" && curvePoints.length) {
+        const sx = cvs.width / oldW;
+        const sy = cvs.height / oldH;
+        curvePoints.forEach((p) => { p.x *= sx; p.y *= sy; });
+        foundSquares.forEach((sq) => sq.forEach((p) => { p.x *= sx; p.y *= sy; }));
+        render();
+    }
 }
 setupCanvas();
 window.addEventListener("resize", setupCanvas);
@@ -119,7 +128,7 @@ function loadExampleCurve() {
     // Create a wavy closed curve
     const centerX = cvs.width / 2;
     const centerY = cvs.height / 2;
-    const radius = Math.min(cvs.width, cvs.height) * 0.3;
+    const radius = Math.min(cvs.width, cvs.height) * 0.34;
 
     for (let i = 0; i <= 100; i++) {
         const angle = (i / 100) * Math.PI * 2;
@@ -142,12 +151,11 @@ function updateStatus(message) {
 }
 
 function render() {
-    ctx.fillStyle = "#0e1620";
-    ctx.fillRect(0, 0, cvs.width, cvs.height);
+    ctx.clearRect(0, 0, cvs.width, cvs.height);
 
     // Draw the curve
     if (curvePoints.length > 1) {
-        ctx.strokeStyle = "#ff7a45";
+        ctx.strokeStyle = "#14202b";
         ctx.lineWidth = 3;
         ctx.beginPath();
         ctx.moveTo(curvePoints[0].x, curvePoints[0].y);
@@ -157,7 +165,7 @@ function render() {
         ctx.stroke();
 
         // Draw points on curve
-        ctx.fillStyle = "rgba(255, 122, 69, 0.5)";
+        ctx.fillStyle = "rgba(20, 32, 43, 0.45)";
         curvePoints.forEach((p) => {
             ctx.beginPath();
             ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
@@ -167,7 +175,9 @@ function render() {
 
     // Draw found squares
     foundSquares.forEach((square, idx) => {
-        ctx.strokeStyle = `hsl(${idx * 60}, 100%, 60%)`;
+        const sqColors = ["#d63a22", "#1d5fa7", "#2c7a4b", "#9a5b13"];
+        const sc = sqColors[idx % sqColors.length];
+        ctx.strokeStyle = sc;
         ctx.lineWidth = 4;
         ctx.setLineDash([5, 5]);
 
@@ -183,7 +193,7 @@ function render() {
 
         // Draw vertices
         square.forEach((p) => {
-            ctx.fillStyle = `hsl(${idx * 60}, 100%, 60%)`;
+            ctx.fillStyle = sc;
             ctx.beginPath();
             ctx.arc(p.x, p.y, 6, 0, Math.PI * 2);
             ctx.fill();
