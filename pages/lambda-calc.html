@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>λ-Calculus Reduction & Type Inference</title>
+    <script src="../js/panels.js"></script>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/lambda-calc.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>λ-Calculus & Algorithm W</h2>
+      <p>Capture-avoiding β-reduction over ASTs alongside Hindley–Milner type inference.</p>
+      <div class="equation">
+        (λx. M) N →β [x := N] M<br />
+        Γ ⊢ λx. e : τ₁ → τ₂ · Γ ⊢ e₁ e₂ : τ
+      </div>
+      <p>Vermilion dashed frame marks the next β-redex under the selected evaluation order.</p>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>Preset Term</label>
+        <select id="preset">
+          <option value="skk">S K K a  (Combinator Identity)</option>
+          <option value="add">Church Addition  1 + 1</option>
+          <option value="and">Church Boolean  AND true false</option>
+          <option value="omega">ω Apply  (λx. x x)(λy. y)</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>Expression (use \ or λ)</label>
+        <input type="text" id="expr-in" value="(λx y z. x z (y z)) (λx y. x) (λx y. x) a" />
+      </div>
+      <div class="control-group">
+        <label>Reduction Order</label>
+        <select id="strategy">
+          <option value="normal">Normal Order (leftmost-outermost)</option>
+          <option value="applicative">Applicative Order (call-by-value)</option>
+        </select>
+      </div>
+      <button id="step-btn">Step →β</button>
+      <button id="norm-btn">Normalize</button>
+      <button id="reset-btn">Reset</button>
+      <div class="status" id="type-out">Γ ⊢ term : ...</div>
+    </div>
+
+    <script src="../js/lambda-calc.js"></script>
+  </body>
+</html>

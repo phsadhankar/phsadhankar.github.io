@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hoare Logic & Weakest Precondition Verifier</title>
+    <script src="../js/panels.js"></script>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/hoare-proof.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>Hoare Logic & wp Verifier</h2>
+      <p>Axiomatic proof obligations {P} while B do C {Q} discharged via weakest preconditions.</p>
+      <div class="equation">
+        VC₁: P ⇒ I    VC₂: (I ∧ B) ⇒ wp(C, I)<br />
+        VC₃: (I ∧ ¬B) ⇒ Q
+      </div>
+      <p>Inject a loop/invariant bug to observe the failing verification condition and counterexample.</p>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>Verified Program</label>
+        <select id="prog-sel">
+          <option value="sum">Sum 1..n  (Gauss Identity)</option>
+          <option value="pow">Binary Exponentiation  (b^e)</option>
+          <option value="div">Euclidean Quotient  (a = q·b + r)</option>
+          <option value="gcd">Euclidean GCD  (gcd invariance)</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>Input Parameter n / e: <span id="param-val">6</span></label>
+        <input type="range" id="param-slider" min="3" max="10" step="1" value="6" />
+      </div>
+      <button id="step-btn">Step Loop</button>
+      <button id="bug-btn">Inject Bug: OFF</button>
+      <button id="reset-btn">Reset Trace</button>
+      <div class="status" id="vc-out">All 3 VCs discharged · Q.E.D.</div>
+    </div>
+
+    <script src="../js/hoare-proof.js"></script>
+  </body>
+</html>

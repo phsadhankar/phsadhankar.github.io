@@ -1,0 +1,13 @@
+.info {
+  max-width: 390px;
+}
+
+.controls {
+  top: 20px;
+  right: 20px;
+  width: 310px;
+}
+
+.controls input[type="text"] {
+  font-size: 10.5px;
+}

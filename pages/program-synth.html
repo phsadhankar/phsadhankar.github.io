@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SyGuS Bottom-Up & CEGIS Synthesizer</title>
+    <script src="../js/panels.js"></script>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/program-synth.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>SyGuS Bottom-Up Synthesizer</h2>
+      <p>
+        Enumerates expressions by AST height using Observational Equivalence (OE) pruning and
+        counterexample-guided inductive synthesis (CEGIS).
+      </p>
+      <div class="equation">
+        sig(e) = [e(I₁), …, e(Iₖ)]<br />
+        Prune e if ∃ e' ∈ Bank : sig(e) = sig(e')
+      </div>
+      <p>Duplicate equivalence classes are discarded before expanding higher AST levels.</p>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>Target Specification</label>
+        <select id="spec-sel">
+          <option value="max2">max2(x, y)  — Maximum of two ints</option>
+          <option value="abs">abs(x)  — Absolute value |x|</option>
+          <option value="relu">relu(x)  — Clamp neg to 0</option>
+          <option value="diff">dist(x, y)  — |x − y|</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>OE Pruning</label>
+        <button id="oe-toggle" class="active">OE Pruning: ON</button>
+      </div>
+      <button id="step-btn">Step Depth</button>
+      <button id="run-btn">Solve (CEGIS)</button>
+      <button id="reset-btn">Reset h=1</button>
+      <div class="status" id="synth-out">Synthesized at depth 2</div>
+    </div>
+
+    <script src="../js/program-synth.js"></script>
+  </body>
+</html>
