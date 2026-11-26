@@ -223,17 +223,10 @@ function render() {
             const val = u_prev[i][j];
             const normalized = maxVal > 0 ? val / maxVal : 0;
 
-            let r, g, b;
-            if (normalized >= 0) {
-                r = Math.floor(228 - normalized * 14);
-                g = Math.floor(236 - normalized * 178);
-                b = Math.floor(217 - normalized * 183);
-            } else {
-                const neg = -normalized;
-                r = Math.floor(228 - neg * 199);
-                g = Math.floor(236 - neg * 141);
-                b = Math.floor(217 - neg * 50);
-            }
+            const a = Math.round(Math.min(1, Math.abs(normalized)) * 225);
+            const r = normalized >= 0 ? 214 : 29;
+            const g = normalized >= 0 ? 58 : 95;
+            const b = normalized >= 0 ? 34 : 167;
 
             // Use SCALE_X and SCALE_Y for correct drawing
             const startX = Math.floor(i * SCALE_X);
@@ -247,7 +240,7 @@ function render() {
                     data[idx] = r;
                     data[idx + 1] = g;
                     data[idx + 2] = b;
-                    data[idx + 3] = 255;
+                    data[idx + 3] = a;
                 }
             }
         }

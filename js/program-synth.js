@@ -353,6 +353,9 @@ function draw() {
 
         let cx = rx + 14;
         const shown = lvl.slice(0, h === 2 ? 18 : 14);
+        if (winner && winner.level === h && !shown.includes(winner)) {
+            shown[shown.length - 1] = winner;
+        }
         shown.forEach((n) => {
             const label = n.code.length > 22 ? n.code.slice(0, 20) + "…" : n.code;
             const chipW = Math.min(rw - 30, label.length * 6.8 + 16);
