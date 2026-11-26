@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abstract Interpretation & Fixpoint Domains</title>
+    <script src="../js/panels.js"></script>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/abstract-interp.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>Abstract Interpretation</h2>
+      <p>
+        Concrete loop trajectories stream through (x, y) while abstract domains
+        compute sound inductive invariants via Kleene iteration &amp; widening ▽.
+      </p>
+      <div class="equation">
+        X_{n+1} = X_n ▽ T♯(X_n)  ·  Safe ⇔ X_∞ ∩ Err = ∅<br />
+        Box (x ∈ [l, u]) loses relational slope; Octagon (±x ± y ≤ c) stays tight
+      </div>
+      <p>Click canvas to inject concrete traces; watch widening ▽ vs narrowing △ settle.</p>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>Loop Program</label>
+        <select id="prog-sel">
+          <option value="rot">Damped Affine Rotation (r = 0.96, θ = 24°)</option>
+          <option value="skew">Skewed Contractor (x + 0.35y, −0.25x + 0.92y)</option>
+          <option value="osc">Coupled Shear Orbit (Near Boundary)</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>Abstract Domain</label>
+        <select id="dom-sel">
+          <option value="oct">Octagons  (±x ± y ≤ c)</option>
+          <option value="box">Intervals / Box  (x ∈ [l, u] × y ∈ [l, u])</option>
+          <option value="poly">8-Template Polyhedra (22.5° facets)</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>Widening Delay k: <span id="widen-val">2</span></label>
+        <input type="range" id="widen-slider" min="0" max="5" step="1" value="2" />
+      </div>
+      <button id="replay-btn" class="active">Replay Fixpoint</button>
+      <button id="hazard-btn">Move Hazard Zone</button>
+      <div class="status" id="abs-out">PROVEN SAFE · X_∞ ∩ ERR = ∅</div>
+    </div>
+
+    <script src="../js/abstract-interp.js"></script>
+  </body>
+</html>

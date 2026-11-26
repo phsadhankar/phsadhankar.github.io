@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CDCL SAT Solver &amp; Implication Graph</title>
+    <script src="../js/panels.js"></script>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/sat-cdcl.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>CDCL SAT Solver</h2>
+      <p>
+        Conflict-Driven Clause Learning watches boolean unit propagation cascades
+        (cobalt), 1-UIP conflict cuts (vermilion), and non-chronological backjumping.
+      </p>
+      <div class="equation">
+        Decide → BCP(unit propagation) → Conflict ⇒ Resolve(1-UIP) → Backjump<br />
+        Learned clauses prune exponentially larger subtrees until SAT or ⊥
+      </div>
+      <p>Watch live clause learning accumulate across classical benchmarks.</p>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>CNF Benchmark</label>
+        <select id="bench-sel">
+          <option value="queens4">4-Queens CNF  (SAT)</option>
+          <option value="k4color">K₄ Clique 3-Coloring  (UNSAT)</option>
+          <option value="php34">Pigeonhole PHP³₄  (UNSAT)</option>
+          <option value="rand3">Random 3-SAT  (Critical α = 4.26)</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>Solver Tempo: <span id="speed-val">Normal</span></label>
+        <input type="range" id="speed-slider" min="1" max="5" step="1" value="3" />
+      </div>
+      <button id="play-btn" class="active">Running</button>
+      <button id="step-btn">Step</button>
+      <button id="reset-btn">Restart</button>
+      <div class="status" id="sat-out">Propagating... · 0 learned clauses</div>
+    </div>
+
+    <script src="../js/sat-cdcl.js"></script>
+  </body>
+</html>
