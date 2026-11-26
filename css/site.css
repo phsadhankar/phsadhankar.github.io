@@ -1008,11 +1008,18 @@ body.locked {
 
 /* ---------- view switching & singularity atlas ---------- */
 
-body[data-view="home"] .sub-only {
+body[data-view="home"] .sub-only,
+body[data-view="home"] .software-only {
   display: none;
 }
 
-body[data-view="discipline"] .home-only {
+body[data-view="discipline"] .home-only,
+body[data-view="discipline"] .software-only {
+  display: none;
+}
+
+body[data-view="software"] .home-only,
+body[data-view="software"] .sub-only {
   display: none;
 }
 
@@ -1214,6 +1221,14 @@ body[data-view="discipline"] .home-only {
 
 .discipline-sheet {
   border-top: 0;
+}
+
+.software-kicker {
+  font: 600 10px/1.2 var(--mono);
+  font-stretch: 80%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
 }
 
 .sub-software {

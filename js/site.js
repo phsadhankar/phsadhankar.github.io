@@ -11,7 +11,12 @@
         year: "numeric",
     });
 
-    /* ---------- flatten all 21 simulations cleanly across disciplines ---------- */
+    const navLinks = [...document.querySelectorAll(".pad-nav a")];
+    const setNav = (activeHref) => {
+        navLinks.forEach((a) => a.classList.toggle("on", a.getAttribute("href") === activeHref));
+    };
+
+    /* ---------- flatten all simulations across research disciplines ---------- */
 
     const ALL = [];
     let fig = 0;
@@ -107,16 +112,59 @@
         if (iframe) fit($(".frame", livePlate), iframe);
     });
 
-    /* ---------- render discipline sheet or software archive ---------- */
+    /* ---------- render separated software archive vs research discipline sheets ---------- */
 
     let activeSheetId = "";
 
     function renderCrumbs(activeId) {
-        const tabs = DISCIPLINES.map(
+        $("#crumb-tabs").innerHTML = DISCIPLINES.map(
             (d) => `<a href="#${d.id}" class="${d.id === activeId ? "on" : ""}">${esc(d.roman)} · ${esc(d.name)}</a>`
-        );
-        tabs.push(`<a href="#software" class="${activeId === "software" ? "on" : ""}">Software (${SOFTWARE.length})</a>`);
-        $("#crumb-tabs").innerHTML = tabs.join("");
+        ).join("");
+    }
+
+    function renderSoftware() {
+        if (activeSheetId === "software" && document.body.dataset.view === "software") return;
+        stopLive();
+        activeSheetId = "software";
+        document.body.dataset.view = "software";
+        setNav("#software");
+
+        $("#sheet-name").textContent = "Software";
+        $("#soft-rail").innerHTML = `
+          <span class="sec-no">Code</span>
+          <h2>Software</h2>
+          <p>Engineering repositories, satellite flight code, ML pipelines, and standalone software projects.</p>
+          <div class="filters" id="sub-filters" role="group" aria-label="Filter"></div>
+          <p class="more"><a href="https://github.com/phsadhankar?tab=repositories" target="_blank" rel="noopener">All on GitHub ↗</a></p>
+        `;
+        $("#soft-body").innerHTML = `<div class="ledger" id="sub-ledger"></div>`;
+        const ledger = $("#sub-ledger");
+        ledger.innerHTML = SOFTWARE.map(
+            (p) => `
+          <a class="row" href="${esc(p.url)}" target="_blank" rel="noopener" data-tags="${p.tags.join(" ")}">
+            <h4>${esc(p.name)}${p.live ? '<span class="badge">LIVE</span>' : ""}</h4>
+            <span class="txt">${esc(p.text)}</span>
+            <span class="stack">${esc(p.stack)}</span>
+            <span class="go">↗</span>
+          </a>`
+        ).join("");
+
+        const filters = $("#sub-filters");
+        filters.innerHTML = FILTERS.map(
+            ([fid, label], i) => `<button type="button" data-f="${fid}" aria-pressed="${i === 0}">${label}</button>`
+        ).join("");
+        filters.addEventListener("click", (e) => {
+            const b = e.target.closest("button");
+            if (!b) return;
+            filters.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b));
+            const f = b.dataset.f;
+            ledger.querySelectorAll(".row").forEach((r) => {
+                r.hidden = f !== "all" && !r.dataset.tags.split(" ").includes(f);
+            });
+        });
+
+        document.title = "Software — Pruthviraj Sadhankar";
+        window.scrollTo({ top: 0, behavior: "instant" });
     }
 
     function renderDiscipline(id) {
@@ -124,50 +172,13 @@
         stopLive();
         activeSheetId = id;
         document.body.dataset.view = "discipline";
+        setNav("");
         renderCrumbs(id);
-
-        if (id === "software") {
-            $("#sheet-name").textContent = "Software";
-            $("#sub-rail").innerHTML = `
-              <span class="sec-no">Archive</span>
-              <h2>Software</h2>
-              <p>Research repositories, synthesis tools, satellite flight code, and experiments.</p>
-              <div class="filters" id="sub-filters" role="group" aria-label="Filter"></div>
-              <p class="more"><a href="https://github.com/phsadhankar?tab=repositories" target="_blank" rel="noopener">All on GitHub ↗</a></p>
-            `;
-            $("#sub-body").innerHTML = `<div class="ledger" id="sub-ledger"></div>`;
-            const ledger = $("#sub-ledger");
-            ledger.innerHTML = SOFTWARE.map(
-                (p) => `
-              <a class="row" href="${esc(p.url)}" target="_blank" rel="noopener" data-tags="${p.tags.join(" ")}">
-                <h4>${esc(p.name)}${p.live ? '<span class="badge">LIVE</span>' : ""}</h4>
-                <span class="txt">${esc(p.text)}</span>
-                <span class="stack">${esc(p.stack)}</span>
-                <span class="go">↗</span>
-              </a>`
-            ).join("");
-            const filters = $("#sub-filters");
-            filters.innerHTML = FILTERS.map(
-                ([fid, label], i) => `<button type="button" data-f="${fid}" aria-pressed="${i === 0}">${label}</button>`
-            ).join("");
-            filters.addEventListener("click", (e) => {
-                const b = e.target.closest("button");
-                if (!b) return;
-                filters.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b));
-                const f = b.dataset.f;
-                ledger.querySelectorAll(".row").forEach((r) => {
-                    r.hidden = f !== "all" && !r.dataset.tags.split(" ").includes(f);
-                });
-            });
-            document.title = "Software — Pruthviraj Sadhankar";
-            window.scrollTo({ top: 0, behavior: "instant" });
-            return;
-        }
 
         const d = DISCIPLINES.find((x) => x.id === id);
         if (!d) return;
 
-        $("#sheet-name").textContent = `§${d.roman} ${d.name}`;
+        $("#sheet-name").textContent = `${d.roman} ${d.name}`;
         $("#sub-rail").innerHTML = `
           <span class="sec-no">§ ${esc(d.roman)}</span>
           <h2>${esc(d.name)}</h2>
@@ -220,7 +231,7 @@
             <div class="branch-head">
               <span class="b-no">+</span>
               <h3>Related code &amp; repositories</h3>
-              <span class="b-count"><a href="#software">All ${SOFTWARE.length} repos ↗</a></span>
+              <span class="b-count">${relatedSoft.length} ${relatedSoft.length === 1 ? "repo" : "repos"}</span>
             </div>
             <div class="ledger">
               ${relatedSoft
@@ -252,10 +263,14 @@
         $("#sheet-name").textContent = "Index";
         document.title = "Pruthviraj Sadhankar";
         if (scrollTarget === "top") {
+            setNav("#atlas");
             window.scrollTo({ top: 0, behavior: "instant" });
         } else if (scrollTarget) {
+            setNav("#" + scrollTarget);
             const el = document.getElementById(scrollTarget);
             if (el) el.scrollIntoView({ behavior: "smooth" });
+        } else {
+            setNav("#atlas");
         }
     }
 
@@ -314,7 +329,11 @@
         closeViewer();
 
         const secId = h.replace(/^#/, "");
-        if (secId === "software" || DISCIPLINES.some((d) => d.id === secId)) {
+        if (secId === "software") {
+            renderSoftware();
+            return;
+        }
+        if (DISCIPLINES.some((d) => d.id === secId)) {
             renderDiscipline(secId);
             return;
         }
@@ -379,13 +398,12 @@
 
     /* ---------- home nav highlight ---------- */
 
-    const links = [...document.querySelectorAll(".pad-nav a")];
     const io = new IntersectionObserver(
         (entries) => {
             if (document.body.dataset.view !== "home") return;
             entries.forEach((en) => {
                 if (!en.isIntersecting) return;
-                links.forEach((a) => a.classList.toggle("on", a.getAttribute("href") === "#" + en.target.id));
+                setNav("#" + en.target.id);
             });
         },
         { rootMargin: "-40% 0px -55% 0px" }

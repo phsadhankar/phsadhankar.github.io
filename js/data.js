@@ -9,7 +9,7 @@ window.DISCIPLINES = [
         tagline: "Transforms, analytic number theory, conformal planes & geometry",
         eq: "ζ(s) = ∑ n^(−s)  ·  F(ω) = ∫ f(t)e^(−iωt)dt",
         desc: "Eight interactive notebooks from scratch in plain JavaScript spanning signal transforms, complex mappings, analytic number theory, and open geometric problems.",
-        softTags: ["ml", "web"],
+        softTags: [],
         branches: [
             {
                 id: "signals",
@@ -107,8 +107,8 @@ window.DISCIPLINES = [
         name: "Physics",
         tagline: "Continuum fluids, Lagrangian chaos & variational mechanics",
         eq: "∂u/∂t + (u·∇)u = −∇p/ρ + ν∇²u  ·  δ∫L dt = 0",
-        desc: "Seven dynamical simulations covering incompressible Navier–Stokes, vorticity cascades, potential flows, Lagrangian double pendulums, brachistochrone variational optima, and PDE fields.",
-        softTags: ["robotics", "ml"],
+        desc: "Seven dynamical simulations covering incompressible Navier–Stokes, vorticity cascades, potential flows, Lagrangian double pendulums, brachistochrone variational optima, and PDE fields, alongside Neural Molecular Dynamics.",
+        softTags: ["physics"],
         branches: [
             {
                 id: "fluids",
@@ -189,29 +189,61 @@ window.DISCIPLINES = [
         roman: "III",
         sym: "⟨ψ|",
         name: "Quantum",
-        tagline: "SU(2) gate synthesis, wavepacket tunneling & subspace search",
-        eq: "iℏ ∂ψ/∂t = Ĥψ  ·  |ψ⟩ = cos(θ/2)|0⟩ + e^(iφ)sin(θ/2)|1⟩",
-        desc: "Interactive quantum computing and wave mechanics labs paired with Python circuit synthesis (Q-Synth) and hardware muon-seeded Qiskit execution (Qubit Command Center).",
+        tagline: "Optical Bloch control, Bell nonlocality, quantum walks & search",
+        eq: "iℏ ∂ψ/∂t = Ĥψ  ·  dr⃗/dt = Ω⃗_eff × r⃗ − γr⃗_⊥  ·  S ≤ 2√2",
+        desc: "Six interactive quantum mechanics and quantum computation labs covering optical Bloch dynamics, SU(2) gate synthesis, wavepacket tunneling, Bell CHSH violation, discrete quantum walks, and Grover search.",
         softTags: ["quantum"],
         branches: [
             {
-                id: "quantum-labs",
-                name: "Circuits, waves & amplitude amplification",
+                id: "quantum-control",
+                name: "Coherent control, gates & tunneling",
                 sims: [
+                    {
+                        slug: "rabi-ramsey",
+                        title: "Rabi & optical Bloch dynamics",
+                        eq: "dr⃗/dt = Ω⃗_eff × r⃗ − γ(r_x, r_y, 0)",
+                        note: "Driven two-level atom integrated via RK4 showing Bloch precession spirals, excited population P(|1⟩, t), and resonance profile.",
+                        span: 6,
+                        ar: "16 / 10",
+                    },
                     {
                         slug: "bloch-gates",
                         title: "Bloch sphere & gate composer",
                         eq: "|ψ⟩ = cos(θ/2)|0⟩ + e^(iφ) sin(θ/2)|1⟩",
                         note: "Compose single-qubit SU(2) gates (H, X, Y, Z, S, T, Rx, Ry), trace Bloch geodesics, and simplify circuits via exact identities.",
-                        span: 5,
-                        ar: "4 / 5",
+                        span: 6,
+                        ar: "16 / 10",
+                        dy: 56,
                     },
                     {
                         slug: "wavepacket",
                         title: "Schrödinger wavepacket tunneling",
                         eq: "iℏ ∂ψ/∂t = [−(ℏ²/2m)∂²/∂x² + V(x)] ψ",
                         note: "Unitary Crank–Nicolson integrator conserving ∫|ψ|²dx = 1 across single barriers, resonant double barriers, and harmonic wells.",
-                        span: 7,
+                        span: 8,
+                        start: 3,
+                        ar: "16 / 10",
+                    },
+                ],
+            },
+            {
+                id: "quantum-info",
+                name: "Entanglement, walks & amplitude amplification",
+                sims: [
+                    {
+                        slug: "entanglement-bell",
+                        title: "Bell pairs & CHSH witness",
+                        eq: "S = |E(a,b) − E(a,b′) + E(a′,b) + E(a′,b′)| ≤ 2√2",
+                        note: "Emit entangled photon pairs into draggable Alice & Bob polarizer dials and breach the classical Bell limit S = 2.",
+                        span: 6,
+                        ar: "16 / 10",
+                    },
+                    {
+                        slug: "quantum-walk",
+                        title: "Quantum vs classical walk",
+                        eq: "U = S · (C ⊗ I)  ⇒  σ_Q ∝ t vs σ_C ∝ √t",
+                        note: "48-trajectory coin-shift walk demonstrating quadratic ballistic spread and collapse back to binomial diffusion under decoherence.",
+                        span: 6,
                         ar: "16 / 10",
                         dy: 56,
                     },
@@ -233,14 +265,46 @@ window.DISCIPLINES = [
         roman: "IV",
         sym: "⊢",
         name: "Formal Methods",
-        tagline: "λ-calculus, type inference, program synthesis & Hoare proofs",
-        eq: "Γ ⊢ e : τ  ·  {P} S {Q}  ·  sig(e) = [e(I₁),…,e(Iₖ)]",
-        desc: "Programming languages and verification notebooks inspired by research in proof assistants (Rocq), syntax-guided synthesis (SyGuS), and axiomatic semantics.",
+        tagline: "Abstract domains, CTL wavefronts, CDCL graphs & synthesis",
+        eq: "X_{n+1} = X_n ▽ T♯(X_n)  ·  AG ¬bad  ·  Γ ⊢ e : τ",
+        desc: "Six programming languages and formal verification labs combining live kinetic abstract interpretation, Kripke model checking, CDCL SAT conflict graphs, λ-calculus, SyGuS synthesis, and Hoare logic.",
         softTags: ["formal"],
         branches: [
             {
-                id: "pl-labs",
-                name: "Semantics, synthesis & verification",
+                id: "kinetic-verif",
+                name: "Kinetic verification & solver geometry",
+                sims: [
+                    {
+                        slug: "abstract-interp",
+                        title: "Abstract interpretation & widening",
+                        eq: "X_{n+1} = X_n ▽ T♯(X_n)  ·  Safe ⇔ X_∞ ∩ Err = ∅",
+                        note: "Concrete execution trails stream through phase space while Box and Octagon envelopes widen, narrow, and race a hazard region.",
+                        span: 6,
+                        ar: "16 / 10",
+                    },
+                    {
+                        slug: "model-checker",
+                        title: "Model checking & CTL wavefronts",
+                        eq: "AG φ ≡ ¬EF ¬φ  ·  AF φ ≡ μZ.(φ ∨ AX Z)",
+                        note: "Transition tokens stream across concurrent Kripke structures while BFS reachability rings and race-bug counterexample lassos orbit.",
+                        span: 6,
+                        ar: "16 / 10",
+                        dy: 56,
+                    },
+                    {
+                        slug: "sat-cdcl",
+                        title: "CDCL SAT solver & 1-UIP graph",
+                        eq: "Decide → BCP → Conflict ⇒ 1-UIP Learn → Backjump",
+                        note: "Live boolean propagation cascades and vermilion 1-UIP conflict cuts learning clauses on 4-Queens, K₄ 3-coloring, and PHP³₄.",
+                        span: 8,
+                        start: 3,
+                        ar: "16 / 10",
+                    },
+                ],
+            },
+            {
+                id: "pl-semantics",
+                name: "Semantics, synthesis & axiomatic proofs",
                 sims: [
                     {
                         slug: "lambda-calc",
@@ -295,7 +359,7 @@ window.SOFTWARE = [
         name: "Neural Molecular Dynamics",
         text: "Bridges static protein structure prediction and real-time physical simulation, aiming at the folding pathway and not only the final state.",
         stack: "Python",
-        tags: ["ml"],
+        tags: ["physics", "ml"],
         url: GH + "Neural-Molecular-Dynamics",
     },
     {
@@ -388,9 +452,10 @@ window.SOFTWARE = [
 
 window.FILTERS = [
     ["all", "All"],
+    ["physics", "Physics"],
     ["quantum", "Quantum"],
-    ["ml", "ML"],
     ["formal", "Formal methods"],
+    ["ml", "ML"],
     ["robotics", "Robotics"],
     ["web", "Web"],
     ["games", "Games"],
