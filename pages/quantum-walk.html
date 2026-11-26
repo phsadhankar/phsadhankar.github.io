@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Discrete Quantum Random Walk</title>
+    <script src="../js/panels.js"></script>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/quantum-walk.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>Quantum vs Classical Walk</h2>
+      <p>
+        A quantum coin flip + conditional shift operator spreads quadratically faster
+        (σ ∝ t) than classical diffusion (σ ∝ √t) via amplitude interference.
+      </p>
+      <div class="equation">
+        U = S · (C ⊗ I)   |x, c⟩ ↦ |x + (−1)^c, c⟩<br />
+        Decoherence p ∈ [0, 1] collapses quantum interference → binomial bell
+      </div>
+      <p>Vermilion: Quantum P(x) · Cobalt dashed: Classical P(x)</p>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>Coin Operator C</label>
+        <select id="coin-sel">
+          <option value="hadamard">Hadamard Balanced (C = H, |ψ₀⟩ = |0⟩+i|1⟩)</option>
+          <option value="asym">Biased Hadamard (|ψ₀⟩ = |0⟩)</option>
+          <option value="dft">Asymmetric θ = π/6 (slow shift)</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>Decoherence p: <span id="decoh-val">0.00</span></label>
+        <input type="range" id="decoh" min="0" max="1" step="0.02" value="0" />
+      </div>
+      <button id="play-btn" class="active">Running</button>
+      <button id="step-btn">+5 Steps</button>
+      <button id="reset-btn">Reset x=0</button>
+      <div class="status" id="walk-out">t = 0 · σ_Q / σ_C = 1.00</div>
+    </div>
+
+    <script src="../js/quantum-walk.js"></script>
+  </body>
+</html>

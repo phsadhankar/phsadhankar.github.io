@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rabi Oscillations & Decoherence</title>
+    <script src="../js/panels.js"></script>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/rabi-ramsey.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>Rabi &amp; Optical Bloch Dynamics</h2>
+      <p>Two-level qubit driven by field amplitude Ω at detuning Δ with Markovian dephasing γ.</p>
+      <div class="equation">
+        d r⃗ / dt = Ω⃗_eff × r⃗ − γ(r_x, r_y, 0)<br />
+        Ω_eff = √(Ω² + Δ²)  ·  P(|1⟩) = (1 − r_z)/2
+      </div>
+      <p>Drag to rotate the Bloch frame; observe the tilting torque vector in cobalt.</p>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>Drive Amplitude Ω: <span id="om-val">1.8</span></label>
+        <input type="range" id="omega" min="0.4" max="3.5" step="0.1" value="1.8" />
+      </div>
+      <div class="control-group">
+        <label>Detuning Δ: <span id="del-val">0.6</span></label>
+        <input type="range" id="delta" min="-2.5" max="2.5" step="0.1" value="0.6" />
+      </div>
+      <div class="control-group">
+        <label>Dephasing γ: <span id="gam-val">0.08</span></label>
+        <input type="range" id="gamma" min="0" max="0.45" step="0.01" value="0.08" />
+      </div>
+      <button id="reset-btn">Reset |0⟩</button>
+      <button id="pi-btn">Resonant Δ = 0</button>
+      <div class="status" id="rabi-out">P(|1⟩) = 0.000 · |r| = 1.000</div>
+    </div>
+
+    <script src="../js/rabi-ramsey.js"></script>
+  </body>
+</html>

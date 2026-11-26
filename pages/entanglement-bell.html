@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bell Nonlocality & CHSH Inequality</title>
+    <script src="../js/panels.js"></script>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/entanglement-bell.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>Bell Pairs & CHSH Witness</h2>
+      <p>
+        Entangled photon source emits pairs in |ψ⟩ = cos θ |00⟩ + e^(iφ) sin θ |11⟩
+        to spacelike-separated polarizers α (Alice) and β (Bob).
+      </p>
+      <div class="equation">
+        S = |E(a, b) − E(a, b′) + E(a′, b) + E(a′, b′)|<br />
+        Local Realism: S ≤ 2   ·   Tsirelson Bound: S_max = 2√2 ≈ 2.828
+      </div>
+      <p>Drag either analyzer dial on the canvas or tune state entanglement θ, φ.</p>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>Entanglement θ: <span id="theta-val">45°</span> (Concurrence C = <span id="conc-val">1.00</span>)</label>
+        <input type="range" id="theta-slider" min="0" max="90" step="1" value="45" />
+      </div>
+      <div class="control-group">
+        <label>Relative Phase φ: <span id="phi-val">0°</span></label>
+        <input type="range" id="phi-slider" min="0" max="360" step="5" value="0" />
+      </div>
+      <div class="control-group">
+        <label>Analyzer Offset (θ_b − θ_a): <span id="ang-val">45°</span></label>
+        <input type="range" id="ang-slider" min="0" max="180" step="1" value="45" />
+      </div>
+      <button id="tsirelson-btn">Max Violation (2√2)</button>
+      <button id="product-btn">Separable |00⟩</button>
+      <button id="reset-btn">Clear Shots</button>
+      <div class="status" id="bell-out">S = 2.828 · BELL VIOLATION</div>
+    </div>
+
+    <script src="../js/entanglement-bell.js"></script>
+  </body>
+</html>
