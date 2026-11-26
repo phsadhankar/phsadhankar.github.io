@@ -243,8 +243,10 @@ function draw() {
     const pad = 34;
     const splitX = W * 0.48;
 
+    const embedded = document.documentElement.classList.contains("embed") || document.documentElement.classList.contains("panels-hidden");
+    const topY = embedded || H < 680 ? 44 : 254;
     // Left frame: Synthesized AST + Specification check table
-    const lx = pad, ly = 44, lw = splitX - pad - 14, lh = H - 80;
+    const lx = pad, ly = topY, lw = splitX - pad - 14, lh = H - topY - 26;
     ctx.fillStyle = "rgba(239, 244, 230, 0.78)";
     ctx.fillRect(lx, ly, lw, lh);
     ctx.strokeStyle = "#14202b";
@@ -259,7 +261,7 @@ function draw() {
     if (dispAst) {
         const measured = astMeasure(dispAst);
         const flat = [];
-        astLayout(measured, lx + 30, lx + lw - 30, ly + 72, 64, flat);
+        astLayout(measured, lx + 30, lx + lw - 30, ly + (embedded ? 72 : 52), embedded ? 64 : 48, flat);
 
         ctx.strokeStyle = "#14202b";
         ctx.lineWidth = 1.5;
@@ -301,7 +303,7 @@ function draw() {
     }
 
     // Bottom left: CEGIS I/O & counterexample table
-    const ty = ly + lh * 0.56;
+    const ty = ly + lh * (embedded ? 0.56 : 0.48);
     ctx.strokeStyle = "rgba(20, 32, 43, 0.35)";
     ctx.beginPath();
     ctx.moveTo(lx + 14, ty);
@@ -319,7 +321,7 @@ function draw() {
     });
 
     // Example verification grid
-    const ey = ty + 142;
+    const ey = ty + (embedded ? 142 : 124);
     spec.examples.forEach(([x, y], i) => {
         const rowY = ey + i * 20;
         if (rowY > ly + lh - 12) return;
@@ -332,7 +334,7 @@ function draw() {
     });
 
     // Right frame: Bottom-up Enumerative Lattice + OE Signatures
-    const rx = splitX + 8, ry = 44, rw = W - rx - pad, rh = H - 80;
+    const rx = splitX + 8, ry = topY, rw = W - rx - pad, rh = H - topY - 26;
     ctx.fillStyle = "rgba(239, 244, 230, 0.78)";
     ctx.fillRect(rx, ry, rw, rh);
     ctx.strokeStyle = "#14202b";

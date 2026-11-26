@@ -353,10 +353,12 @@ function draw() {
     const W = canvas.width;
     const H = canvas.height;
 
+    const embedded = document.documentElement.classList.contains("embed") || document.documentElement.classList.contains("panels-hidden");
     const topPad = 42;
-    const ledgerH = Math.min(200, H * 0.27);
+    const ledgerH = Math.min(185, H * 0.24);
     const treeH = H - ledgerH - topPad - 24;
-    const sidePad = Math.max(36, W * 0.14);
+    const leftPad = embedded || W < 1050 ? Math.max(36, W * 0.14) : 415;
+    const rightPad = embedded || W < 1050 ? Math.max(36, W * 0.14) : 345;
 
     if (currentAst) {
         const redex = findNextRedex(currentAst, strategy);
@@ -364,7 +366,7 @@ function draw() {
         const depth = Math.max(1, measured.height);
         const dy = Math.min(72, (treeH - 50) / depth);
         const flat = [];
-        const root = layoutTree(measured, sidePad, W - sidePad, topPad + 28, dy, flat);
+        const root = layoutTree(measured, leftPad, W - rightPad, topPad + 28, dy, flat);
 
         // Highlight active redex subtree box first
         for (const item of flat) {

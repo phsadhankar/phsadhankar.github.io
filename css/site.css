@@ -1088,14 +1088,15 @@ body.locked {
   }
 
   .pad-nav {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-between;
-    gap: 0 4px;
+    gap: 2px;
   }
 
   .pad-nav a {
-    padding: 7px 4px;
-    font-size: 9.5px;
+    padding: 8px 2px;
+    font-size: 9px;
+    letter-spacing: 0.04em;
   }
 
   .answer {

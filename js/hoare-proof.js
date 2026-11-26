@@ -186,11 +186,13 @@ function draw() {
     const p = PROGRAMS[progKey];
     const vcs = p.vcs(bugInjected);
 
+    const embedded = document.documentElement.classList.contains("embed") || document.documentElement.classList.contains("panels-hidden");
     const pad = 34;
+    const topY = embedded || H < 680 ? 44 : 244;
     const splitX = W * 0.48;
 
     // Left frame: Proof Outline & VCs
-    const lx = pad, ly = 44, lw = splitX - pad - 12, lh = H - 80;
+    const lx = pad, ly = topY, lw = splitX - pad - 12, lh = H - topY - 26;
     ctx.fillStyle = "rgba(239, 244, 230, 0.8)";
     ctx.fillRect(lx, ly, lw, lh);
     ctx.strokeStyle = "#14202b";
@@ -209,13 +211,13 @@ function draw() {
         { txt: "  do  " + p.bodyLabel, kind: "code" },
         { txt: p.post, kind: "assert" },
     ];
-    let yCur = ly + 52;
+    let yCur = ly + 46;
     codeLines.forEach((ln) => {
         ctx.fillStyle =
             ln.kind === "bad" ? "#d63a22" : ln.kind === "assert" ? "#1d5fa7" : "#14202b";
         ctx.font = `${ln.kind === "code" ? "500" : "600"} 11px 'Martian Mono', monospace`;
         ctx.fillText(ln.txt.slice(0, 56), lx + 16, yCur);
-        yCur += 24;
+        yCur += embedded ? 24 : 20;
     });
 
     // Verification Conditions block
@@ -231,13 +233,13 @@ function draw() {
     ctx.fillText("VERIFICATION CONDITIONS (WP)", lx + 14, vcy + 6);
 
     vcs.forEach((vc, idx) => {
-        const by = vcy + 24 + idx * 54;
+        const by = vcy + 22 + idx * (embedded ? 54 : 46);
         if (by + 44 > ly + lh) return;
         ctx.fillStyle = vc.ok ? "rgba(29, 95, 167, 0.08)" : "rgba(214, 58, 34, 0.12)";
-        ctx.fillRect(lx + 14, by, lw - 28, 44);
+        ctx.fillRect(lx + 14, by, lw - 28, embedded ? 44 : 40);
         ctx.strokeStyle = vc.ok ? "#1d5fa7" : "#d63a22";
         ctx.lineWidth = vc.ok ? 1.2 : 2;
-        ctx.strokeRect(lx + 14, by, lw - 28, 44);
+        ctx.strokeRect(lx + 14, by, lw - 28, embedded ? 44 : 40);
 
         ctx.fillStyle = vc.ok ? "#1d5fa7" : "#d63a22";
         ctx.font = "700 10.5px 'Martian Mono', monospace";
@@ -249,7 +251,7 @@ function draw() {
     });
 
     // Right frame: Invariant Manifold + Program State Trajectory
-    const rx = splitX + 10, ry = 44, rw = W - rx - pad, rh = H - 80;
+    const rx = splitX + 10, ry = topY, rw = W - rx - pad, rh = H - topY - 26;
     ctx.fillStyle = "rgba(239, 244, 230, 0.8)";
     ctx.fillRect(rx, ry, rw, rh);
     ctx.strokeStyle = "#14202b";
