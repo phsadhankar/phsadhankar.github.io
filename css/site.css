@@ -5,7 +5,7 @@
   --ink-soft: #3c4b57;
   --red: #d63a22;
   --rule: rgba(58, 108, 78, 0.3);
-  --stage: #0e1620;
+  --stage: #e4ecd9;
 
   --display: "Big Shoulders Display", Impact, "Arial Narrow", sans-serif;
   --serif: "Newsreader", Georgia, serif;
@@ -389,8 +389,10 @@ kbd {
   outline: none;
 }
 
-.plate[style*="--start"] {
-  grid-column-start: var(--start);
+@media (min-width: 761px) {
+  .plate[style*="--start"] {
+    grid-column: var(--start) / span var(--span, 6);
+  }
 }
 
 .mat {
@@ -440,6 +442,7 @@ kbd {
   aspect-ratio: var(--ar, 16 / 10);
   overflow: hidden;
   background: var(--stage);
+  border: 1px solid var(--ink);
 }
 
 .frame img {
@@ -477,18 +480,22 @@ kbd {
   font-stretch: 80%;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  background: var(--paper);
-  color: var(--ink);
 }
 
 .tag {
   left: 0;
   top: 0;
+  background: var(--ink);
+  color: var(--paper-hi);
 }
 
 .state {
   right: 0;
   bottom: 0;
+  background: var(--paper-hi);
+  color: var(--ink);
+  border-top: 1px solid var(--ink);
+  border-left: 1px solid var(--ink);
 }
 
 .state::before {
