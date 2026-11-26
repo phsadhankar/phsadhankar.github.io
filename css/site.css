@@ -1005,6 +1005,221 @@ body.locked {
   overflow: hidden;
 }
 
+
+/* ---------- view switching & singularity atlas ---------- */
+
+body[data-view="home"] .sub-only {
+  display: none;
+}
+
+body[data-view="discipline"] .home-only {
+  display: none;
+}
+
+.atlas-stage {
+  position: relative;
+  height: clamp(560px, 68vh, 660px);
+  border: 1.5px solid var(--ink);
+  overflow: hidden;
+  background: rgba(239, 244, 230, 0.25);
+}
+
+#atlas-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.atlas-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: 100%;
+}
+
+.basin {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 2.6vw, 32px);
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+  transition: opacity 0.25s;
+}
+
+.atlas-stage:has(.basin.is-hot) .basin:not(.is-hot) {
+  opacity: 0.52;
+}
+
+.basin:nth-child(1) {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.basin:nth-child(2) {
+  justify-content: flex-start;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.basin:nth-child(3) {
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.basin:nth-child(4) {
+  justify-content: flex-end;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.basin-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 600 10px/1 var(--mono);
+  font-stretch: 80%;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.basin-meta .sym {
+  padding: 3px 7px;
+  color: var(--paper-hi);
+  background: var(--ink);
+  transition: background 0.2s;
+}
+
+.basin.is-hot .basin-meta .sym,
+.basin:focus-visible .basin-meta .sym {
+  background: var(--red);
+}
+
+.basin h3 {
+  margin: 10px 0 6px;
+  font: 900 clamp(30px, 3.2vw, 46px) / 0.88 var(--display);
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  transition: color 0.18s;
+}
+
+.basin.is-hot h3,
+.basin:focus-visible h3 {
+  color: var(--red);
+}
+
+.basin p {
+  margin: 0 0 10px;
+  max-width: 24ch;
+  font-size: 14.5px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.basin-go {
+  font: 600 10.5px/1 var(--mono);
+  font-stretch: 80%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding-bottom: 3px;
+  border-bottom: 1.5px solid transparent;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.basin.is-hot .basin-go,
+.basin:focus-visible .basin-go {
+  border-bottom-color: var(--red);
+  color: var(--red);
+}
+
+/* ---------- discipline sub-sheet ---------- */
+
+.discipline-wrap {
+  animation: sheetIn 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes sheetIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.crumb-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  padding: 14px var(--gutter);
+  background: var(--paper-hi);
+  border-bottom: 1px solid var(--ink);
+}
+
+.crumb-back {
+  padding: 7px 12px;
+  font: 600 10.5px/1 var(--mono);
+  font-stretch: 80%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--paper-hi);
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.crumb-back:hover {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.crumb-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.crumb-tabs a {
+  padding: 6px 10px;
+  font: 600 10px/1 var(--mono);
+  font-stretch: 80%;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--ink);
+  background: transparent;
+  transition: background 0.15s, color 0.15s;
+}
+
+.crumb-tabs a:hover {
+  background: var(--paper);
+}
+
+.crumb-tabs a.on {
+  color: var(--paper-hi);
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.discipline-sheet {
+  border-top: 0;
+}
+
+.sub-software {
+  margin-top: 84px;
+}
+
 /* ---------- smaller screens ---------- */
 
 @media (max-width: 1080px) {
@@ -1111,6 +1326,31 @@ body.locked {
 
   .v-hint {
     display: none;
+  }
+
+  .atlas-stage {
+    height: auto;
+  }
+
+  .atlas-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, minmax(150px, auto));
+  }
+
+  .basin:nth-child(n) {
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    padding: 20px 16px;
+  }
+
+  .basin p {
+    max-width: 24ch;
+    font-size: 13.5px;
+  }
+
+  .basin h3 {
+    font-size: 36px;
   }
 }
 

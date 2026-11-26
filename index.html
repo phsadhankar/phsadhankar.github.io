@@ -6,7 +6,7 @@
     <title>Pruthviraj Sadhankar</title>
     <meta
       name="description"
-      content="Pruthviraj Sadhankar: mathematics, quantum computing, and formal methods research alongside live interactive notebooks."
+      content="Pruthviraj Sadhankar: mathematics, physics, quantum computing, and formal methods research alongside interactive numerical notebooks."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,7 +16,7 @@
     />
     <link rel="stylesheet" href="./css/site.css" />
   </head>
-  <body>
+  <body data-view="home">
     <canvas id="net" aria-hidden="true"></canvas>
 
     <header class="pad">
@@ -24,28 +24,26 @@
         <span class="field"><i>Name</i><b>Pruthviraj Sadhankar</b></span>
         <span class="field"><i>Project</i><b>Portfolio</b></span>
         <span class="field"><i>Date</i><b id="today"></b></span>
-        <span class="field"><i>Sheet</i><b>1 of 1</b></span>
+        <span class="field"><i>Sheet</i><b id="sheet-name">Index</b></span>
       </div>
       <nav class="pad-nav" aria-label="Sections">
-        <a href="#math">Math</a>
-        <a href="#quantum">Quantum</a>
-        <a href="#pl">Formal</a>
+        <a href="#atlas" data-home>Atlas</a>
+        <a href="#record" data-home>Record</a>
         <a href="#software">Software</a>
-        <a href="#record">Record</a>
         <a href="#contact">Contact</a>
       </nav>
     </header>
 
     <main>
-      <section class="hero" id="top">
+      <section class="hero home-only" id="top">
         <h1 class="name">
           <span>Pruthviraj</span>
           <span>Sadhankar</span>
         </h1>
 
         <p class="roles">
-          Mathematics · Quantum<br />
-          Formal methods · Systems<br />
+          Mathematics · Physics<br />
+          Quantum · Formal methods<br />
           University of Kansas
         </p>
 
@@ -88,90 +86,53 @@
         </p>
       </section>
 
-      <section class="sheet" id="math">
+      <section class="sheet home-only" id="atlas">
         <aside class="rail">
           <span class="sec-no">§1</span>
-          <h2>Mathematics</h2>
+          <h2>Notebooks</h2>
           <p>
-            Fifteen numerical, geometric, and variational labs built from scratch
-            on canvas in plain JavaScript.
+            Four coupled basins on one complex plane (z⁴ − 1 = 0). Move to bend
+            the separatrices; select a singularity to open its research sheet.
           </p>
           <p class="how">
-            Hover a plate to run it. Click to open full screen, where panels can
-            be dragged, folded, or hidden with <kbd>H</kbd>.
+            Each basin opens dedicated interactive simulations and code in that
+            domain without crowding the index sheet.
           </p>
-        </aside>
-        <div class="body" id="math-body"></div>
-      </section>
-
-      <section class="sheet" id="quantum">
-        <aside class="rail">
-          <span class="sec-no">§2</span>
-          <h2>Quantum &amp; Physics</h2>
-          <p>
-            Single-qubit SU(2) gate synthesis, unitary Crank–Nicolson tunneling,
-            and Grover subspace amplification.
-          </p>
-          <p class="how">
-            Pairs directly with the Python circuit optimizer and muon-seeded sampler in §4.
-          </p>
-        </aside>
-        <div class="body" id="quantum-body"></div>
-      </section>
-
-      <section class="sheet" id="pl">
-        <aside class="rail">
-          <span class="sec-no">§3</span>
-          <h2>PL &amp; Formal Methods</h2>
-          <p>
-            Capture-avoiding λ-reduction and Hindley–Milner typing, bottom-up
-            SyGuS synthesis, and Hoare logic verification conditions.
-          </p>
-          <p class="how">
-            Click any plate to step proofs, inspect ASTs, or inject counterexamples.
-          </p>
-        </aside>
-        <div class="body" id="pl-body"></div>
-      </section>
-
-      <section class="sheet" id="software">
-        <aside class="rail">
-          <span class="sec-no">§4</span>
-          <h2>Software</h2>
-          <p>The rest of the shelf: research code, tools, and games.</p>
-          <div class="filters" id="filters" role="group" aria-label="Filter"></div>
         </aside>
         <div class="body">
-          <div class="ledger" id="ledger"></div>
-          <p class="more">
-            <a href="https://github.com/phsadhankar?tab=repositories"
-              >All repositories on GitHub ↗</a
-            >
-          </p>
+          <div class="atlas-stage" id="atlas-stage">
+            <canvas id="atlas-canvas" aria-hidden="true"></canvas>
+            <div class="atlas-grid" id="atlas-grid"></div>
+          </div>
         </div>
       </section>
 
-      <section class="sheet" id="record">
+      <section class="sheet home-only" id="record">
         <aside class="rail">
-          <span class="sec-no">§5</span>
+          <span class="sec-no">§2</span>
           <h2>Record</h2>
           <p>Where the hours went.</p>
+          <p class="more">
+            <a href="#software">Open software archive (15 repos) ↗</a>
+          </p>
         </aside>
         <div class="body">
           <div class="entries" id="experience"></div>
           <h3 class="sub">Education</h3>
           <div class="entries" id="education"></div>
+          <h3 class="sub">Toolbox</h3>
+          <div class="sets" id="sets"></div>
         </div>
       </section>
 
-      <section class="sheet" id="toolbox">
-        <aside class="rail">
-          <span class="sec-no">§6</span>
-          <h2>Toolbox</h2>
-          <p>Stated as sets, because that is how I would rather say it.</p>
-        </aside>
-        <div class="body">
-          <div class="sets" id="sets"></div>
+      <section class="sub-only discipline-wrap" id="discipline-view" aria-live="polite">
+        <div class="crumb-bar">
+          <a class="crumb-back" href="#top">← Index Sheet</a>
+          <div class="crumb-tabs" id="crumb-tabs"></div>
+        </div>
+        <div class="sheet discipline-sheet">
+          <aside class="rail" id="sub-rail"></aside>
+          <div class="body" id="sub-body"></div>
         </div>
       </section>
     </main>
@@ -213,5 +174,6 @@
     <script src="./js/data.js"></script>
     <script src="./js/grid.js"></script>
     <script src="./js/site.js"></script>
+    <script src="./js/atlas.js"></script>
   </body>
 </html>
