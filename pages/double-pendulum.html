@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Double Pendulum & Phase Space</title>
+    <script src="../js/panels.js"></script>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/double-pendulum.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>Double Pendulum Phase Space</h2>
+      <p>Two RK4 Lagrangian pendulums differing initially by δθ₁ = 10⁻⁴ rad.</p>
+      <div class="equation">
+        d/dt(∂ℒ/∂θ̇ᵢ) − ∂ℒ/∂θᵢ = 0<br />
+        Phase plot: (θ₂ mod 2π, ω₂)
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>Perturbation δθ₁: <span id="eps-val">1e-4</span> rad</label>
+        <input type="range" id="eps" min="-5" max="-1" step="1" value="-4" />
+      </div>
+      <div class="control-group">
+        <label>Mass Ratio m₂/m₁: <span id="mass-val">1.0</span></label>
+        <input type="range" id="mass" min="0.4" max="2.5" step="0.1" value="1.0" />
+      </div>
+      <button id="reset-btn">Reset Chaos</button>
+      <button id="toggle-btn">Pause</button>
+      <div class="status" id="stats-out">|Δθ| = 0.000 rad</div>
+    </div>
+
+    <script src="../js/double-pendulum.js"></script>
+  </body>
+</html>

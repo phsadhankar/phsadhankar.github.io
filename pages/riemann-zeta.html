@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Riemann Zeta Critical Strip</title>
+    <script src="../js/panels.js"></script>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/riemann-zeta.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>Riemann Zeta Critical Strip</h2>
+      <p>Orbit of s = σ + it mapped through ζ(s) via Euler-accelerated η(s).</p>
+      <div class="equation">
+        ζ(s) = (1 − 2^(1−s))⁻¹ · ∑ (−1)^(n−1) n^(−s)<br />
+        Z(t) = e^(iϑ(t)) · ζ(½ + it) ∈ ℝ
+      </div>
+      <p>
+        At σ = 0.5, the spiral passes through 0 + 0i at each non-trivial zero γₙ.
+      </p>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>σ (Re s): <span id="sigma-val">0.50</span></label>
+        <input type="range" id="sigma" min="0.15" max="0.85" step="0.01" value="0.50" />
+      </div>
+      <div class="control-group">
+        <label>t (Im s): <span id="t-val">26.00</span></label>
+        <input type="range" id="t-slider" min="1" max="45" step="0.02" value="26" />
+      </div>
+      <button id="critical-btn">Snap σ = ½</button>
+      <button id="sweep-btn">Pause Sweep</button>
+      <div class="control-group">
+        <label>Jump to Zero γₙ</label>
+        <button class="zero-btn" data-t="14.1347">γ₁ 14.13</button>
+        <button class="zero-btn" data-t="21.0220">γ₂ 21.02</button>
+        <button class="zero-btn" data-t="25.0109">γ₃ 25.01</button>
+        <button class="zero-btn" data-t="30.4249">γ₄ 30.42</button>
+      </div>
+      <div class="status" id="zeta-readout">ζ(0.50 + 26.00i) = ...</div>
+    </div>
+
+    <script src="../js/riemann-zeta.js"></script>
+  </body>
+</html>

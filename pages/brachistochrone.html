@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brachistochrone & Tautochrone</title>
+    <script src="../js/panels.js"></script>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/brachistochrone.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>Brachistochrone Race</h2>
+      <p>Minimizing descent time T[y] under uniform gravity g.</p>
+      <div class="equation">
+        T[y] = ∫ √((1 + y'²) / (2gy)) dx<br />
+        Optimal: Cycloid  x = R(θ − sin θ), y = R(1 − cos θ)
+      </div>
+      <p>Drag the ochre Bézier handle to test your own curve against the cycloid.</p>
+    </div>
+
+    <div class="controls">
+      <button id="race-btn">Replay Race</button>
+      <button id="taut-btn">Tautochrone Mode</button>
+      <div class="status" id="times-out">Racing...</div>
+    </div>
+
+    <script src="../js/brachistochrone.js"></script>
+  </body>
+</html>

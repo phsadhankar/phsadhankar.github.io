@@ -1,0 +1,14 @@
+.info {
+  max-width: 390px;
+}
+
+.controls {
+  top: 20px;
+  right: 20px;
+  width: 280px;
+}
+
+.zero-btn {
+  padding: 5px 8px;
+  font-size: 10px;
+}

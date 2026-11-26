@@ -1,0 +1,9 @@
+.info {
+  max-width: 370px;
+}
+
+.controls {
+  bottom: 20px;
+  left: 20px;
+  width: 270px;
+}
