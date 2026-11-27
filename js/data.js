@@ -265,9 +265,9 @@ window.DISCIPLINES = [
         roman: "IV",
         sym: "⊢",
         name: "Formal Methods",
-        tagline: "Abstract domains, CTL wavefronts, CDCL graphs & synthesis",
+        tagline: "Abstract domains, CTL wavefronts, CDCL graphs & automata",
         eq: "X_{n+1} = X_n ▽ T♯(X_n)  ·  AG ¬bad  ·  Γ ⊢ e : τ",
-        desc: "Six programming languages and formal verification labs combining live kinetic abstract interpretation, Kripke model checking, CDCL SAT conflict graphs, λ-calculus, SyGuS synthesis, and Hoare logic.",
+        desc: "Seven programming languages, formal verification, and automata labs combining live kinetic abstract interpretation, Kripke model checking, CDCL SAT conflict graphs, λ-calculus, SyGuS synthesis, Hoare logic, and Life-in-Life cellular automata.",
         softTags: ["formal"],
         branches: [
             {
@@ -330,6 +330,21 @@ window.DISCIPLINES = [
                         note: "Discharges verification conditions for loop invariants on a state manifold, or lets you inject bugs to inspect failing counterexamples.",
                         span: 8,
                         start: 3,
+                        ar: "16 / 10",
+                    },
+                ],
+            },
+            {
+                id: "automata-ca",
+                name: "Automata & universal computation",
+                sims: [
+                    {
+                        slug: "cellular-automata",
+                        title: "Cellular automata & Life-in-Life",
+                        eq: "s_i^{t+1} = δ(s_i^t, N(i))  ·  Meta B3/S23 ∈ Micro B3/S23",
+                        note: "Conway's Game of Life, a hierarchical Life-in-Life metapixel running macro B3/S23 over real B3/S23 glider waveguides, Wireworld, Brian's Brain, 1D rules, and a custom rule studio you can draw and play.",
+                        span: 10,
+                        start: 2,
                         ar: "16 / 10",
                     },
                 ],
