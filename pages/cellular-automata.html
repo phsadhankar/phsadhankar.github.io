@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cellular Automata &amp; Life-in-Life</title>
+    <script src="../js/panels.js"></script>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/cellular-automata.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="info">
+      <h2>Cellular Automata</h2>
+      <p>
+        Explore discrete local transition systems from Conway's Life and a hierarchical
+        <strong>Life-in-Life</strong> metapixel (macro B3/S23 driven by real B3/S23
+        glider waveguides) to Generations, Wireworld, Elementary 1D rules, and your own
+        custom rules.
+      </p>
+      <div class="equation" id="rule-eq">
+        B3/S23 · s_i^{t+1} = 1 ⇔ n=3 ∨ (s_i^t=1 ∧ n=2)
+      </div>
+      <p class="hint">
+        <strong>Drag:</strong> Paint / Erase · <strong>Wheel:</strong> Zoom ·
+        <strong>Right/Shift+Drag:</strong> Pan · <strong>Space:</strong> Run ·
+        <strong>H:</strong> Hide slips
+      </p>
+    </div>
+
+    <div class="stats" id="stats-box">
+      <div class="stat-line">
+        <strong>Clock:</strong> <span id="stat-gen">Gen 0</span>
+      </div>
+      <div class="stat-line">
+        <strong>Active:</strong> <span id="stat-pop">0 (0.0%)</span>
+      </div>
+      <div class="stat-line">
+        <strong>Flux:</strong> <span id="stat-flux">+0 / −0</span>
+      </div>
+      <div class="stat-line">
+        <strong>View:</strong> <span id="stat-view">1.0× · (–, –)</span>
+      </div>
+    </div>
+
+    <div class="controls" id="controls-panel">
+      <div class="control-group">
+        <label for="preset-sel">Automaton Universe / Preset</label>
+        <select id="preset-sel">
+          <optgroup label="2D Life &amp; Recursive Meta">
+            <option value="life">Conway's Game of Life (B3/S23)</option>
+            <option value="life-in-life">Life in Life (Meta B3/S23 ∈ B3/S23)</option>
+            <option value="highlife">HighLife (B36/S23 · Replicator)</option>
+            <option value="daynight">Day &amp; Night (B3678/S34678)</option>
+            <option value="seeds">Seeds (B2/S · Explosive)</option>
+            <option value="maze">Maze Solver (B3/S12345)</option>
+          </optgroup>
+          <optgroup label="Multi-State &amp; 1D Universal">
+            <option value="starwars">Star Wars (B2/S345 · 4-State)</option>
+            <option value="brians-brain">Brian's Brain (3-State Excitable)</option>
+            <option value="wireworld">Wireworld (4-State Logic Circuit)</option>
+            <option value="elem-1d">Elementary 1D (Wolfram Rule 110 / 30)</option>
+          </optgroup>
+          <optgroup label="Saved Custom Rules" id="custom-optgroup"></optgroup>
+        </select>
+      </div>
+
+      <div class="control-group seed-row">
+        <label for="seed-sel">Seed Configuration</label>
+        <div class="inline-pair">
+          <select id="seed-sel"></select>
+          <button type="button" id="seed-btn" title="Reload seed">Load</button>
+        </div>
+      </div>
+
+      <div class="btn-row transport-row">
+        <button type="button" id="play-btn" class="active">Running</button>
+        <button type="button" id="step-btn">Step</button>
+        <button type="button" id="macro-step-btn" hidden>Macro +1</button>
+        <button type="button" id="soup-btn">Soup</button>
+        <button type="button" id="clear-btn">Clear</button>
+      </div>
+
+      <div class="control-group">
+        <label>Tempo: <span id="speed-val">16</span> gen/s · Color:
+          <button type="button" id="palette-btn" class="mini-btn">Ink / Flux</button>
+        </label>
+        <input type="range" id="speed-slider" min="1" max="60" step="1" value="16" />
+      </div>
+
+      <div class="control-group">
+        <label>Camera &amp; Scale: <span id="zoom-val">1.0×</span></label>
+        <div class="btn-row">
+          <button type="button" id="zoom-out-btn" class="mini-btn">−</button>
+          <button type="button" id="zoom-fit-btn" class="mini-btn">Fit</button>
+          <button type="button" id="zoom-in-btn" class="mini-btn">+</button>
+          <button type="button" id="inspect-btn" class="mini-btn" hidden>Zoom Metacell</button>
+        </div>
+      </div>
+
+      <div class="control-group" id="tools-group">
+        <label id="tool-label">Brush &amp; Pattern Stamp</label>
+        <div class="btn-row">
+          <button type="button" data-tool="draw" class="tool-btn active">Paint</button>
+          <button type="button" data-tool="erase" class="tool-btn">Erase</button>
+          <button type="button" data-tool="stamp" class="tool-btn" id="stamp-mode-btn">Stamp</button>
+          <button type="button" id="rot-btn" class="mini-btn" title="Rotate stamp 90° (R)">Rot 90°</button>
+        </div>
+
+        <div id="stamp-wrap" hidden>
+          <select id="stamp-sel">
+            <option value="glider">Glider (5 cells)</option>
+            <option value="lwss">LWSS Spaceship</option>
+            <option value="blinker">Blinker (P2)</option>
+            <option value="toad">Toad (P2)</option>
+            <option value="beacon">Beacon (P2)</option>
+            <option value="pulsar">Pulsar (P3)</option>
+            <option value="pentadecathlon">Pentadecathlon (P15)</option>
+            <option value="gosper">Gosper Glider Gun</option>
+            <option value="eater">Fishhook Eater 1</option>
+            <option value="rpent">R-Pentomino (Methuselah)</option>
+            <option value="replicator">HighLife Replicator</option>
+          </select>
+        </div>
+
+        <div id="state-palette" class="swatch-row" hidden></div>
+
+        <div id="meta-scale-row" class="btn-row" hidden>
+          <button type="button" id="scale-macro-btn" class="mini-btn active">Edit Macro</button>
+          <button type="button" id="scale-micro-btn" class="mini-btn">Perturb Micro</button>
+        </div>
+      </div>
+
+      <hr class="slip-rule" />
+
+      <div class="control-group" id="custom-2d-studio">
+        <label>Custom Rule Builder <span id="custom-scope-tag">(Live Playable)</span></label>
+        <div class="bs-row">
+          <span class="bs-tag">B</span>
+          <div class="bs-cells" id="b-bits"></div>
+        </div>
+        <div class="bs-row">
+          <span class="bs-tag">S</span>
+          <div class="bs-cells" id="s-bits"></div>
+        </div>
+
+        <div class="inline-pair rule-str-row">
+          <input type="text" id="rule-input" value="B3/S23" aria-label="Rule notation B/S" placeholder="e.g. B36/S23 or B2/S345/4" />
+          <button type="button" id="apply-rule-btn">Apply</button>
+        </div>
+
+        <div class="meta-opts">
+          <div class="opt-col">
+            <label for="states-sel">States</label>
+            <select id="states-sel">
+              <option value="2">2 (Binary)</option>
+              <option value="3">3 (Decay)</option>
+              <option value="4">4 (Generations)</option>
+              <option value="5">5 (Generations)</option>
+              <option value="6">6 (Generations)</option>
+              <option value="8">8 (Generations)</option>
+            </select>
+          </div>
+          <div class="opt-col">
+            <label for="nbr-sel">Nbr</label>
+            <select id="nbr-sel">
+              <option value="moore">Moore (8)</option>
+              <option value="vn">von Neumann (4)</option>
+            </select>
+          </div>
+          <div class="opt-col">
+            <label for="wrap-sel">Edge</label>
+            <select id="wrap-sel">
+              <option value="wrap">Toroid</option>
+              <option value="wall">Bounded</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-group" id="custom-1d-studio" hidden>
+        <label for="w1d-num">Wolfram Rule (0 – 255) &amp; Truth Table</label>
+        <div class="inline-pair">
+          <input type="number" id="w1d-num" min="0" max="255" value="110" />
+          <button type="button" id="w1d-rand-btn">Random Rule</button>
+        </div>
+        <div class="w1d-table" id="w1d-table"></div>
+      </div>
+
+      <div class="inline-pair save-row">
+        <input type="text" id="save-name" placeholder="Name your rule…" maxlength="28" />
+        <button type="button" id="save-rule-btn">Save</button>
+        <button type="button" id="del-rule-btn" hidden>Del</button>
+      </div>
+    </div>
+
+    <script src="../js/cellular-automata.js"></script>
+  </body>
+</html>

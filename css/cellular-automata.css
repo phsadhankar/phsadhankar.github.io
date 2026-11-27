@@ -1,0 +1,235 @@
+[hidden] {
+  display: none !important;
+}
+
+.info {
+  width: 300px;
+}
+
+.info .hint {
+  margin-bottom: 0;
+  font-size: 10px;
+  color: var(--ink-soft);
+}
+
+.stats {
+  left: 20px;
+  bottom: 20px;
+  width: 300px;
+}
+
+.controls {
+  top: 20px;
+  right: 20px;
+  width: 328px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink) transparent;
+}
+
+.inline-pair {
+  display: flex;
+  gap: 6px;
+  align-items: stretch;
+}
+
+.inline-pair > select,
+.inline-pair > input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.inline-pair > button {
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+input[type="number"] {
+  box-sizing: border-box;
+  padding: 6px 8px;
+  font: 500 11px var(--mono);
+  font-stretch: 80%;
+  color: var(--ink);
+  background: var(--paper-hi);
+  border: 1px solid var(--ink);
+  border-radius: 0;
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.btn-row > button {
+  margin: 0;
+  flex: 1 1 auto;
+  padding: 7px 8px;
+}
+
+.mini-btn {
+  padding: 5px 8px !important;
+  font-size: 9.5px !important;
+}
+
+.slip-rule {
+  border: 0;
+  border-top: 1px dashed rgba(20, 32, 43, 0.28);
+  margin: 12px 0;
+}
+
+/* Birth / Survival 0..8 bit toggles */
+.bs-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.bs-tag {
+  width: 14px;
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--red);
+}
+
+.bs-cells {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 3px;
+  flex: 1;
+}
+
+.bs-bit {
+  margin: 0 !important;
+  padding: 6px 0 !important;
+  text-align: center;
+  font-size: 10px !important;
+  background: var(--paper-hi) !important;
+  color: var(--ink) !important;
+  border: 1px solid rgba(20, 32, 43, 0.45) !important;
+}
+
+.bs-bit.on {
+  background: var(--ink) !important;
+  color: var(--paper-hi) !important;
+  border-color: var(--ink) !important;
+}
+
+.bs-bit.disabled {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.rule-str-row {
+  margin-top: 7px;
+}
+
+.meta-opts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.opt-col label {
+  margin-bottom: 3px;
+  font-size: 9.5px;
+  color: var(--ink-soft);
+}
+
+.swatch-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 7px;
+}
+
+.swatch-btn {
+  margin: 0 !important;
+  padding: 5px 7px !important;
+  font-size: 9.5px !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--paper-hi) !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--ink) !important;
+}
+
+.swatch-btn.active {
+  background: var(--ink) !important;
+  color: var(--paper-hi) !important;
+}
+
+.swatch-dot {
+  width: 8px;
+  height: 8px;
+  border: 1px solid currentColor;
+  display: inline-block;
+}
+
+.w1d-table {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.w1d-case {
+  margin: 0 !important;
+  padding: 5px 4px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: var(--paper-hi) !important;
+  color: var(--ink) !important;
+  border: 1px solid rgba(20, 32, 43, 0.45) !important;
+  font-size: 9.5px !important;
+}
+
+.w1d-case.on {
+  background: var(--ink) !important;
+  color: var(--paper-hi) !important;
+  border-color: var(--ink) !important;
+}
+
+.w1d-bits {
+  display: flex;
+  gap: 2px;
+}
+
+.w1d-sq {
+  width: 6px;
+  height: 6px;
+  border: 1px solid currentColor;
+}
+
+.w1d-sq.fill {
+  background: currentColor;
+}
+
+#stamp-wrap,
+#meta-scale-row {
+  margin-top: 7px;
+}
+
+.save-row {
+  margin-top: 8px;
+}
+
+@media (max-width: 760px) {
+  .info,
+  .stats {
+    display: none;
+  }
+  .controls {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    width: auto;
+    max-height: 46vh;
+  }
+}
